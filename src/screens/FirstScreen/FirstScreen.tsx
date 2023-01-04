@@ -16,11 +16,11 @@ export const FirstScreen = ({ navigation }) => {
             </View>
             <View style={styles.Buttons}>
                 <View style={styles.FlatButton}>
-                    <FlatButton name='phone' title={'Continue With Phone'}>
+                    <FlatButton name='phone' title={'Continue With Phone'} onPress={() => navigation.navigate('ItemsDashboard')}>
                     </FlatButton>
                 </View>
                 <View style={styles.FlatButton}>
-                    <FlatButton name='google' title={'Continue With google'}>
+                    <FlatButton name='google' title={'Continue With google'} onPress={() => navigation.navigate('MessagesScreen')}>
                     </FlatButton>
                 </View>
                 <View style={styles.FlatButton}>
@@ -33,7 +33,7 @@ export const FirstScreen = ({ navigation }) => {
                 </View>
             </View>
             <TouchableOpacity>
-                <Text style={{ color: '#4285F4', top: 30 }}>
+                <Text style={{ color: '#4285F4', top: 30 }} onPress={() => navigation.navigate('MainTabs')}>
                     Continue Without login
                 </Text>
             </TouchableOpacity>

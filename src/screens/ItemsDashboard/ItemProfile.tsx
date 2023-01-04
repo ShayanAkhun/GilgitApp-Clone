@@ -47,7 +47,6 @@ const Data = [
         date: '14 Aug'
     },
 ];
-const numColumns = 4;
 
 const Item = ({ item, onPress, backgroundColor, textColor }) => (
     <View style={styles.CardComponent}>
@@ -69,7 +68,6 @@ const Item = ({ item, onPress, backgroundColor, textColor }) => (
 );
 const ItemProfile = () => {
     const [selectedId, setSelectedId] = useState(null);
-
     const renderItem = ({ item }) => {
         const backgroundColor = item.id === selectedId ? "white" : "white";
         const color = item.id === selectedId ? 'black' : 'black';

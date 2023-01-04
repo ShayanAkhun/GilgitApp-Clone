@@ -9,8 +9,7 @@ import BUyerRequests from './BuyerRequest/BuyerRequest';
 
 
 const ItemsDashboard = () => {
-    const [text, onChangeText] = React.useState("Search");
-    const [number, onChangeNumber] = React.useState('');
+    const [text, onChangeText] = useState('');
     return (
         <ScrollView style={styles.container}>
             <View style={styles.topBar}>
@@ -24,8 +23,8 @@ const ItemsDashboard = () => {
             </View>
             <TextInput
                 style={styles.input}
-                onChangeText={onChangeNumber}
-                value={number}
+                onChangeText={onChangeText}
+                value={text}
                 placeholder="Search"
             />
             <Text style={styles.categories}>Categories</Text>

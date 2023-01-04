@@ -72,7 +72,6 @@ const Data = [
     title: 'Others',
   },
 ];
-const numColumns = 4;
 
 const Item = ({ item, onPress, backgroundColor, textColor }) => (
   <TouchableOpacity onPress={onPress} style={[styles.item, backgroundColor]}>

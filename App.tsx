@@ -9,28 +9,29 @@
  */
 
 import React, { type PropsWithChildren } from 'react';
-import {
-  SafeAreaView,
-  ScrollView,
-  StatusBar,
-  StyleSheet,
-  Text,
-  useColorScheme,
-  View,
-} from 'react-native';
 import { MainTabs } from './src/Tabs/MainTabs';
-import {
-  Colors,
-  DebugInstructions,
-  Header,
-  LearnMoreLinks,
-  ReloadInstructions,
-} from 'react-native/Libraries/NewAppScreen';
+import { NativeBaseProvider } from 'native-base';
 import { SheetProvider } from "react-native-actions-sheet";
+import { NavigationContainer } from '@react-navigation/native';
+import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import { FirstScreen } from './src/screens/FirstScreen/FirstScreen';
+import ItemsDashboard from './src/screens/ItemsDashboard/ItemsDashboard';
+import MessagesScreen from './src/screens/Messages/Messages';
 
+
+const Stack = createNativeStackNavigator();
 const App = () => {
   return (
-    <MainTabs />
+    <NativeBaseProvider>
+      <NavigationContainer>
+        <Stack.Navigator >
+          <Stack.Screen options={{ headerShown: false }} name="FirstScreen" component={FirstScreen} />
+          <Stack.Screen options={{ headerShown: false }} name="MainTabs" component={MainTabs} />
+          <Stack.Screen options={{ headerShown: false }} name="ItemsDashboard" component={ItemsDashboard} />
+          <Stack.Screen options={{ headerShown: false }} name="MessagesScreen" component={MessagesScreen} />
+        </Stack.Navigator>
+      </NavigationContainer>
+    </NativeBaseProvider>
 
   );
 };
