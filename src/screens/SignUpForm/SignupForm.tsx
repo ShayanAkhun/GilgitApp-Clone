@@ -19,10 +19,11 @@ import {
 } from 'native-base';
 
 const validationSchema = Yup.object().shape({
-    name: Yup.string().required('Name is required'),
-    location: Yup.string().required('Address is required'),
+    name: Yup.string().required('Full Name is required'),
+    location: Yup.string().required('Location is required'),
     phone: Yup.string().required('Phone Number is required'),
-    type: Yup.string().required('Specialist is required'),
+    email: Yup.string().required('Email is required'),
+    number: Yup.string().required('WhatsApp Number is required'),
 });
 
 interface IProps { }
@@ -42,6 +43,7 @@ export const SignUpform = () => {
         location: signUpEditing && selectedsignUpForm ? selectedsignUpForm.location : '',
         phone: signUpEditing && selectedsignUpForm ? selectedsignUpForm.phone : '',
         id: signUpEditing && selectedsignUpForm ? selectedsignUpForm.id : '',
+        number: signUpEditing && selectedsignUpForm ? selectedsignUpForm.number : '',
     }
 
     const onSubmit = (values: SignUpForm) => {
@@ -53,7 +55,8 @@ export const SignUpform = () => {
                 name: values.name,
                 location: values.location,
                 type,
-                phone: values.phone
+                phone: values.phone,
+                number: values.number
             };
             const index = formState.findIndex(u => u.id === selectedsignUpForm.id);
             formState[index] = updatedForm;
@@ -63,7 +66,8 @@ export const SignUpform = () => {
                 name: values.name,
                 location: values.location,
                 type,
-                phone: values.phone
+                phone: values.phone,
+                number: values.number
             })
         }
         setSignUp(formState);
@@ -106,11 +110,11 @@ export const SignUpform = () => {
                                     <FormControl.Label>Email</FormControl.Label>
                                     <Input
                                         placeholder="Enter your email address"
-                                        value={values.location}
-                                        onChangeText={handleChange('location')}
+                                        value={values.email}
+                                        onChangeText={handleChange('email adress')}
                                     />
-                                    {errors.location && (
-                                        <Text style={{ fontSize: 10, color: 'red' }}>{errors.location}</Text>
+                                    {errors.email && (
+                                        <Text style={{ fontSize: 10, color: 'red' }}>{errors.email}</Text>
                                     )}
                                     <FormControl.Label>Location</FormControl.Label>
                                     <Input
@@ -121,18 +125,22 @@ export const SignUpform = () => {
                                     {errors.location && (
                                         <Text style={{ fontSize: 10, color: 'red' }}>{errors.location}</Text>
                                     )}
-                                    <FormControl.Label> Contact Number</FormControl.Label>
+                                    <FormControl.Label>Contact Number</FormControl.Label>
                                     <Input
-                                        placeholder="Enter your Number"
-                                        value={values.phone}
-                                        onChangeText={handleChange('location')}
+                                        value={String(values.phone) ?? ''}
+                                        keyboardType={'numeric'}
+                                        placeholder="Enter your Phone Number"
+                                        onChangeText={handleChange('phone')}
                                     />
-                                    <FormControl.Label>WhatsApp number</FormControl.Label>
+                                    {errors.phone && <Text style={{ fontSize: 10, color: 'red' }}>{errors.phone}</Text>}
+                                    <FormControl.Label>WhatsApp Number</FormControl.Label>
                                     <Input
+                                        value={String(values.number) ?? ''}
+                                        keyboardType={'numeric'}
                                         placeholder="Enter your WhatsApp Number"
-                                        value={values.phone}
-                                        onChangeText={handleChange('location')}
+                                        onChangeText={handleChange('number')}
                                     />
+                                    {errors.number && <Text style={{ fontSize: 10, color: 'red' }}>{errors.number}</Text>}
                                     <Button rounded={100} size="lg" mt={25} onPress={() => handleSubmit()}>
                                         {signUpEditing ? 'Update' : 'Save'}
                                     </Button>
@@ -159,13 +167,13 @@ const styles = StyleSheet.create({
         marginTop: 50,
         borderWidth: 1,
         borderColor: 'gray.300',
-        height: 120,
-        width: 130,
+        height: 150,
+        width: 150,
         bottom: 40,
         marginBottom: 20,
         alignSelf: 'center',
         justifyContent: 'center',
-        rounded: 'full'
+        borderRadius: 150
     },
     input: {
         width: 350,

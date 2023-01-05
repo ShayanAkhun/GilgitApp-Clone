@@ -3,5 +3,7 @@ export interface SignUpForm {
     name: string;
     location?: string;
     phone?: string | number;
-    type?: string
+    type?: string,
+    number?: number | string,
+    email?: string
 }
