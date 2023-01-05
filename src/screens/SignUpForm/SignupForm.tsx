@@ -26,10 +26,6 @@ const validationSchema = Yup.object().shape({
     number: Yup.string().required('WhatsApp Number is required'),
 });
 
-interface IProps { }
-
-
-
 export const SignUpform = () => {
     const navigation = useNavigation();
     const signUpEditing = signUpFormStore(state => state.signUpEditing)
@@ -75,85 +71,79 @@ export const SignUpform = () => {
     }
 
     return (
-        <ScrollView>
-            <View style={{ backgroundColor: '#ffff', flex: 1, height: '100%' }}>
-                <View>
+        <ScrollView style={{ backgroundColor: '#ffff', flex: 1, }}>
+            <View>
 
-                    <View style={{ backgroundColor: '#ffff', top: 40, }}>
-                        <View style={styles.Addphoto}>
-                            <Pressable alignSelf='center' rounded='full'>
-                                <Text style={{ alignSelf: 'center', fontSize: 16, marginTop: 2, color: 'gray.500' }} >
-                                    Add Photo
-                                </Text>
-                                <View style={{ alignSelf: 'center' }}>
-                                    <AddIcon size={6} />
-                                </View>
-                            </Pressable>
-                        </View>
+                <View style={{ backgroundColor: '#ffff', top: 40, }}>
+                    <View style={styles.Addphoto}>
+                        <TouchableOpacity>
+                            <Text style={{ alignSelf: 'center', fontSize: 16, marginTop: 2, color: 'gray.500' }} >
+                                Add Photo
+                            </Text>
+                            <View style={{ alignSelf: 'center' }}>
+                                <AddIcon size={6} />
+                            </View>
+                        </TouchableOpacity>
                     </View>
                 </View>
-                <Formik
-                    validationSchema={validationSchema}
-                    initialValues={initialValues}
-                    onSubmit={onSubmit}
-                    render={({ errors, handleChange, values, handleSubmit }) => {
-                        return (
-                            <FormControl w="90%" alignSelf={'center'}>
-                                <Stack mx="4">
-                                    <FormControl.Label>Full Name</FormControl.Label>
-                                    <Input
-                                        placeholder="Full Name"
-                                        value={values.name}
-                                        onChangeText={handleChange('name')}
-                                    />
-                                    {errors.name && <Text style={{ fontSize: 10, color: 'red' }}>{errors.name}</Text>}
-                                    <FormControl.Label>Email</FormControl.Label>
-                                    <Input
-                                        placeholder="Enter your email address"
-                                        value={values.email}
-                                        onChangeText={handleChange('email adress')}
-                                    />
-                                    {errors.email && (
-                                        <Text style={{ fontSize: 10, color: 'red' }}>{errors.email}</Text>
-                                    )}
-                                    <FormControl.Label>Location</FormControl.Label>
-                                    <Input
-                                        placeholder="Enter your Location"
-                                        value={values.location}
-                                        onChangeText={handleChange('location')}
-                                    />
-                                    {errors.location && (
-                                        <Text style={{ fontSize: 10, color: 'red' }}>{errors.location}</Text>
-                                    )}
-                                    <FormControl.Label>Contact Number</FormControl.Label>
-                                    <Input
-                                        value={String(values.phone) ?? ''}
-                                        keyboardType={'numeric'}
-                                        placeholder="Enter your Phone Number"
-                                        onChangeText={handleChange('phone')}
-                                    />
-                                    {errors.phone && <Text style={{ fontSize: 10, color: 'red' }}>{errors.phone}</Text>}
-                                    <FormControl.Label>WhatsApp Number</FormControl.Label>
-                                    <Input
-                                        value={String(values.number) ?? ''}
-                                        keyboardType={'numeric'}
-                                        placeholder="Enter your WhatsApp Number"
-                                        onChangeText={handleChange('number')}
-                                    />
-                                    {errors.number && <Text style={{ fontSize: 10, color: 'red' }}>{errors.number}</Text>}
-                                    <Button rounded={100} size="lg" mt={25} onPress={() => handleSubmit()}>
-                                        {signUpEditing ? 'Update' : 'Save'}
-                                    </Button>
-                                </Stack>
-                            </FormControl>
-                        )
-                    }}
-                />
-
-
-
-
             </View>
+            <Formik
+                validationSchema={validationSchema}
+                initialValues={initialValues}
+                onSubmit={onSubmit}
+                render={({ errors, handleChange, values, handleSubmit }) => {
+                    return (
+                        <FormControl w="90%" alignSelf={'center'}>
+                            <Stack mx="4">
+                                <FormControl.Label>Full Name</FormControl.Label>
+                                <Input
+                                    placeholder="Full Name"
+                                    value={values.name}
+                                    onChangeText={handleChange('name')}
+                                />
+                                {errors.name && <Text style={{ fontSize: 10, color: 'red' }}>{errors.name}</Text>}
+                                <FormControl.Label>Email</FormControl.Label>
+                                <Input
+                                    placeholder="Enter your email address"
+                                    value={values.email}
+                                    onChangeText={handleChange('email adress')}
+                                />
+                                {errors.email && (
+                                    <Text style={{ fontSize: 10, color: 'red' }}>{errors.email}</Text>
+                                )}
+                                <FormControl.Label>Location</FormControl.Label>
+                                <Input
+                                    placeholder="Enter your Location"
+                                    value={values.location}
+                                    onChangeText={handleChange('location')}
+                                />
+                                {errors.location && (
+                                    <Text style={{ fontSize: 10, color: 'red' }}>{errors.location}</Text>
+                                )}
+                                <FormControl.Label>Contact Number</FormControl.Label>
+                                <Input
+                                    value={String(values.phone) ?? ''}
+                                    keyboardType={'numeric'}
+                                    placeholder="Enter your Phone Number"
+                                    onChangeText={handleChange('phone')}
+                                />
+                                {errors.phone && <Text style={{ fontSize: 10, color: 'red' }}>{errors.phone}</Text>}
+                                <FormControl.Label>WhatsApp Number</FormControl.Label>
+                                <Input
+                                    value={String(values.number) ?? ''}
+                                    keyboardType={'numeric'}
+                                    placeholder="Enter your WhatsApp Number"
+                                    onChangeText={handleChange('number')}
+                                />
+                                {errors.number && <Text style={{ fontSize: 10, color: 'red' }}>{errors.number}</Text>}
+                                <Button rounded={100} size="lg" mt={25} onPress={() => handleSubmit()}>
+                                    {signUpEditing ? 'Update' : 'Save'}
+                                </Button>
+                            </Stack>
+                        </FormControl>
+                    )
+                }}
+            />
 
         </ScrollView>
 
@@ -183,7 +173,6 @@ const styles = StyleSheet.create({
         borderWidth: 1,
         padding: 10,
         borderColor: '#0A0B0E',
-        // backgroundColor: '#FFFFFF'
 
     },
     SaveButton: {

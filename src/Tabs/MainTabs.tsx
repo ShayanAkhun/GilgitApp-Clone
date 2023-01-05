@@ -6,7 +6,8 @@ import SIcon from 'react-native-vector-icons/SimpleLineIcons';
 import { FirstScreen } from '../screens/FirstScreen/FirstScreen'
 import ItemsDashboard from '../screens/ItemsDashboard/ItemsDashboard';
 import MessagesScreen from '../screens/Messages/Messages';
-import { SignUpform, SignUpForm } from '../screens/SignUpForm/SignupForm';
+import { SignUpform, } from '../screens/SignUpForm/SignupForm';
+import { UploadItems } from '../screens/UploadItem/UploadItem';
 
 const Tab = createBottomTabNavigator();
 
@@ -46,8 +47,8 @@ export const MainTabs = () => {
                 }}
             />
             <Tab.Screen
-                name="Add Items"
-                component={ItemsDashboard}
+                name="UploadItems"
+                component={UploadItems}
                 options={{
                     // tabBarLabel: 'DashboardItems',
                     tabBarIcon: ({ color, size }) => (

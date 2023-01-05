@@ -17,6 +17,7 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { FirstScreen } from './src/screens/FirstScreen/FirstScreen';
 import ItemsDashboard from './src/screens/ItemsDashboard/ItemsDashboard';
 import MessagesScreen from './src/screens/Messages/Messages';
+import { UploadItems } from './src/screens/UploadItem/UploadItem';
 
 
 const Stack = createNativeStackNavigator();
@@ -29,6 +30,7 @@ const App = () => {
           <Stack.Screen options={{ headerShown: false }} name="MainTabs" component={MainTabs} />
           <Stack.Screen options={{ headerShown: false }} name="ItemsDashboard" component={ItemsDashboard} />
           <Stack.Screen options={{ headerShown: false }} name="MessagesScreen" component={MessagesScreen} />
+          <Stack.Screen options={{ headerShown: false }} name="UploadItems" component={UploadItems} />
         </Stack.Navigator>
       </NavigationContainer>
     </NativeBaseProvider>
