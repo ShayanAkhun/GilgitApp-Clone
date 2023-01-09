@@ -1,6 +1,9 @@
 import { useNavigation } from "@react-navigation/native";
 import React, { useState } from "react";
 import { FlatList, Image, SafeAreaView, StatusBar, StyleSheet, Text, TouchableOpacity, View } from "react-native";
+const navigation = useNavigation();
+
+
 const Data = [
     {
         id: 1,
@@ -9,7 +12,10 @@ const Data = [
         price: 'PKR 1,95000',
         location: 'Gilgit',
         views: 109,
-        date: '13 feb'
+        date: '13 feb',
+        // onPress: () => {
+        //     navigation.navigate('')
+        // }
     },
     {
         id: 2,
@@ -56,12 +62,12 @@ const Item = ({ item, onPress, backgroundColor, textColor, }) => (
             <View style={styles.CardData}>
                 <View style={styles.CardDataRight}>
                     <Text style={styles.CardAmount}>{item.price}</Text>
-                    <Text style={styles.CardDescription}>{item.title}</Text>
-                    <Text style={styles.CardLocation}>{item.location}</Text>
+                    <Text style={styles.CardDescription}>{item?.title}</Text>
+                    <Text style={styles.CardLocation}>{item?.location}</Text>
                 </View>
                 <View style={styles.CardDataLeft}>
-                    <Text style={styles.CardDate}>{item.date}</Text>
-                    <Text style={styles.CardViews}>{item.views}</Text>
+                    <Text style={styles.CardDate}>{item?.date}</Text>
+                    <Text style={styles.CardViews}>{item?.views}</Text>
                 </View>
             </View>
         </TouchableOpacity>
@@ -80,6 +86,7 @@ const ItemProfile = () => {
                 // onPress={() => setSelectedId(item.id)}
                 backgroundColor={{ backgroundColor }}
                 textColor={{ color }}
+                // onPress={item.onPress}
                 onPress={() => {
                     console.log('is this working!')
                     navigation.navigate('BuyerRequest')

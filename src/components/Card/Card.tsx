@@ -1,57 +1,21 @@
 import React from 'react'
-import { View, Text, StyleSheet, TouchableOpacity, Image } from 'react-native'
+import { View, Text, StyleSheet, TouchableOpacity, Image, Dimensions } from 'react-native'
 import ItemProfile from '../../screens/ItemsDashboard/ItemProfile'
+import { CategorySliderStore } from '../../store/categorySlider'
+import { categorySlider } from '../../Types'
 
 
-const item = [
-    {
-        id: 1,
-        image: require('../../assets/CardComponentImages/Macbook.png'),
-        title: 'Apple Macbook Pro',
-        price: 'PKR 1,95000',
-        location: 'Gilgit',
-        views: 109,
-        date: '13 feb'
-    },
-    {
-        id: 2,
-        image: require('../../assets/CardComponentImages/Hp.png'),
-        title: 'HP laptop',
-        price: 'PKR 95,000',
-        location: 'Gilgit',
-        views: 354,
-        date: '01 April'
-    },
-    {
-        id: 3,
-        image: require('../../assets/CardComponentImages/Bike.png'),
-        title: 'Honda 125',
-        price: 'PKR 105,000',
-        location: 'Gilgit',
-        views: 569,
-        date: '11 July'
-    },
-    {
-        id: 4,
-        image: require('../../assets/CardComponentImages/Honda.png'),
-        title: 'Honda 200',
-        price: 'PKR 295,000',
-        location: 'Gilgit',
-        views: 1004,
-        date: '1 Jan'
-    },
-    {
-        id: 5,
-        image: require('../../assets/CardComponentImages/Mustang.png'),
-        title: 'MUstang',
-        price: 'PKR 4000,000',
-        location: 'Gilgit',
-        views: 1440,
-        date: '14 Aug'
-    },
+const { width, height } = Dimensions.get('window')
+console.log(width)
 
-]
-export const Card = ({ item }) => {
+interface IProps {
+    item: categorySlider
+    onEdit?: () => void
+}
+
+export const Card: React.FC<IProps> = ({ item }) => {
+    console.log({ height });
+
     return (
         <View style={styles.CardComponent}>
             <TouchableOpacity style={{ alignSelf: 'center' }}>
@@ -59,11 +23,10 @@ export const Card = ({ item }) => {
                 <View style={styles.CardData}>
                     <View style={styles.CardDataRight}>
                         <Text style={styles.CardAmount}>{item.price}</Text>
-                        <Text style={styles.CardDescription}>{item.title}</Text>
+                        <Text style={styles.CardDescription}>{item.description}</Text>
                         <Text style={styles.CardLocation}>{item.location}</Text>
                     </View>
                     <View style={styles.CardDataLeft}>
-                        <Text style={styles.CardDate}>{item.date}</Text>
                         <Text style={styles.CardViews}>{item.views}</Text>
                     </View>
                 </View>
@@ -76,7 +39,7 @@ const styles = StyleSheet.create({
     CardComponent: {
         backgroundColor: '#FFFFFF',
         borderWidth: 1,
-        width: 185,
+        width: width / 2.3,
         height: 268,
         borderColor: '#FFFFFF',
         borderRadius: 3,

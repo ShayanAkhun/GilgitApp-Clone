@@ -1,9 +1,25 @@
-import { View, Text, ScrollView, TextInput, StyleSheet } from 'react-native'
+import { View, Text, ScrollView, TextInput, StyleSheet, Dimensions } from 'react-native'
 import React, { useState } from 'react'
+import { CategorySliderStore } from '../../store/categorySlider';
 import { Card } from '../../components/Card/Card';
+import { categorySlider } from '../../Types';
+
+
+
+const { width, height } = Dimensions.get('window')
 
 export const CategorySlider = () => {
   const [text, onChangeText] = useState('');
+
+  const slider = CategorySliderStore(state => state.slider);
+  const setSelectedSlider = CategorySliderStore(state => state.setSelectedSlider);
+
+  const sliderEditHandler = (slider: categorySlider) => {
+    setSelectedSlider(slider);
+  };
+
+
+
   return (
     <ScrollView style={{ flex: 1, backgroundColor: '#ffffff' }}>
 
@@ -14,8 +30,11 @@ export const CategorySlider = () => {
         placeholder="Search"
       />
 
-      <View
-        style={styles.ItemsList}>
+      <View style={{ flexWrap: 'wrap', flexDirection: 'row', backgroundColor: '#ffffff' }}>
+        {slider.map(slider => (
+          console.log(slider),
+          <Card item={slider} onEdit={() => sliderEditHandler(slider)} />
+        ))}
       </View>
 
 
@@ -34,7 +53,8 @@ const styles = StyleSheet.create({
     padding: 10,
     borderColor: '#F8F8F8',
     backgroundColor: '#E5E5E5',
-    marginTop: 20
+    marginTop: 20,
+    flex: 1
 
   },
   ItemsList: {

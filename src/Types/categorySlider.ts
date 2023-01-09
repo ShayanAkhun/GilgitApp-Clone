@@ -1,8 +1,10 @@
+import { ImageSourcePropType } from "react-native";
+
 export interface categorySlider {
-    price?: string | number,
+    price: string | number,
     description?: string,
     location?: string,
     views?: number,
-    image?: {},
+    image?: ImageSourcePropType | undefined,
     id: number
 }
