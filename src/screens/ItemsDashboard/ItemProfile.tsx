@@ -1,3 +1,4 @@
+import { useNavigation } from "@react-navigation/native";
 import React, { useState } from "react";
 import { FlatList, Image, SafeAreaView, StatusBar, StyleSheet, Text, TouchableOpacity, View } from "react-native";
 const Data = [
@@ -48,9 +49,9 @@ const Data = [
     },
 ];
 
-const Item = ({ item, onPress, backgroundColor, textColor }) => (
+const Item = ({ item, onPress, backgroundColor, textColor, }) => (
     <View style={styles.CardComponent}>
-        <TouchableOpacity style={{ alignSelf: 'center' }}>
+        <TouchableOpacity style={{ alignSelf: 'center' }} onPress={onPress}>
             <Image source={item.image} />
             <View style={styles.CardData}>
                 <View style={styles.CardDataRight}>
@@ -67,6 +68,7 @@ const Item = ({ item, onPress, backgroundColor, textColor }) => (
     </View>
 );
 const ItemProfile = () => {
+    const navigation = useNavigation();
     const [selectedId, setSelectedId] = useState(null);
     const renderItem = ({ item }) => {
         const backgroundColor = item.id === selectedId ? "white" : "white";
@@ -75,9 +77,13 @@ const ItemProfile = () => {
         return (
             <Item
                 item={item}
-                onPress={() => setSelectedId(item.id)}
+                // onPress={() => setSelectedId(item.id)}
                 backgroundColor={{ backgroundColor }}
                 textColor={{ color }}
+                onPress={() => {
+                    console.log('is this working!')
+                    navigation.navigate('BuyerRequest')
+                }}
             />
         );
     };

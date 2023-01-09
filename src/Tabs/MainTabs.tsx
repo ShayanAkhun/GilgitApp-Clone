@@ -1,6 +1,7 @@
 import React from 'react'
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import MIcon from 'react-native-vector-icons/MaterialCommunityIcons';
+import mIcon from 'react-native-vector-icons/MaterialIcons';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import SIcon from 'react-native-vector-icons/SimpleLineIcons';
 import { FirstScreen } from '../screens/FirstScreen/FirstScreen'
@@ -8,6 +9,7 @@ import ItemsDashboard from '../screens/ItemsDashboard/ItemsDashboard';
 import MessagesScreen from '../screens/Messages/Messages';
 import { SignUpform, } from '../screens/SignUpForm/SignupForm';
 import { UploadItems } from '../screens/UploadItem/UploadItem';
+import { HeaderButton } from '../components/Common/goBackIcon';
 
 const Tab = createBottomTabNavigator();
 
@@ -19,6 +21,7 @@ export const MainTabs = () => {
                 headerShown: false,
                 tabBarActiveTintColor: '#4285F4',
                 tabBarStyle: { position: 'absolute' },
+                headerLeft: () => (<HeaderButton />)
             }}
         >
             <Tab.Screen
@@ -50,11 +53,12 @@ export const MainTabs = () => {
                 name="UploadItems"
                 component={UploadItems}
                 options={{
-                    // tabBarLabel: 'DashboardItems',
+                    headerTitleAlign: 'center',
+                    headerTitle: 'Upload Items',
+                    headerShown: true,
                     tabBarIcon: ({ color, size }) => (
                         <SIcon name="plus" color={color} size={36} />
                     ),
-
                 }}
             />
             <Tab.Screen

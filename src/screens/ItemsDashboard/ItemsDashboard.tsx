@@ -4,7 +4,8 @@ import Icon from 'react-native-vector-icons/EvilIcons';
 import DashboardItems from './DashboardItems';
 import { Card } from '../../components/Card/Card';
 import ItemProfile from './ItemProfile';
-import BUyerRequests from './BuyerRequest/BuyerRequest';
+import CategorySlider from '../BuyerRequest/BuyerRequest';
+import BuyerRequests from '../BuyerRequest/BuyerRequest';
 
 
 
@@ -46,7 +47,7 @@ const ItemsDashboard = () => {
                                 <Text style={{ color: '#4285F4', fontSize: 16 }}>View all</Text>
                             </TouchableOpacity>
                         </View>
-                        <BUyerRequests />
+                        <BuyerRequests />
                     </View>
                 </View>
             </View>

@@ -49,6 +49,7 @@ const item = [
         views: 1440,
         date: '14 Aug'
     },
+
 ]
 export const Card = ({ item }) => {
     return (
@@ -84,7 +85,8 @@ const styles = StyleSheet.create({
         shadowOpacity: 0.2,
         shadowRadius: 5,
         padding: 5,
-        margin: 10
+        margin: 10,
+        elevation: 2
 
     },
     CardData: {

@@ -1,3 +1,4 @@
+import { useNavigation } from "@react-navigation/native";
 import React, { useState } from "react";
 import { FlatList, Image, SafeAreaView, StatusBar, StyleSheet, Text, TouchableOpacity, View } from "react-native";
 const Data = [
@@ -83,6 +84,7 @@ const Item = ({ item, onPress, backgroundColor, textColor }) => (
 );
 const DashboardItems = () => {
   const [selectedId, setSelectedId] = useState(null);
+  const navigation = useNavigation();
 
   const renderItem = ({ item }) => {
     const backgroundColor = item.id === selectedId ? "white" : "white";
@@ -91,7 +93,7 @@ const DashboardItems = () => {
     return (
       <Item
         item={item}
-        onPress={() => setSelectedId(item.id)}
+        onPress={() => navigation.navigate('CategorySlider')}
         backgroundColor={{ backgroundColor }}
         textColor={{ color }}
       />

@@ -1,7 +1,8 @@
 export interface UploadItem {
-    title?: string,
-    price?: number | string,
-    category?: string,
+    name: string,
+    price: number,
+    description?: string,
+    manufacturer?: string,
     location?: string,
     type?: string
     id?: number | string

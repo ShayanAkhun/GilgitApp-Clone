@@ -3,7 +3,7 @@ import { FlatList, Image, StatusBar, StyleSheet, Text, TouchableOpacity, View } 
 const Data = [
     {
         id: 1,
-        image: require('../../../assets/BuyerRequestCardImage/user.png'),
+        image: require('../../assets/BuyerRequestCardImage/user.png'),
         title: ' Akhtar Lawa',
         location: 'Gilgit',
         item: 'Mobile',
@@ -12,7 +12,7 @@ const Data = [
     },
     {
         id: 2,
-        image: require('../../../assets/BuyerRequestCardImage/user.png'),
+        image: require('../../assets/BuyerRequestCardImage/user.png'),
         title: ' Sameer Aslam',
         location: 'Gilgit',
         item: 'Mobile',
@@ -21,7 +21,7 @@ const Data = [
     },
     {
         id: 3,
-        image: require('../../../assets/BuyerRequestCardImage/user.png'),
+        image: require('../../assets/BuyerRequestCardImage/user.png'),
         title: ' Hakeem Sardar',
         location: 'Gilgit',
         item: 'Mobile',
@@ -30,7 +30,7 @@ const Data = [
     },
     {
         id: 4,
-        image: require('../../../assets/BuyerRequestCardImage/user.png'),
+        image: require('../../assets/BuyerRequestCardImage/user.png'),
         title: ' Adnan ',
         location: 'Gilgit',
         item: 'Mobile',
@@ -39,7 +39,7 @@ const Data = [
     },
     {
         id: 5,
-        image: require('../../../assets/BuyerRequestCardImage/user.png'),
+        image: require('../../assets/BuyerRequestCardImage/user.png'),
         title: 'Little Broung',
         location: 'Gilgit',
         item: 'Mobile',

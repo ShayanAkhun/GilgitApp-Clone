@@ -18,6 +18,8 @@ import { FirstScreen } from './src/screens/FirstScreen/FirstScreen';
 import ItemsDashboard from './src/screens/ItemsDashboard/ItemsDashboard';
 import MessagesScreen from './src/screens/Messages/Messages';
 import { UploadItems } from './src/screens/UploadItem/UploadItem';
+import { CategorySlider } from './src/screens/CategorySliderScreen/CategorySlider';
+import { HeaderButton } from './src/components/Common/goBackIcon';
 
 
 const Stack = createNativeStackNavigator();
@@ -31,6 +33,7 @@ const App = () => {
           <Stack.Screen options={{ headerShown: false }} name="ItemsDashboard" component={ItemsDashboard} />
           <Stack.Screen options={{ headerShown: false }} name="MessagesScreen" component={MessagesScreen} />
           <Stack.Screen options={{ headerShown: false }} name="UploadItems" component={UploadItems} />
+          <Stack.Screen options={{ headerShown: true, headerTitleAlign: 'center', headerLeft: () => (<HeaderButton />) }} name="CategorySlider" component={CategorySlider} />
         </Stack.Navigator>
       </NavigationContainer>
     </NativeBaseProvider>
