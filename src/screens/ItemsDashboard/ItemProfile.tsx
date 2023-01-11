@@ -1,8 +1,6 @@
 import { useNavigation } from "@react-navigation/native";
 import React, { useState } from "react";
 import { FlatList, Image, SafeAreaView, StatusBar, StyleSheet, Text, TouchableOpacity, View } from "react-native";
-const navigation = useNavigation();
-
 
 const Data = [
     {
@@ -13,9 +11,8 @@ const Data = [
         location: 'Gilgit',
         views: 109,
         date: '13 feb',
-        // onPress: () => {
-        //     navigation.navigate('')
-        // }
+        screenNavigation: 'LaptopsScreen'
+
     },
     {
         id: 2,
@@ -24,7 +21,8 @@ const Data = [
         price: 'PKR 95,000',
         location: 'Gilgit',
         views: 354,
-        date: '01 April'
+        date: '01 April',
+        screenNavigation: 'LaptopsScreen'
     },
     {
         id: 3,
@@ -33,7 +31,8 @@ const Data = [
         price: 'PKR 105,000',
         location: 'Gilgit',
         views: 569,
-        date: '11 July'
+        date: '11 July',
+        screenNavigation: 'LaptopsScreen'
     },
     {
         id: 4,
@@ -42,7 +41,8 @@ const Data = [
         price: 'PKR 295,000',
         location: 'Gilgit',
         views: 1004,
-        date: '1 Jan'
+        date: '1 Jan',
+        screenNavigation: 'LaptopsScreen'
     },
     {
         id: 5,
@@ -51,7 +51,8 @@ const Data = [
         price: 'PKR 4000,000',
         location: 'Gilgit',
         views: 1440,
-        date: '14 Aug'
+        date: '14 Aug',
+        screenNavigation: 'LaptopsScreen'
     },
 ];
 
@@ -74,22 +75,23 @@ const Item = ({ item, onPress, backgroundColor, textColor, }) => (
     </View>
 );
 const ItemProfile = () => {
-    const navigation = useNavigation();
     const [selectedId, setSelectedId] = useState(null);
+    const navigation = useNavigation();
+
     const renderItem = ({ item }) => {
         const backgroundColor = item.id === selectedId ? "white" : "white";
         const color = item.id === selectedId ? 'black' : 'black';
-
+        console.log(item)
         return (
+
             <Item
                 item={item}
                 // onPress={() => setSelectedId(item.id)}
                 backgroundColor={{ backgroundColor }}
                 textColor={{ color }}
-                // onPress={item.onPress}
                 onPress={() => {
-                    console.log('is this working!')
-                    navigation.navigate('BuyerRequest')
+                    console.log('is this working!', item.screenNavigation)
+                    navigation.navigate(item.screenNavigation)
                 }}
             />
         );

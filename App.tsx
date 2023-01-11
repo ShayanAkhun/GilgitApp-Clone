@@ -17,12 +17,11 @@ import { FirstScreen } from './src/screens/FirstScreen/FirstScreen';
 import ItemsDashboard from './src/screens/ItemsDashboard/ItemsDashboard';
 import MessagesScreen from './src/screens/Messages/Messages';
 import { UploadItems } from './src/screens/UploadItem/UploadItem';
-import { CategorySlider } from './src/screens/CategorySliderScreen/CategorySlider';
 import { HeaderButton } from './src/components/Common/goBackIcon';
 import BrScreen from './src/screens/CategorySliderScreen/BrScreen';
 import BikesScreen from './src/screens/CategorySliderScreen/BikesScreen';
 import CarsScreen from './src/screens/CategorySliderScreen/CarsScreen';
-import LaptopsScreen from './src/screens/CategorySliderScreen/LaptopsScreen';
+import { LaptopScreen } from './src/screens/CategorySliderScreen/LaptopScreen';
 
 
 const Stack = createNativeStackNavigator();
@@ -36,11 +35,10 @@ const App = () => {
           <Stack.Screen options={{ headerShown: false }} name="ItemsDashboard" component={ItemsDashboard} />
           <Stack.Screen options={{ headerShown: false }} name="MessagesScreen" component={MessagesScreen} />
           <Stack.Screen options={{ headerShown: false }} name="UploadItems" component={UploadItems} />
-          <Stack.Screen options={{ headerShown: true, headerTitleAlign: 'center', headerLeft: () => (<HeaderButton />) }} name="CategorySlider" component={CategorySlider} />
-          <Stack.Screen options={{ headerShown: false }} name="BrScreen" component={BrScreen} />
-          <Stack.Screen options={{ headerShown: false }} name="BikesScreen" component={BikesScreen} />
-          <Stack.Screen options={{ headerShown: false }} name="BikesScreen" component={CarsScreen} />
-          <Stack.Screen options={{ headerShown: false }} name="LaptopsScreen" component={LaptopsScreen} />
+          <Stack.Screen options={{ headerShown: true, headerTitle: 'Laptops', headerTitleAlign: 'center', headerLeft: () => (<HeaderButton />) }} name="LaptopScreen" component={LaptopScreen} />
+          <Stack.Screen options={{ headerShown: true, headerTitle: 'Buyer Requests', headerTitleAlign: 'center', headerLeft: () => (<HeaderButton />) }} name="BrScreen" component={BrScreen} />
+          <Stack.Screen options={{ headerShown: true, headerTitle: 'Bikes', headerTitleAlign: 'center', headerLeft: () => (<HeaderButton />) }} name="BikesScreen" component={BikesScreen} />
+          <Stack.Screen options={{ headerShown: true, headerTitle: 'Cars', headerTitleAlign: 'center', headerLeft: () => (<HeaderButton />) }} name="CarsScreen" component={CarsScreen} />
         </Stack.Navigator>
       </NavigationContainer>
     </NativeBaseProvider>

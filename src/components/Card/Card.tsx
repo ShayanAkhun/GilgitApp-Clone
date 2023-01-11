@@ -1,20 +1,20 @@
 import React from 'react'
 import { View, Text, StyleSheet, TouchableOpacity, Image, Dimensions } from 'react-native'
-import ItemProfile from '../../screens/ItemsDashboard/ItemProfile'
-import { CategorySliderStore } from '../../store/categorySlider'
-import { categorySlider } from '../../Types'
+import { Laptops } from '../../Types'
+import { Cars } from '../../Types'
+import { Bikes } from '../../Types'
 
 
 const { width, height } = Dimensions.get('window')
 console.log(width)
 
 interface IProps {
-    item: categorySlider
+    item: Laptops & Cars & Bikes
     onEdit?: () => void
 }
 
 export const Card: React.FC<IProps> = ({ item }) => {
-    console.log({ height });
+    console.log(item);
 
     return (
         <View style={styles.CardComponent}>

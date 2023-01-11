@@ -4,7 +4,6 @@ import MIcon from 'react-native-vector-icons/MaterialCommunityIcons';
 import mIcon from 'react-native-vector-icons/MaterialIcons';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import SIcon from 'react-native-vector-icons/SimpleLineIcons';
-import { FirstScreen } from '../screens/FirstScreen/FirstScreen'
 import ItemsDashboard from '../screens/ItemsDashboard/ItemsDashboard';
 import MessagesScreen from '../screens/Messages/Messages';
 import { SignUpform, } from '../screens/SignUpForm/SignupForm';

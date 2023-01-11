@@ -1,6 +1,6 @@
 import { ImageSourcePropType } from "react-native";
 
-export interface categorySlider {
+export interface Cars {
     price: string | number,
     description?: string,
     location?: string,

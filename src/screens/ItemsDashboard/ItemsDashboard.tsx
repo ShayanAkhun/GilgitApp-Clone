@@ -2,9 +2,7 @@ import { View, Text, StyleSheet, ScrollView, TextInput, TouchableOpacity, FlatLi
 import React, { useState } from 'react';
 import Icon from 'react-native-vector-icons/EvilIcons';
 import DashboardItems from './DashboardItems';
-import { Card } from '../../components/Card/Card';
 import ItemProfile from './ItemProfile';
-import CategorySlider from '../BuyerRequest/BuyerRequest';
 import BuyerRequests from '../BuyerRequest/BuyerRequest';
 
 

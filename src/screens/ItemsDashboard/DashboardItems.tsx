@@ -6,21 +6,26 @@ const Data = [
     id: 1,
     image: require('../../assets/CategoriesImages/BR.png'),
     title: 'BRs',
+    screenNavigation: 'BrScreen'
+
   },
   {
     id: 2,
     image: require('../../assets/CategoriesImages/Car.png'),
     title: 'Cars',
+    screenNavigation: 'CarsScreen'
   },
   {
     id: 3,
     image: require('../../assets/CategoriesImages/Bikes.png'),
     title: 'Bikes',
+    screenNavigation: 'BikesScreen'
   },
   {
     id: 4,
     image: require('../../assets/CategoriesImages/Laptops.png'),
     title: 'Laptops',
+    screenNavigation: 'LaptopScreen'
   },
   {
     id: 5,
@@ -93,7 +98,7 @@ const DashboardItems = () => {
     return (
       <Item
         item={item}
-        onPress={() => navigation.navigate('CategorySlider')}
+        onPress={() => navigation.navigate(item.screenNavigation)}
         backgroundColor={{ backgroundColor }}
         textColor={{ color }}
       />

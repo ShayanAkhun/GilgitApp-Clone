@@ -1,21 +1,21 @@
 import { View, Text, ScrollView, TextInput, StyleSheet, Dimensions } from 'react-native'
 import React, { useState } from 'react'
-import { CategorySliderStore } from '../../store/categorySlider';
+import { LaptopsStore } from '../../store/Laptops';
 import { Card } from '../../components/Card/Card';
-import { categorySlider } from '../../Types';
+import { Laptops } from '../../Types';
 
 
 
 const { width, height } = Dimensions.get('window')
 
-export const CategorySlider = () => {
+export const LaptopScreen = () => {
   const [text, onChangeText] = useState('');
 
-  const slider = CategorySliderStore(state => state.slider);
-  const setSelectedSlider = CategorySliderStore(state => state.setSelectedSlider);
+  const laptops = LaptopsStore(state => state.laptops);
+  const setSelectedLaptops = LaptopsStore(state => state.setSelectedLaptops);
 
-  const sliderEditHandler = (slider: categorySlider) => {
-    setSelectedSlider(slider);
+  const EditHandler = (laptops: Laptops) => {
+    setSelectedLaptops(laptops);
   };
 
 
@@ -31,9 +31,9 @@ export const CategorySlider = () => {
       />
 
       <View style={{ flexWrap: 'wrap', flexDirection: 'row', backgroundColor: '#ffffff' }}>
-        {slider.map(slider => (
-          console.log(slider),
-          <Card item={slider} onEdit={() => sliderEditHandler(slider)} />
+        {laptops.map(laptops => (
+          console.log(laptops),
+          <Card item={laptops} onEdit={() => EditHandler(laptops)} />
         ))}
       </View>
 

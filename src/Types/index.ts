@@ -1,3 +1,5 @@
 export * from './SignUpForm'
 export * from './UploadItem'
-export * from './categorySlider'
+export * from './Laptops'
+export * from './Cars'
+export * from './Bikes'
