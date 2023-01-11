@@ -2,6 +2,7 @@ import { View, Text, SafeAreaView, TouchableOpacity, StyleSheet, Image, Touchabl
 import React, { useState } from 'react'
 import { Divider } from 'react-native-paper'
 import MIcon from 'react-native-vector-icons/MaterialCommunityIcons';
+import { useNavigation } from '@react-navigation/native';
 
 
 const Data = [
@@ -55,7 +56,7 @@ const NotificationItem = ({ item, onPress, backgroundColor, textColor, }) => (
 const Notifications = () => {
 
     const [selectedId, setSelectedId] = useState(null);
-
+    const navigation = useNavigation();
     const renderItem = ({ item }) => {
         const backgroundColor = item.id === selectedId ? "white" : "white";
         const color = item.id === selectedId ? 'black' : 'black';
@@ -74,7 +75,7 @@ const Notifications = () => {
         <SafeAreaView style={{ backgroundColor: '#E5E5E5' }}>
             <Divider />
             <View style={styles.topBar}>
-                <TouchableOpacity>
+                <TouchableOpacity onPress={() => navigation.navigate('Favourite')}>
                     <Text style={styles.topBarText}>Notifications</Text>
                 </TouchableOpacity>
                 <Divider />
