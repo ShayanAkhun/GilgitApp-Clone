@@ -81,7 +81,6 @@ const ItemProfile = () => {
     const renderItem = ({ item }) => {
         const backgroundColor = item.id === selectedId ? "white" : "white";
         const color = item.id === selectedId ? 'black' : 'black';
-        console.log(item)
         return (
 
             <Item

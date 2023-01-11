@@ -68,14 +68,12 @@ export const UploadItems = () => {
                 description: values.description,
                 location: values.location,
                 manufacturer: values.manufacturer
-                // itemType
             })
         }
         setItem(itemState);
         navigation.goBack();
     }
     return (
-        // <View style={{ flex: 1, marginBottom: 100 }}>
 
         <ScrollView style={{ backgroundColor: '#ffff', flex: 1, height: 100, marginBottom: 40 }}>
             <View style={{ backgroundColor: '#ffff', }}>
@@ -148,20 +146,20 @@ export const UploadItems = () => {
                                     <View style={{ flexDirection: 'row', justifyContent: 'space-evenly', right: 50, top: 8 }}>
 
                                         <Button style={{
-                                            backgroundColor: color ? '#4285F4' : '#ECECEC',
+                                            backgroundColor: color ? '#ECECEC' : '#4285F4',
                                             borderRadius: 50,
                                             width: 100,
                                         }} onPress={() => setColor(!color)}>
-                                            <Text style={{ color: color ? '#ffffff' : '#1C1C1C' }}>Yes</Text>
+                                            <Text style={{ color: color ? '#1C1C1C' : '#ffffff' }}>Yes</Text>
                                         </Button>
 
                                         <Button style={{
-                                            backgroundColor: secondColor ? '#4285F4' : '#ECECEC',
+                                            backgroundColor: secondColor ? '#ECECEC' : '#4285F4',
                                             borderRadius: 50,
                                             width: 100,
                                         }}
                                             onPress={() => setSecondColor(!secondColor)}>
-                                            <Text style={{ color: secondColor ? '#ffffff' : '#1C1C1C' }}>No</Text>
+                                            <Text style={{ color: secondColor ? '#1C1C1C' : '#ffffff' }}>No</Text>
                                         </Button>
                                     </View>
                                 </View>
@@ -170,20 +168,20 @@ export const UploadItems = () => {
                                     <View style={{ flexDirection: 'row', justifyContent: 'space-evenly', right: 50, top: 8 }}>
 
                                         <Button style={{
-                                            backgroundColor: thirdColor ? '#4285F4' : '#ECECEC',
+                                            backgroundColor: thirdColor ? '#ECECEC' : '#4285F4',
                                             borderRadius: 50,
                                             width: 100,
                                         }} onPress={() => setThirdColor(!thirdColor)}>
-                                            <Text style={{ color: thirdColor ? '#ffffff' : '#1C1C1C' }}>Yes</Text>
+                                            <Text style={{ color: thirdColor ? '#1C1C1C' : '#ffffff' }}>Yes</Text>
                                         </Button>
 
                                         <Button style={{
-                                            backgroundColor: fourthColor ? '#4285F4' : '#ECECEC',
+                                            backgroundColor: fourthColor ? '#ECECEC' : '#4285F4',
                                             borderRadius: 50,
                                             width: 100,
                                         }}
                                             onPress={() => setFourthColor(!fourthColor)}>
-                                            <Text style={{ color: fourthColor ? '#ffffff' : '#1C1C1C' }}>No</Text>
+                                            <Text style={{ color: fourthColor ? '#1C1C1C' : '#ffffff' }}>No</Text>
                                         </Button>
                                     </View>
                                 </View>
@@ -196,7 +194,6 @@ export const UploadItems = () => {
                     )
                 }} />
         </ScrollView>
-        // </View>
 
     )
 }

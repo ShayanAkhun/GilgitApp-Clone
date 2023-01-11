@@ -22,6 +22,7 @@ import BrScreen from './src/screens/CategorySliderScreen/BrScreen';
 import BikesScreen from './src/screens/CategorySliderScreen/BikesScreen';
 import CarsScreen from './src/screens/CategorySliderScreen/CarsScreen';
 import { LaptopScreen } from './src/screens/CategorySliderScreen/LaptopScreen';
+import Notifications from './src/screens/NotificationsScreen/Notifications';
 
 
 const Stack = createNativeStackNavigator();
@@ -39,6 +40,7 @@ const App = () => {
           <Stack.Screen options={{ headerShown: true, headerTitle: 'Buyer Requests', headerTitleAlign: 'center', headerLeft: () => (<HeaderButton />) }} name="BrScreen" component={BrScreen} />
           <Stack.Screen options={{ headerShown: true, headerTitle: 'Bikes', headerTitleAlign: 'center', headerLeft: () => (<HeaderButton />) }} name="BikesScreen" component={BikesScreen} />
           <Stack.Screen options={{ headerShown: true, headerTitle: 'Cars', headerTitleAlign: 'center', headerLeft: () => (<HeaderButton />) }} name="CarsScreen" component={CarsScreen} />
+          <Stack.Screen options={{ headerShown: true, headerTitle: 'Cars', headerTitleAlign: 'center', headerLeft: () => (<HeaderButton />) }} name="Notifications" component={Notifications} />
         </Stack.Navigator>
       </NavigationContainer>
     </NativeBaseProvider>

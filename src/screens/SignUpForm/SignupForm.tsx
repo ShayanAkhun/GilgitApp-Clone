@@ -136,7 +136,7 @@ export const SignUpform = () => {
                                     onChangeText={handleChange('number')}
                                 />
                                 {errors.number && <Text style={{ fontSize: 10, color: 'red' }}>{errors.number}</Text>}
-                                <Button rounded={100} size="lg" mt={25} onPress={() => handleSubmit()}>
+                                <Button style={styles.SaveButton} rounded={100} size="lg" mt={25} onPress={() => handleSubmit()}>
                                     {signUpEditing ? 'Update' : 'Save'}
                                 </Button>
                             </Stack>
@@ -176,15 +176,12 @@ const styles = StyleSheet.create({
 
     },
     SaveButton: {
-        width: 350,
+        width: 320,
         borderRadius: 4,
         height: 48,
-        margin: 12,
         borderWidth: 1,
-        padding: 10,
         borderColor: '#4285F4',
         backgroundColor: '#4285F4',
-        top: 50
     },
     SaveButtonText: {
         fontSize: 18,

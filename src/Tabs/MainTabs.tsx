@@ -9,6 +9,7 @@ import MessagesScreen from '../screens/Messages/Messages';
 import { SignUpform, } from '../screens/SignUpForm/SignupForm';
 import { UploadItems } from '../screens/UploadItem/UploadItem';
 import { HeaderButton } from '../components/Common/goBackIcon';
+import Notifications from '../screens/NotificationsScreen/Notifications';
 
 const Tab = createBottomTabNavigator();
 
@@ -62,8 +63,10 @@ export const MainTabs = () => {
             />
             <Tab.Screen
                 name="Notifications"
-                component={ItemsDashboard}
+                component={Notifications}
                 options={{
+                    headerShown: true,
+                    headerTitleAlign: 'center',
                     tabBarLabel: 'Notifications',
                     tabBarIcon: ({ color, size }) => (
                         <Icon name="bell" color={color} size={size} />
