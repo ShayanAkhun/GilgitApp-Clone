@@ -22,8 +22,7 @@ export const MainTabs = () => {
                 tabBarActiveTintColor: '#4285F4',
                 tabBarStyle: { position: 'absolute' },
                 headerLeft: () => (<HeaderButton />)
-            }}
-        >
+            }}>
             <Tab.Screen
                 name="ItemDashboard"
                 component={ItemsDashboard}
