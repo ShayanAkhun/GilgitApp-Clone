@@ -10,6 +10,7 @@ import { SignUpform, } from '../screens/SignUpForm/SignupForm';
 import { UploadItems } from '../screens/UploadItem/UploadItem';
 import { HeaderButton } from '../components/Common/goBackIcon';
 import Notifications from '../screens/NotificationsScreen/Notifications';
+import ItemUploadBottomSheet from '../components/UploadItemBottomSheet/ItemUploadBottomSheet';
 
 const Tab = createBottomTabNavigator();
 
@@ -49,8 +50,8 @@ export const MainTabs = () => {
                 }}
             />
             <Tab.Screen
-                name="UploadItems"
-                component={UploadItems}
+                name="Items"
+                component={ItemUploadBottomSheet}
                 options={{
                     headerTitleAlign: 'center',
                     headerTitle: 'Upload Items',
