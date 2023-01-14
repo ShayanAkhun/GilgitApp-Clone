@@ -7,7 +7,7 @@ import SIcon from 'react-native-vector-icons/SimpleLineIcons';
 import ItemsDashboard from '../screens/ItemsDashboard/ItemsDashboard';
 import MessagesScreen from '../screens/Messages/Messages';
 import { SignUpform, } from '../screens/SignUpForm/SignupForm';
-import { UploadItems } from '../screens/UploadItem/UploadItem';
+import { UploadItems } from '../screens/UploadItem/LaptopsUploadForm';
 import { HeaderButton } from '../components/Common/goBackIcon';
 import Notifications from '../screens/NotificationsScreen/Notifications';
 import ItemUploadBottomSheet from '../components/UploadItemBottomSheet/ItemUploadBottomSheet';
@@ -55,7 +55,7 @@ export const MainTabs = () => {
                 options={{
                     headerTitleAlign: 'center',
                     headerTitle: 'Upload Items',
-                    headerShown: true,
+                    headerShown: false,
                     tabBarIcon: ({ color, size }) => (
                         <SIcon name="plus" color={color} size={36} />
                     ),

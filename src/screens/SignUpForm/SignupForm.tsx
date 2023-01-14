@@ -93,7 +93,7 @@ export const SignUpform = () => {
                 onSubmit={onSubmit}
                 render={({ errors, handleChange, values, handleSubmit }) => {
                     return (
-                        <FormControl w="90%" alignSelf={'center'}>
+                        <FormControl w="100%" alignSelf={'center'}>
                             <Stack mx="4">
                                 <FormControl.Label>Full Name</FormControl.Label>
                                 <Input
@@ -176,7 +176,7 @@ const styles = StyleSheet.create({
 
     },
     SaveButton: {
-        width: 320,
+        width: 360,
         borderRadius: 4,
         height: 48,
         borderWidth: 1,

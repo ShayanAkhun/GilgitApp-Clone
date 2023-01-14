@@ -16,7 +16,7 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { FirstScreen } from './src/screens/FirstScreen/FirstScreen';
 import ItemsDashboard from './src/screens/ItemsDashboard/ItemsDashboard';
 import MessagesScreen from './src/screens/Messages/Messages';
-import { UploadItems } from './src/screens/UploadItem/UploadItem';
+import { LaptopsUploadItems } from './src/screens/UploadItem/LaptopsUploadForm';
 import { HeaderButton } from './src/components/Common/goBackIcon';
 import BrScreen from './src/screens/CategorySliderScreen/BrScreen';
 import BikesScreen from './src/screens/CategorySliderScreen/BikesScreen';
@@ -26,6 +26,8 @@ import Notifications from './src/screens/NotificationsScreen/Notifications';
 import Favourite from './src/screens/NotificationsScreen/Favourtie';
 import ItemUploadBottomSheet from './src/components/UploadItemBottomSheet/ItemUploadBottomSheet';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
+import { BuyerRequestUploadForm } from './src/screens/UploadItem/BuyerRequestUploadForm';
+
 
 
 const Stack = createNativeStackNavigator();
@@ -39,7 +41,7 @@ const App = () => {
             <Stack.Screen options={{ headerShown: false }} name="MainTabs" component={MainTabs} />
             <Stack.Screen options={{ headerShown: false }} name="ItemsDashboard" component={ItemsDashboard} />
             <Stack.Screen options={{ headerShown: false }} name="MessagesScreen" component={MessagesScreen} />
-            <Stack.Screen options={{ headerShown: false }} name="UploadItems" component={UploadItems} />
+            <Stack.Screen options={{ headerShown: true, headerTitle: 'Upload Items', headerTitleAlign: 'center', headerLeft: () => (<HeaderButton />) }} name="LaptopsUploadItems" component={LaptopsUploadItems} />
             <Stack.Screen options={{ headerShown: true, headerTitle: 'Laptops', headerTitleAlign: 'center', headerLeft: () => (<HeaderButton />) }} name="LaptopScreen" component={LaptopScreen} />
             <Stack.Screen options={{ headerShown: true, headerTitle: 'Buyer Requests', headerTitleAlign: 'center', headerLeft: () => (<HeaderButton />) }} name="BrScreen" component={BrScreen} />
             <Stack.Screen options={{ headerShown: true, headerTitle: 'Bikes', headerTitleAlign: 'center', headerLeft: () => (<HeaderButton />) }} name="BikesScreen" component={BikesScreen} />
@@ -47,6 +49,7 @@ const App = () => {
             <Stack.Screen options={{ headerShown: true, headerTitle: 'Notifications', headerTitleAlign: 'center', headerLeft: () => (<HeaderButton />) }} name="Notifications" component={Notifications} />
             <Stack.Screen options={{ headerShown: false, headerTitle: 'Favourite', headerTitleAlign: 'center', }} name="Favourite" component={Favourite} />
             <Stack.Screen options={{ headerShown: false, headerTitle: 'Favourite', headerTitleAlign: 'center', }} name="ItemUploadBottomSheet" component={ItemUploadBottomSheet} />
+            <Stack.Screen options={{ headerShown: true, headerTitle: 'Buyer Request\s', headerTitleAlign: 'center', headerLeft: () => (<HeaderButton />) }} name="BuyerRequestUploadForm" component={BuyerRequestUploadForm} />
           </Stack.Navigator>
         </NavigationContainer>
       </GestureHandlerRootView>

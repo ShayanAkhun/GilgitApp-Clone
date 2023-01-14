@@ -17,25 +17,25 @@ const UploadItemBottomSheet = () => {
         id: 1,
         image: require('../../assets/UploadItemsImages/BuyerRequests.png'),
         title: 'Buyer Requests',
-        screenNavigation: 'UploadItems'
+        screenNavigation: 'BuyerRequestUploadForm'
     },
     {
         id: 2,
         image: require('../../assets/UploadItemsImages/Cars&SUVs.png'),
         title: 'Cars & SUVs',
-        screenNavigation: 'UploadItems'
+        screenNavigation: 'LaptopsUploadItems'
     },
     {
         id: 3,
         image: require('../../assets/UploadItemsImages/Bikes.png'),
         title: 'Bikes',
-        screenNavigation: 'UploadItems'
+        screenNavigation: 'LaptopsUploadItems'
     },
     {
         id: 4,
         image: require('../../assets/UploadItemsImages/Mobiles&Accessories.png'),
         title: 'Mobiles & Accessories',
-        screenNavigation: 'UploadItems'
+        screenNavigation: 'LaptopsUploadItems'
     },
     {
         id: 5,
@@ -92,11 +92,8 @@ const UploadItemBottomSheet = () => {
     const handleSheetChange = useCallback((index) => {
         console.log("handleSheetChange", index);
     }, []);
-    const handleSnapPress = useCallback((index) => {
-        sheetRef.current?.snapToIndex(index);
-    }, []);
-    const handleClosePress = useCallback(() => {
-        sheetRef.current?.close();
+    const handleRefresh = useCallback(() => {
+        console.log("Refreshed");
     }, []);
 
     const renderItem = useCallback(
@@ -104,7 +101,7 @@ const UploadItemBottomSheet = () => {
             <TouchableOpacity onPress={() => navigation.navigate(item.screenNavigation)}>
                 <View style={styles.itemContainer}>
                     <>
-                        <Image style={styles.images} source={item.image} />
+                        <Image source={item.image} />
                         <Text style={{ marginHorizontal: 8 }}>{item.title}</Text>
                     </>
                 </View>
@@ -115,20 +112,18 @@ const UploadItemBottomSheet = () => {
     );
     return (
         <View style={styles.container}>
-            {/* <Button title="Snap To 90%" onPress={() => handleSnapPress(2)} />
-            <Button title="Snap To 50%" onPress={() => handleSnapPress(1)} />
-            <Button title="Snap To 25%" onPress={() => handleSnapPress(0)} />
-            <Button title="Close" onPress={() => handleClosePress()} /> */}
             <BottomSheet
                 ref={sheetRef}
                 snapPoints={snapPoints}
                 onChange={handleSheetChange}
+                enablePanDownToClose={true}
             >
                 <BottomSheetFlatList
                     data={data}
-                    // keyExtractor={(i) => i}
                     renderItem={renderItem}
                     contentContainerStyle={styles.contentContainer}
+                    refreshing={false}
+                    onRefresh={handleRefresh}
                 />
             </BottomSheet>
         </View>
@@ -150,9 +145,6 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
 
     },
-    images: {
-
-    }
 });
 
 export default UploadItemBottomSheet;
