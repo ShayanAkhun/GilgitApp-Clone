@@ -4,36 +4,36 @@ import { Formik, Form, Field } from 'formik';
 import * as Yup from 'yup';
 import { useNavigation } from '@react-navigation/native';
 import { useState } from 'react';
-import { UploadItem } from '../../Types';
-import { uploadItemStore } from '../../store';
+import { Cars, CarsCategory } from '../../Types';
+import { CarsStore } from '../../store';
 import {
     Input,
     FormControl,
     Stack,
     Button,
     AddIcon,
+    Select,
+    CheckIcon,
 } from 'native-base';
-import { launchCamera, launchImageLibrary } from 'react-native-image-picker';
-import * as  ImagePicker from 'react-native-image-picker';
-
 const { width, height } = Dimensions.get('window')
 
-
-
 const validationSchema = Yup.object().shape({
-    name: Yup.string().required('title is a required field'),
-    price: Yup.string().required('Price is a required field'),
-    location: Yup.string().required('location is a required field'),
-    description: Yup.string().required('description is a required field'),
-    manufacturer: Yup.string().required('manufacturer is a required field'),
+    name: Yup.string().required('This field is required'),
+    price: Yup.string().required('This field is required'),
+    location: Yup.string().required('This field is required'),
+    description: Yup.string().required('This field is required'),
+    image: Yup.string().required('You should Upload at least one image'),
+    manufacturer: Yup.string().required('This field is required'),
+    title: Yup.string().required('This field is required'),
+
 })
-export const LaptopsUploadItems = () => {
+export const CarsUploadItems = () => {
     const navigation = useNavigation();
-    const itemEditing = uploadItemStore(state => state.itemEditing)
-    const selectedItem = uploadItemStore(state => state.selectedItem)
-    const item = uploadItemStore(state => state.item)
-    const setItem = uploadItemStore(state => state.setItem)
-    const [itemType, setItemType] = useState(itemEditing && selectedItem ? selectedItem.type : '')
+    const carsEditing = CarsStore(state => state.carsEditing)
+    const selectedCars = CarsStore(state => state.selectedCars)
+    const cars = CarsStore(state => state.cars)
+    const setItem = CarsStore(state => state.setCars)
+    const [carType, setCarType] = useState(carsEditing && selectedCars ? selectedCars.type : '')
     const [color, setColor] = useState(true)
     const [secondColor, setSecondColor] = useState(true)
     const [thirdColor, setThirdColor] = useState(true)
@@ -41,66 +41,48 @@ export const LaptopsUploadItems = () => {
     const [fifthColor, setFifthColor] = useState(true)
     const [sixthColor, setSixthColor] = useState(true)
 
-    const initialValues: UploadItem = {
-        name: itemEditing && selectedItem ? selectedItem.name : '',
-        price: itemEditing && selectedItem ? selectedItem.price : '',
-        description: itemEditing && selectedItem ? selectedItem.description : '',
-        location: itemEditing && selectedItem ? selectedItem.location : '',
-        type: itemEditing && selectedItem ? selectedItem.type : '',
-        id: itemEditing && selectedItem ? selectedItem.id : '',
+    const initialValues: Cars = {
+        title: carsEditing && selectedCars ? selectedCars.title : '',
+        price: carsEditing && selectedCars ? selectedCars.price : '',
+        description: carsEditing && selectedCars ? selectedCars.description : '',
+        location: carsEditing && selectedCars ? selectedCars.location : '',
+        type: carsEditing && selectedCars ? selectedCars.type : '',
+        id: carsEditing && selectedCars ? selectedCars.id : '',
+        manufacturer: carsEditing && selectedCars ? selectedCars.manufacturer : '',
     }
-    const onSubmit = (values: UploadItem,) => {
-        const itemState = [...item]
-        if (itemEditing && selectedItem) {
+    const onSubmit = (values: Cars) => {
+        const carsState = [...cars]
+        if (carsEditing && selectedCars) {
             console.log(values, 'is this working ');
             const updatedItems = {
-                id: selectedItem.id,
-                name: values.name,
+                id: selectedCars.id,
+                title: values.title,
                 price: values.price,
                 description: values.description,
                 location: values.location,
-                manufacturer: values.manufacturer,
-                itemType,
+                // itemType,
             }
-            const itemIndex = itemState.findIndex(i => i.id === selectedItem.id);
-            itemState[itemIndex] = updatedItems;
+            const itemIndex = carsState.findIndex(i => i.id === selectedCars.id);
+            carsState[itemIndex] = updatedItems;
         } else {
-            itemState.push({
+            carsState.push({
                 id: Math.floor(Math.random() * 100),
-                name: values.name,
+                title: values.title,
                 price: values.price,
                 description: values.description,
                 location: values.location,
-                manufacturer: values.manufacturer
             })
         }
-        setItem(itemState);
+        setItem(carsState);
         navigation.goBack();
     }
-    const handleImageUpload = () => {
-        const options = {
-            noData: true
-        }
-        ImagePicker.launchImageLibrary(options, response => {
-            console.log('Images')
-        })
-    }
-    console.log(height)
+    const carsCategory = (Object?.keys(CarsCategory) as (keyof typeof CarsCategory)[])?.map(key => {
+        return CarsCategory[key];
+    });
     return (
         <View style={{ backgroundColor: '#ffff', flex: 1, marginBottom: 8, height: 10 }}>
             <ScrollView>
-                <View style={{ backgroundColor: '#ffff', }}>
-                    <View style={styles.Addphoto}>
-                        <TouchableOpacity onPress={handleImageUpload}>
-                            <View style={{ alignSelf: 'center' }}>
-                                <AddIcon size={6} />
-                            </View>
-                            <Text style={{ alignSelf: 'center', fontSize: 14, marginTop: 6, color: 'gray.500' }} >
-                                Click here to upload a Picture
-                            </Text>
-                        </TouchableOpacity>
-                    </View>
-                </View>
+
                 <Formik
                     validationSchema={validationSchema}
                     initialValues={initialValues}
@@ -109,16 +91,29 @@ export const LaptopsUploadItems = () => {
                         return (
                             <FormControl style={styles.FormControl}>
                                 <Stack mx='4'>
+                                    <View style={{ backgroundColor: '#ffff', }}>
+                                        <View style={styles.Addphoto}>
+                                            <TouchableOpacity>
+                                                <View style={{ alignSelf: 'center' }}>
+                                                    <AddIcon size={6} />
+                                                </View>
+                                                <Text style={{ alignSelf: 'center', fontSize: 14, marginTop: 6, color: 'gray.500' }} >
+                                                    Click here to upload a Picture
+                                                </Text>
+                                            </TouchableOpacity>
+                                        </View>
+                                    </View>
+                                    {errors.image && <Text style={{ fontSize: 10, color: 'red' }}>{errors.image}</Text>}
                                     <FormControl.Label>Title</FormControl.Label>
                                     <Input
-                                        placeholder="e.g Dell Latitude, Apple Macbook pro etc..."
-                                        value={values.name}
+                                        placeholder="e.g Toyota,Premio,Civic,Passo "
+                                        value={values.title}
                                         onChangeText={handleChange('title')}
                                     />
-                                    {errors.name && <Text style={{ fontSize: 10, color: 'red' }}>{errors.name}</Text>}
+                                    {errors.title && <Text style={{ fontSize: 10, color: 'red' }}>{errors.title}</Text>}
                                     <FormControl.Label>Description</FormControl.Label>
                                     <Input
-                                        placeholder="Add some Description i.e, RAM, HDD, Generation etc..."
+                                        placeholder="Enter your Description"
                                         style={styles.DescriptionInput}
                                         value={values.description}
                                         onChangeText={handleChange('description')}
@@ -127,11 +122,22 @@ export const LaptopsUploadItems = () => {
                                         <Text style={{ fontSize: 10, color: 'red' }}>{errors.description}</Text>
                                     )}
                                     <FormControl.Label>Manufacturer</FormControl.Label>
-                                    <Input
-                                        placeholder="Manufacturer E.G, Apple, Dell, Hp etc..."
-                                        value={values.manufacturer}
-                                        onChangeText={handleChange('manufacturer')}
-                                    />
+                                    <Select
+                                        selectedValue={carType ?? ''}
+                                        minWidth="200"
+                                        accessibilityLabel="Category"
+                                        placeholder="Manufacturer E.G Toyota, Honda Etc"
+                                        _selectedItem={{
+                                            bg: 'gray.300',
+                                            endIcon: <CheckIcon size="4" />,
+                                        }}
+                                        mt={1}
+                                        onValueChange={item => setCarType(item)}
+                                    >
+                                        {carsCategory.map(item => {
+                                            return <Select.Item label={item} value={item} />;
+                                        })}
+                                    </Select>
                                     {errors.manufacturer && (
                                         <Text style={{ fontSize: 10, color: 'red' }}>{errors.manufacturer}</Text>
                                     )}
@@ -146,7 +152,7 @@ export const LaptopsUploadItems = () => {
                                     )}
                                     <FormControl.Label>Price</FormControl.Label>
                                     <Input
-                                        placeholder="e.g 30,000, 50,000, 100,0000 etc..."
+                                        placeholder="e.g 350,000, 5000,000, 1000,000 etc..."
                                         value={values.price}
                                         keyboardType={'numeric'}
                                         onChangeText={handleChange('Location')}
@@ -215,7 +221,7 @@ export const LaptopsUploadItems = () => {
 
                                     </ScrollView>
                                     <Button style={styles.SellButton} onPress={() => handleSubmit()}>
-                                        {itemEditing ? 'Update' : 'Sell Now'}
+                                        {carsEditing ? 'Update' : 'Sell Now'}
                                     </Button>
                                 </Stack>
 

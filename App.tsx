@@ -27,6 +27,7 @@ import Favourite from './src/screens/NotificationsScreen/Favourtie';
 import ItemUploadBottomSheet from './src/components/UploadItemBottomSheet/ItemUploadBottomSheet';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import { BuyerRequestUploadForm } from './src/screens/UploadItem/BuyerRequestUploadForm';
+import { CarsUploadItems } from './src/screens/UploadItem/CarsUploadForm';
 
 
 
@@ -50,6 +51,7 @@ const App = () => {
             <Stack.Screen options={{ headerShown: false, headerTitle: 'Favourite', headerTitleAlign: 'center', }} name="Favourite" component={Favourite} />
             <Stack.Screen options={{ headerShown: false, headerTitle: 'Favourite', headerTitleAlign: 'center', }} name="ItemUploadBottomSheet" component={ItemUploadBottomSheet} />
             <Stack.Screen options={{ headerShown: true, headerTitle: 'Buyer Request\s', headerTitleAlign: 'center', headerLeft: () => (<HeaderButton />) }} name="BuyerRequestUploadForm" component={BuyerRequestUploadForm} />
+            <Stack.Screen options={{ headerShown: true, headerTitle: 'CarsUploadItems', headerTitleAlign: 'center', headerLeft: () => (<HeaderButton />) }} name="CarsUploadItems" component={CarsUploadItems} />
           </Stack.Navigator>
         </NavigationContainer>
       </GestureHandlerRootView>

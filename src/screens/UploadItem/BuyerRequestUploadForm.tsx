@@ -42,7 +42,6 @@ export const BuyerRequestUploadForm = () => {
     const onSubmit = (values: UploadBuyerRequests,) => {
         const state = [...buyerstore]
         if (brStoresEditing && selectedbrStores) {
-            console.log(values, 'is this working ');
             const updatedItems = {
                 id: selectedbrStores.id,
                 name: values.name,

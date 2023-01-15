@@ -6,5 +6,25 @@ export interface Cars {
     location?: string,
     views?: number,
     image?: ImageSourcePropType | undefined,
-    id: number
+    id?: number | string,
+    type?: string,
+    title?: string,
+    manufacturer?: string
+}
+
+
+export enum CarsCategory {
+
+    TOYOTA = 'Toyota',
+    HONDA = 'Honda',
+    NISSAN = 'Nissan',
+    HYUNDAI = 'Hyundai',
+    SUZUKI = 'Suzuki',
+    JEEP = 'Jeep',
+    MAZDA = 'Mazda',
+    FORD = 'Ford',
+    MITSUBISHI = 'Mitsubishi',
+    AUDI = 'Audi',
+    OTHERS = 'Others'
+
 }

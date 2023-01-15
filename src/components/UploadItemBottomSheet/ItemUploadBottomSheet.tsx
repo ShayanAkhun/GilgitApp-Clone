@@ -23,7 +23,7 @@ const UploadItemBottomSheet = () => {
         id: 2,
         image: require('../../assets/UploadItemsImages/Cars&SUVs.png'),
         title: 'Cars & SUVs',
-        screenNavigation: 'LaptopsUploadItems'
+        screenNavigation: 'CarsUploadItems'
     },
     {
         id: 3,
