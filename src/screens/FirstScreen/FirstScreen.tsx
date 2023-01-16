@@ -25,7 +25,7 @@ export const FirstScreen = ({ navigation }) => {
             console.log('due____', userInfo)
             setUser(userInfo)
         } catch (error: any) {
-            console.log('Message____', error.message);
+            console.log('Message____????', error.message);
             if (error.code === statusCodes.SIGN_IN_CANCELLED) {
                 console.log('user cancelled the login request');
             } else if (error.code === statusCodes.IN_PROGRESS) {
@@ -33,7 +33,7 @@ export const FirstScreen = ({ navigation }) => {
             } else if (error.code === statusCodes.PLAY_SERVICES_NOT_AVAILABLE) {
                 console.log('Play Services not availabe');
             } else {
-                console.log('Something went wrong please try again');
+                console.log('Something went wrong please try again idk whats wrong');
 
             }
         }
@@ -64,7 +64,7 @@ export const FirstScreen = ({ navigation }) => {
 
             } else {
                 alert('Something went wrong please try again later')
-                console.log('Something went wrong please try again later');
+                console.log('Something went wrong please try again later sign error');
 
             }
         }
@@ -99,7 +99,11 @@ export const FirstScreen = ({ navigation }) => {
                 <View style={styles.FlatButton}>
                     {/* <FlatButton name='google' title={'Continue With google'} onPress={() => navigation.navigate('MessagesScreen')}>
                     </FlatButton> */}
-                    <GoogleSigninButton style={{ width: 192, height: 48 }}
+                    <GoogleSigninButton style={{
+                        width: 335,
+                        height: 62,
+                        marginBottom: 10
+                    }}
                         size={GoogleSigninButton.Size.Wide}
                         color={GoogleSigninButton.Color.Dark}
                         onPress={signIn} />
