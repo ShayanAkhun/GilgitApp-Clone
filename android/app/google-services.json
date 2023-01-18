@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "534783698219",
+    "project_id": "gilgitapp-oauth-1673804283353",
+    "storage_bucket": "gilgitapp-oauth-1673804283353.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:534783698219:android:fd871c7b0193b6be54d16e",
+        "android_client_info": {
+          "package_name": "com.gilgitapp"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "534783698219-fcgmd76or1d0hv0dl09nov4g2fg8qqvo.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD5X6MLFyHsNveB55RW6TOQB4s8PVWbHlw"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "534783698219-fcgmd76or1d0hv0dl09nov4g2fg8qqvo.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

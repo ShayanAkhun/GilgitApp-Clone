@@ -7,14 +7,18 @@ import { GoogleSignin, GoogleSigninButton, statusCodes } from '@react-native-goo
 
 
 export const FirstScreen = ({ navigation }) => {
+
+
+    GoogleSignin.configure({
+        webClientId: '955202559448-6sro7qhfc2ul43bjtr97un1ul8c7i2qb.apps.googleusercontent.com',
+        offlineAccess: true,
+        forceCodeForRefreshToken: true,
+
+    })
+
     const [user, setUser] = React.useState({})
     useEffect(() => {
-        GoogleSignin.configure({
-            webClientId: '955202559448-6sro7qhfc2ul43bjtr97un1ul8c7i2qb.apps.googleusercontent.com',
-            offlineAccess: true,
-            forceCodeForRefreshToken: true,
 
-        })
         isSignedIn()
     }, [])
 
@@ -25,7 +29,7 @@ export const FirstScreen = ({ navigation }) => {
             console.log('due____', userInfo)
             setUser(userInfo)
         } catch (error: any) {
-            console.log('Message____????', error.message);
+            console.log('Message____????', error);
             if (error.code === statusCodes.SIGN_IN_CANCELLED) {
                 console.log('user cancelled the login request');
             } else if (error.code === statusCodes.IN_PROGRESS) {
