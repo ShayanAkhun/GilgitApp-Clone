@@ -16,5 +16,10 @@ module.exports = {
     babelTransformerPath: require.resolve(
       'react-native-typescript-transformer',
     ),
+    project: {
+      ios: {},
+      android: {},
+    },
+    assets: ['./assets/fonts/'],
   },
 };

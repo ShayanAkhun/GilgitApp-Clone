@@ -15,6 +15,8 @@ import {
 } from 'native-base';
 import { launchCamera, launchImageLibrary } from 'react-native-image-picker';
 import * as  ImagePicker from 'react-native-image-picker';
+import auth from '@react-native-firebase/app';
+
 
 const { width, height } = Dimensions.get('window')
 
@@ -86,6 +88,8 @@ export const LaptopsUploadItems = () => {
         })
     }
     console.log(height)
+
+
     return (
         <View style={{ backgroundColor: '#ffff', flex: 1, marginBottom: 8, height: 10 }}>
             <ScrollView>

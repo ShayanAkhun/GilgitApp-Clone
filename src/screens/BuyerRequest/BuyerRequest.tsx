@@ -1,4 +1,5 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
+import firestore, { FirebaseFirestoreTypes } from '@react-native-firebase/firestore'
 import { FlatList, Image, StatusBar, StyleSheet, Text, TouchableOpacity, View } from "react-native";
 const Data = [
     {
@@ -47,34 +48,60 @@ const Data = [
         description: 'Hi muja mobile chaheya jo 8gb RAM ho or 128gb ki memory'
     },
 ];
-
-const Item = ({ item, onPress, backgroundColor, textColor }) => (
-    <View style={styles.CardComponent}>
-        <TouchableOpacity>
-            <View style={styles.CardData}>
-                <Image source={item.image} />
-                <View style={{ flexDirection: 'column' }}>
-                    <Text style={styles.CardDescription}>{item.title}</Text>
-                    <View style={styles.CardDataRight}>
-                        <Text style={styles.CardDate}>{item.date}</Text>
-                        <Text style={styles.CardLocation}>{item.location}</Text>
-                        <Text style={styles.CardViews}>{item.item}</Text>
-                    </View>
-                    <View style={styles.CardDataLeft}>
-                        <Text style={styles.decription}>{item.description}</Text>
-                    </View>
-                </View>
-
-            </View>
-        </TouchableOpacity>
-    </View>
-);
 const BuyerRequests = () => {
+    const [user, setUser] = useState({ name: '' });
+
+    useEffect(() => {
+        const subscriber = firestore().collection('MessagesUsers').doc('HWQWVppkV1YBiyZF5uWl').onSnapshot(doc => {
+            setUser({
+                name: doc.data().name
+            });
+        });
+
+        return () => subscriber();
+    }, []);
+
+    const getUser = async () => {
+        const userDocument = await firestore().collection('MessagesUsers').doc('HWQWVppkV1YBiyZF5uWl').get();
+    }
+
+    useEffect(() => {
+        getUser();
+    }, []);
+
+
+
+    const Item = ({ item, onPress, backgroundColor, textColor }) => (
+
+        <View style={styles.CardComponent}>
+            <TouchableOpacity>
+                <View style={styles.CardData}>
+                    <Image source={item.image} />
+                    <View style={{ flexDirection: 'column' }}>
+                        <Text style={styles.CardDescription}>{user.name}</Text>
+                        <View style={styles.CardDataRight}>
+                            <Text style={styles.CardDate}>{item.date}</Text>
+                            <Text style={styles.CardLocation}>{item.location}</Text>
+                            <Text style={styles.CardViews}>{item.item}</Text>
+                        </View>
+                        <View style={styles.CardDataLeft}>
+                            <Text style={styles.decription}>{item.description}</Text>
+                        </View>
+                    </View>
+
+                </View>
+            </TouchableOpacity>
+        </View>
+
+
+    );
+
     const [selectedId, setSelectedId] = useState(null);
 
     const renderItem = ({ item }) => {
         const backgroundColor = item.id === selectedId ? "white" : "white";
         const color = item.id === selectedId ? 'black' : 'black';
+
 
         return (
             <Item

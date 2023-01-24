@@ -128,6 +128,8 @@ const styles = StyleSheet.create({
   },
   title: {
     fontSize: 16,
+    fontFamily: 'Poppins-Light',
+    lineHeight: 21
   },
   images: {
     alignItems: 'center',

@@ -1,12 +1,14 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import { View, Text, StyleSheet, Image, TouchableOpacity, } from 'react-native';
 import MIcon from 'react-native-vector-icons/MaterialCommunityIcons';
 import { FlatButton } from '../../components';
 import { Icon } from '../../components/Icons/Icons';
 import { GoogleSignin, GoogleSigninButton, statusCodes } from '@react-native-google-signin/google-signin';
-
+import firestore, { FirebaseFirestoreTypes } from '@react-native-firebase/firestore'
 
 export const FirstScreen = ({ navigation }) => {
+
+
 
 
     GoogleSignin.configure({
@@ -63,11 +65,11 @@ export const FirstScreen = ({ navigation }) => {
             setUser(userInfo)
         } catch (error: any) {
             if (error.code === statusCodes.SIGN_IN_REQUIRED) {
-                alert('User has not signed In yet');
+                // alert('User has not signed In yet');
                 console.log('User has not signed In yet');
 
             } else {
-                alert('Something went wrong please try again later')
+                // alert('Something went wrong please try again later')
                 console.log('Something went wrong please try again later sign error');
 
             }
@@ -87,6 +89,11 @@ export const FirstScreen = ({ navigation }) => {
 
 
 
+    const getUser = async () => {
+        const userDocument = await firestore().collection('Users').doc('TG0DWiqmLlelNRlg4WQd').get()
+    }
+
+
     return (
         <View style={styles.loginscreen}>
             <Image source={require('../../assets/PngImages/Group4071.png')} style={styles.homePhoto} />
@@ -97,40 +104,43 @@ export const FirstScreen = ({ navigation }) => {
             </View>
             <View style={styles.Buttons}>
                 <View style={styles.FlatButton}>
-                    <FlatButton name='phone' title={'Continue With Phone'} onPress={() => navigation.navigate('ItemsDashboard')}>
+                    <FlatButton name='phone' title={'Continue With Phone'} >
                     </FlatButton>
                 </View>
                 <View style={styles.FlatButton}>
-                    {/* <FlatButton name='google' title={'Continue With google'} onPress={() => navigation.navigate('MessagesScreen')}>
-                    </FlatButton> */}
                     <GoogleSigninButton style={{
                         width: 335,
                         height: 62,
-                        marginBottom: 10
+                        marginBottom: 10,
+                        borderColor: '#6C6C6C',
+
                     }}
                         size={GoogleSigninButton.Size.Wide}
-                        color={GoogleSigninButton.Color.Dark}
+                        color={GoogleSigninButton.Color.Light}
                         onPress={signIn} />
 
 
-                    <TouchableOpacity onPress={signOut}>
-                        <Text>SignOut</Text>
-                    </TouchableOpacity>
                 </View>
                 <View style={styles.FlatButton}>
-                    <FlatButton name='facebook' title={'Continue With Facebook'}>
+                    <FlatButton name='facebook' title={'Continue With Facebook'} >
                     </FlatButton>
                 </View>
                 <View style={styles.FlatButton}>
                     <FlatButton name='apple' title={'Continue With Apple'}>
                     </FlatButton>
                 </View>
+
+                <TouchableOpacity onPress={signOut}>
+                    <Text>SignOut</Text>
+                </TouchableOpacity>
             </View>
-            <TouchableOpacity>
-                <Text style={{ color: '#4285F4', top: 30 }} onPress={() => navigation.navigate('MainTabs')}>
-                    Continue Without login
-                </Text>
-            </TouchableOpacity>
+            <View style={{ justifyContent: 'center', alignItems: 'center', }}>
+                <TouchableOpacity >
+                    <Text style={{ color: '#4285F4', top: 30, fontFamily: 'Poppins-Light', fontWeight: '500' }} onPress={() => navigation.navigate('MainTabs')}>
+                        Continue Without login
+                    </Text>
+                </TouchableOpacity>
+            </View>
         </View>
     )
 }
@@ -146,9 +156,10 @@ const styles = StyleSheet.create({
         top: 30
     },
     loginscreenText: {
-        fontWeight: 'bold',
+        // fontWeight: 'bold',
         fontSize: 16,
         color: '#0A0B0E',
+        fontFamily: 'Poppins-Light'
     },
     homePhoto: {
         width: 250,
@@ -165,3 +176,30 @@ const styles = StyleSheet.create({
 
 
 })
+
+
+
+
+
+
+// const MyComponent = (props) => {
+//     const [user, setUser] = useState({ name: '' });
+
+//     useEffect(() => {
+//         const subscriber = firestore().collection().doc().onSnapshot(doc => {
+//             setUser({
+//                 name: doc.data().name
+//             });
+//         });
+
+//         return () => subscriber();
+//     }, []);
+
+//     const getUser = async () => {
+//         const userDocument = await firestore().collection('Users').doc('TG0DWiqmLlelNRlg4WQd').get();
+//     }
+
+//     useEffect(() => {
+//         getUser();
+//     }, []);
+// }

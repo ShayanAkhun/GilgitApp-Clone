@@ -14,10 +14,10 @@ const ItemsDashboard = () => {
             <View style={styles.topBar}>
                 <View style={styles.LocationBar}>
                     <Icon name='location' size={24} color='#494949' />
-                    <Text>Current Location</Text>
+                    <Text style={{ color: '#43454B', fontFamily: 'Poppins-Light', bottom: 2, fontWeight: '400' }}>Current Location</Text>
                 </View>
                 <TouchableOpacity>
-                    <Text style={{ color: '#4285F4', fontSize: 16, }}>Gilgit Baltistan</Text>
+                    <Text style={{ color: '#4285F4', fontSize: 16, fontFamily: 'Poppins-Light', fontWeight: '500' }}>Gilgit Baltistan</Text>
                 </TouchableOpacity>
             </View>
             <TextInput
@@ -80,8 +80,9 @@ const styles = StyleSheet.create({
     categories: {
         color: '#0A0B0E',
         fontSize: 20,
-        fontWeight: 'bold',
+        fontFamily: 'Poppins-Light',
         marginLeft: 8
+
     },
     RecentItemsContainer: {
         backgroundColor: '#F8F8F8'
@@ -91,17 +92,22 @@ const styles = StyleSheet.create({
         fontSize: 18,
         marginVertical: 6,
         margin: 12,
+        fontFamily: 'Poppins-Light',
+        fontWeight: '500',
+        letterSpacing: 0.02000000000
     },
     BR: {
         justifyContent: 'space-between',
         flexDirection: 'row',
         paddingHorizontal: 14,
-        paddingTop: 6
+        paddingTop: 6,
     },
     BRtext: {
         fontSize: 18,
         fontWeight: '500',
-        color: '#1C1C1C'
+        color: '#1C1C1C',
+        fontFamily: 'Poppins-Light',
+        letterSpacing: 0.02
     }
 
 

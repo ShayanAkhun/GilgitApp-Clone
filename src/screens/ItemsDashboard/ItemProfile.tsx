@@ -1,5 +1,5 @@
 import { useNavigation } from "@react-navigation/native";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { FlatList, Image, SafeAreaView, StatusBar, StyleSheet, Text, TouchableOpacity, View } from "react-native";
 
 const Data = [
@@ -81,6 +81,7 @@ const ItemProfile = () => {
     const renderItem = ({ item }) => {
         const backgroundColor = item.id === selectedId ? "white" : "white";
         const color = item.id === selectedId ? 'black' : 'black';
+
         return (
 
             <Item
@@ -146,27 +147,37 @@ const styles = StyleSheet.create({
     CardAmount: {
         color: '#1C1C1C',
         fontSize: 16,
-        fontWeight: '500'
+        fontWeight: '500',
+        fontFamily: 'Poppins-SemiBold',
+        lineHeight: 24
     },
     CardDate: {
         fontSize: 12,
         color: '#1C1C1C',
-        fontWeight: '400'
+        fontWeight: '400',
+        fontFamily: 'Poppins-Light',
+        lineHeight: 24
     },
     CardDescription: {
         fontSize: 14,
         color: '#1C1C1C',
-        fontWeight: '400'
+        fontWeight: '400',
+        fontFamily: 'Poppins-SemiBold',
+        lineHeight: 24
     },
     CardLocation: {
         fontSize: 12,
         color: '#1C1C1C',
-        fontWeight: '400'
+        fontWeight: '400',
+        fontFamily: 'Poppins-Light',
+        // lineHeight: 24
     },
     CardViews: {
         fontSize: 12,
         color: '#1C1C1C',
-        fontWeight: '400'
+        fontWeight: '400',
+        fontFamily: 'Poppins-Light',
+        lineHeight: 24
     },
     CardDataRight: {
         paddingHorizontal: 8,
