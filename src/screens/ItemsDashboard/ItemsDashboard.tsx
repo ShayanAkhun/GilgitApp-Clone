@@ -1,11 +1,9 @@
-import { View, Text, StyleSheet, ScrollView, TextInput, TouchableOpacity, FlatList, Image, } from 'react-native'
+import { View, Text, StyleSheet, ScrollView, TextInput, TouchableOpacity, } from 'react-native'
 import React, { useState } from 'react';
 import Icon from 'react-native-vector-icons/EvilIcons';
 import DashboardItems from './DashboardItems';
 import ItemProfile from './ItemProfile';
 import BuyerRequests from '../BuyerRequest/BuyerRequest';
-
-
 
 const ItemsDashboard = () => {
     const [text, onChangeText] = useState('');
@@ -58,9 +56,10 @@ export default ItemsDashboard
 
 const styles = StyleSheet.create({
     container: {
-        backgroundColor: '#FFFFFF'
+        backgroundColor: '#FFFFFF',
+
     }, input: {
-        width: 350,
+        width: 385,
         borderRadius: 3,
         height: 48,
         margin: 12,
@@ -108,7 +107,8 @@ const styles = StyleSheet.create({
         color: '#1C1C1C',
         fontFamily: 'Poppins-Light',
         letterSpacing: 0.02
-    }
+    },
+
 
 
 })

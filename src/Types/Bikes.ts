@@ -6,5 +6,21 @@ export interface Bikes {
     location?: string,
     views?: number,
     image?: ImageSourcePropType | undefined,
-    id: number
+    id?: number | string,
+    type?: string,
+    manufacturer?: string,
+    title?: string
+}
+
+
+export enum BikesCategory {
+    HONDA = 'Honda',
+    UNIQUE = 'Unique',
+    UNITED = 'United',
+    YAMAHA = 'Yamaha',
+    ROADPRINCE = 'Road Prince',
+    SUZUKI = 'Suzuki',
+    RAVI = 'Ravi',
+    ZXMCO = 'Zxmco',
+    OTHER = 'Others',
 }

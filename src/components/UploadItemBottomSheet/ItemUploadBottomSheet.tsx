@@ -29,18 +29,18 @@ const UploadItemBottomSheet = () => {
         id: 3,
         image: require('../../assets/UploadItemsImages/Bikes.png'),
         title: 'Bikes',
-        screenNavigation: 'LaptopsUploadItems'
+        screenNavigation: 'BikesUploadForm'
     },
     {
         id: 4,
-        image: require('../../assets/UploadItemsImages/Mobiles&Accessories.png'),
-        title: 'Mobiles & Accessories',
+        image: require('../../assets/UploadItemsImages/Laptops&Accessories.png'),
+        title: 'Laptops & Accessories',
         screenNavigation: 'LaptopsUploadItems'
     },
     {
         id: 5,
-        image: require('../../assets/UploadItemsImages/Laptops&Accessories.png'),
-        title: 'Laptops & Accessories',
+        image: require('../../assets/UploadItemsImages/Mobiles&Accessories.png'),
+        title: 'Mobiles & Accessories',
     },
     {
         id: 6,

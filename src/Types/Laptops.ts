@@ -8,3 +8,19 @@ export interface Laptops {
     image?: ImageSourcePropType | undefined,
     id: number
 }
+
+export enum LaptopsCategory {
+    MACBOOK = 'Macbook',
+    RAZER = 'Razer',
+    DELL = 'Dell',
+    HP = 'Hp',
+    ASUS = 'Asus',
+    ACER = 'Acer',
+    LENOVO = 'Lenovo',
+    SAMSUNG = 'Samsung',
+    TOSHIBA = 'Toshiba',
+    LG = 'LG',
+    SONY = 'Sony',
+    PANASONIC = 'Panasonic',
+    OTHER = 'Pthers',
+}

@@ -2,7 +2,6 @@ import { View, Text, StyleSheet, ScrollView, TouchableOpacity, } from 'react-nat
 import React from 'react';
 import { Formik, Form, Field } from 'formik';
 import * as Yup from 'yup';
-import SignUpFormData from './SignUpFormData';
 import { SignUpForm } from '../../Types';
 import { signUpFormStore } from '../../store';
 import { useNavigation } from '@react-navigation/native';
@@ -72,19 +71,17 @@ export const SignUpform = () => {
 
     return (
         <ScrollView style={{ backgroundColor: '#ffff', flex: 1, }}>
-            <View>
 
-                <View style={{ backgroundColor: '#ffff', top: 40, }}>
-                    <View style={styles.Addphoto}>
-                        <TouchableOpacity>
-                            <Text style={{ alignSelf: 'center', fontSize: 16, marginTop: 2, color: 'gray.500' }} >
-                                Add Photo
-                            </Text>
-                            <View style={{ alignSelf: 'center' }}>
-                                <AddIcon size={6} />
-                            </View>
-                        </TouchableOpacity>
-                    </View>
+            <View style={{ backgroundColor: '#ffff', top: 40, }}>
+                <View style={styles.Addphoto}>
+                    <TouchableOpacity>
+                        <Text style={{ alignSelf: 'center', fontSize: 16, marginTop: 2, color: 'gray.500' }} >
+                            Add Photo
+                        </Text>
+                        <View style={{ alignSelf: 'center' }}>
+                            <AddIcon size={6} />
+                        </View>
+                    </TouchableOpacity>
                 </View>
             </View>
             <Formik

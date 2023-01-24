@@ -182,24 +182,3 @@ const styles = StyleSheet.create({
 
 
 
-// const MyComponent = (props) => {
-//     const [user, setUser] = useState({ name: '' });
-
-//     useEffect(() => {
-//         const subscriber = firestore().collection().doc().onSnapshot(doc => {
-//             setUser({
-//                 name: doc.data().name
-//             });
-//         });
-
-//         return () => subscriber();
-//     }, []);
-
-//     const getUser = async () => {
-//         const userDocument = await firestore().collection('Users').doc('TG0DWiqmLlelNRlg4WQd').get();
-//     }
-
-//     useEffect(() => {
-//         getUser();
-//     }, []);
-// }

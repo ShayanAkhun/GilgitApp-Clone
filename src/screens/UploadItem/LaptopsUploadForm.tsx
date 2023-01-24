@@ -4,7 +4,7 @@ import { Formik, Form, Field } from 'formik';
 import * as Yup from 'yup';
 import { useNavigation } from '@react-navigation/native';
 import { useState } from 'react';
-import { UploadItem } from '../../Types';
+import { UploadItem, LaptopsCategory } from '../../Types';
 import { uploadItemStore } from '../../store';
 import {
     Input,
@@ -12,14 +12,16 @@ import {
     Stack,
     Button,
     AddIcon,
+    Select,
+    CheckIcon,
+    ArrowDownIcon
 } from 'native-base';
-import { launchCamera, launchImageLibrary } from 'react-native-image-picker';
 import * as  ImagePicker from 'react-native-image-picker';
-import auth from '@react-native-firebase/app';
+import MIcon from 'react-native-vector-icons/MaterialIcons';
 
 
-const { width, height } = Dimensions.get('window')
-
+const { width } = Dimensions.get('window')
+const height = Dimensions.get('window').height;
 
 
 const validationSchema = Yup.object().shape({
@@ -87,23 +89,24 @@ export const LaptopsUploadItems = () => {
             console.log('Images')
         })
     }
-    console.log(height)
+
+    const laptops = (Object?.keys(LaptopsCategory) as (keyof typeof LaptopsCategory)[])?.map(key => {
+        return LaptopsCategory[key]
+    })
 
 
     return (
-        <View style={{ backgroundColor: '#ffff', flex: 1, marginBottom: 8, height: 10 }}>
-            <ScrollView>
-                <View style={{ backgroundColor: '#ffff', }}>
-                    <View style={styles.Addphoto}>
-                        <TouchableOpacity onPress={handleImageUpload}>
-                            <View style={{ alignSelf: 'center' }}>
-                                <AddIcon size={6} />
-                            </View>
-                            <Text style={{ alignSelf: 'center', fontSize: 14, marginTop: 6, color: 'gray.500' }} >
-                                Click here to upload a Picture
-                            </Text>
-                        </TouchableOpacity>
-                    </View>
+        <View style={{ backgroundColor: '#ffff', flex: 1, }}>
+            <ScrollView showsVerticalScrollIndicator={false}>
+                <View style={styles.Addphoto}>
+                    <TouchableOpacity onPress={handleImageUpload}>
+                        <Text style={{ alignSelf: 'center', fontSize: 16, color: 'gray.500' }} >
+                            Add Photo
+                        </Text>
+                        <View style={{ alignSelf: 'center' }}>
+                            <AddIcon size={6} />
+                        </View>
+                    </TouchableOpacity>
                 </View>
                 <Formik
                     validationSchema={validationSchema}
@@ -112,7 +115,7 @@ export const LaptopsUploadItems = () => {
                     render={({ errors, handleChange, values, handleSubmit }) => {
                         return (
                             <FormControl style={styles.FormControl}>
-                                <Stack mx='4'>
+                                <Stack mx='2'>
                                     <FormControl.Label>Title</FormControl.Label>
                                     <Input
                                         placeholder="e.g Dell Latitude, Apple Macbook pro etc..."
@@ -131,11 +134,22 @@ export const LaptopsUploadItems = () => {
                                         <Text style={{ fontSize: 10, color: 'red' }}>{errors.description}</Text>
                                     )}
                                     <FormControl.Label>Manufacturer</FormControl.Label>
-                                    <Input
-                                        placeholder="Manufacturer E.G, Apple, Dell, Hp etc..."
-                                        value={values.manufacturer}
-                                        onChangeText={handleChange('manufacturer')}
-                                    />
+                                    <Select
+                                        selectedValue={itemType ?? ''}
+                                        minWidth="200"
+                                        accessibilityLabel="Category"
+                                        placeholder="Manufacturer E.G Apple, Dell, Hp Etc"
+                                        _selectedItem={{
+                                            bg: 'gray.300',
+                                            endIcon: <CheckIcon size="4" />,
+                                        }}
+                                        mt={1}
+                                        onValueChange={item => setItemType(item)}
+                                    >
+                                        {laptops.map(item => {
+                                            return <Select.Item label={item} value={item} />;
+                                        })}
+                                    </Select>
                                     {errors.manufacturer && (
                                         <Text style={{ fontSize: 10, color: 'red' }}>{errors.manufacturer}</Text>
                                     )}
@@ -158,36 +172,45 @@ export const LaptopsUploadItems = () => {
                                     {errors.price && (
                                         <Text style={{ fontSize: 10, color: 'red' }}>{errors.price}</Text>
                                     )}
-                                    <View style={{ top: 10 }}>
-                                        <Text style={styles.Negotation}>Condition</Text>
-                                        <View style={{ flexDirection: 'row', justifyContent: 'space-evenly', right: 50, top: 8 }}>
 
-                                            <Button style={{
-                                                backgroundColor: color ? '#ECECEC' : '#4285F4',
-                                                borderRadius: 50,
-                                                width: 100,
-                                            }} onPress={() => setColor(!color)}>
-                                                <Text style={{ color: color ? '#1C1C1C' : '#ffffff' }}>New</Text>
-                                            </Button>
 
-                                            <Button style={{
-                                                backgroundColor: secondColor ? '#ECECEC' : '#4285F4',
-                                                borderRadius: 50,
-                                                width: 100,
-                                            }}
-                                                onPress={() => setSecondColor(!secondColor)}>
-                                                <Text style={{ color: secondColor ? '#1C1C1C' : '#ffffff' }}>Used</Text>
-                                            </Button>
-                                        </View>
+
+                                </Stack>
+
+                                <View style={{ top: 10 }}>
+                                    <Text style={styles.Negotation}>Condition</Text>
+                                    <View style={{ flexDirection: 'row', justifyContent: 'space-evenly', right: 60, marginTop: 10 }}>
+
+                                        <Button style={{
+                                            backgroundColor: color ? '#ECECEC' : '#4285F4',
+                                            borderRadius: 50,
+                                            width: 100,
+                                        }} onPress={() => setColor(!color)}>
+                                            <Text style={{ color: color ? '#1C1C1C' : '#ffffff' }}>New</Text>
+                                        </Button>
+
+                                        <Button style={{
+                                            backgroundColor: secondColor ? '#ECECEC' : '#4285F4',
+                                            borderRadius: 50,
+                                            width: 100,
+                                        }}
+                                            onPress={() => setSecondColor(!secondColor)}>
+                                            <Text style={{ color: secondColor ? '#1C1C1C' : '#ffffff' }}>Used</Text>
+                                        </Button>
                                     </View>
-                                    <ScrollView horizontal showsHorizontalScrollIndicator={false} style={{ top: 40, }}>
-                                        <Text style={styles.Warranty}>Warranty</Text>
-                                        <SafeAreaView style={{ flexDirection: 'row', justifyContent: 'space-between', right: 50, top: 8 }}>
+                                </View>
+
+
+                                <Text style={styles.Warranty}>Warranty</Text>
+                                <View style={{ flexDirection: 'column', marginHorizontal: 10, marginVertical: 12, marginTop: 20 }}>
+                                    <ScrollView horizontal showsHorizontalScrollIndicator={false}>
+                                        <View style={{ flexDirection: 'row', justifyContent: 'space-evenly', right: 10, marginVertical: 16, marginHorizontal: 20 }} >
 
                                             <Button style={{
                                                 backgroundColor: thirdColor ? '#ECECEC' : '#4285F4',
                                                 borderRadius: 50,
                                                 width: 100,
+                                                height: 45
                                             }} onPress={() => setThirdColor(!thirdColor)}>
                                                 <Text style={{ color: thirdColor ? '#1C1C1C' : '#ffffff' }}>7 Days</Text>
                                             </Button>
@@ -196,6 +219,7 @@ export const LaptopsUploadItems = () => {
                                                 backgroundColor: fourthColor ? '#ECECEC' : '#4285F4',
                                                 borderRadius: 50,
                                                 width: 100,
+                                                height: 45
                                             }}
                                                 onPress={() => setFourthColor(!fourthColor)}>
                                                 <Text style={{ color: fourthColor ? '#1C1C1C' : '#ffffff' }}>15 Days</Text>
@@ -204,24 +228,38 @@ export const LaptopsUploadItems = () => {
                                                 backgroundColor: fifthColor ? '#ECECEC' : '#4285F4',
                                                 borderRadius: 50,
                                                 width: 100,
+                                                height: 45
                                             }} onPress={() => setFifthColor(!fifthColor)}>
                                                 <Text style={{ color: fifthColor ? '#1C1C1C' : '#ffffff' }}>30 Days</Text>
                                             </Button>
                                             <Button style={{
                                                 backgroundColor: sixthColor ? '#ECECEC' : '#4285F4',
                                                 borderRadius: 50,
-                                                width: 86,
-                                                height: 42
-                                            }} onPress={() => setSixthColor(!sixthColor)}>
-                                                <Text style={{ color: sixthColor ? '#1C1C1C' : '#ffffff' }}>No Warranty</Text>
-                                            </Button>
-                                        </SafeAreaView>
+                                                width: 100,
+                                                height: 45,
 
+                                            }} onPress={() => setSixthColor(!sixthColor)}>
+                                                <Text style={{ color: sixthColor ? '#1C1C1C' : '#ffffff', }}>No Warranty</Text>
+                                            </Button>
+                                        </View>
                                     </ScrollView>
+                                </View>
+                                <View>
+                                    <TouchableOpacity>
+                                        <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
+                                            <Text style={{ color: '#4285F4', fontFamily: 'Poppins-Light', fontSize: 17, letterSpacing: 1, fontWeight: '500', marginHorizontal: 8, }}>
+                                                Additional Information
+                                            </Text>
+                                            <MIcon name='keyboard-arrow-down' size={32} />
+                                        </View>
+                                    </TouchableOpacity>
+                                </View>
+
+                                <View style={{ alignSelf: 'center', padding: 10 }}>
                                     <Button style={styles.SellButton} onPress={() => handleSubmit()}>
                                         {itemEditing ? 'Update' : 'Sell Now'}
                                     </Button>
-                                </Stack>
+                                </View>
 
 
 
@@ -241,19 +279,21 @@ const styles = StyleSheet.create({
     Addphoto: {
         backgroundColor: '#FFFFFF',
         flex: 1,
-        marginTop: 50,
+        borderWidth: 1,
         borderColor: 'gray.300',
         height: 150,
-        width: width / 2,
+        width: 150,
         bottom: 40,
         marginBottom: 20,
         alignSelf: 'center',
         justifyContent: 'center',
-        borderWidth: 1,
+        borderRadius: 150,
+        top: 20
     },
     FormControl: {
         width: '100%',
-        alignSelf: 'center'
+        // height: height * 1
+        height: '100%',
     },
     DescriptionInput: {
         width: 380,
@@ -264,13 +304,17 @@ const styles = StyleSheet.create({
         fontSize: 16,
         color: '#1C1C1C',
         fontWeight: '500',
+        fontFamily: 'Poppins',
+        marginHorizontal: 8,
 
     },
     Warranty: {
         fontSize: 16,
         color: '#1C1C1C',
         fontWeight: '500',
-        top: 28,
+        top: 20,
+        marginHorizontal: 8,
+        fontFamily: 'Poppins'
 
     },
     SellButton: {

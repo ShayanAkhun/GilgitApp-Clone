@@ -59,7 +59,9 @@ const Data = [
 const Item = ({ item, onPress, backgroundColor, textColor, }) => (
     <View style={styles.CardComponent}>
         <TouchableOpacity style={{ alignSelf: 'center' }} onPress={onPress}>
-            <Image source={item.image} />
+            <View style={{ alignItems: 'center' }}>
+                <Image source={item.image} />
+            </View>
             <View style={styles.CardData}>
                 <View style={styles.CardDataRight}>
                     <Text style={styles.CardAmount}>{item.price}</Text>
@@ -127,7 +129,7 @@ const styles = StyleSheet.create({
     CardComponent: {
         backgroundColor: '#FFFFFF',
         borderWidth: 1,
-        width: 185,
+        width: 200,
         height: 268,
         borderColor: '#FFFFFF',
         borderRadius: 3,
@@ -170,7 +172,6 @@ const styles = StyleSheet.create({
         color: '#1C1C1C',
         fontWeight: '400',
         fontFamily: 'Poppins-Light',
-        // lineHeight: 24
     },
     CardViews: {
         fontSize: 12,

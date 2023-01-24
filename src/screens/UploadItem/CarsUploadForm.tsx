@@ -15,7 +15,9 @@ import {
     Select,
     CheckIcon,
 } from 'native-base';
-const { width, height } = Dimensions.get('window')
+const { width } = Dimensions.get('window')
+const height = Dimensions.get('window').height;
+import * as  ImagePicker from 'react-native-image-picker';
 
 const validationSchema = Yup.object().shape({
     name: Yup.string().required('This field is required'),
@@ -75,163 +77,177 @@ export const CarsUploadItems = () => {
         }
         setItem(carsState);
         navigation.goBack();
+
+    }
+    const handleImageUpload = () => {
+        const options = {
+            noData: true
+        }
+        ImagePicker.launchImageLibrary(options, response => {
+            console.log('Images')
+        })
     }
     const carsCategory = (Object?.keys(CarsCategory) as (keyof typeof CarsCategory)[])?.map(key => {
         return CarsCategory[key];
     });
     return (
-        <View style={{ backgroundColor: '#ffff', flex: 1, marginBottom: 8, height: 10 }}>
-            <ScrollView>
+        <ScrollView style={styles.container}>
+            <View style={styles.Addphoto}>
+                <TouchableOpacity onPress={handleImageUpload}>
+                    <Text style={{ alignSelf: 'center', fontSize: 16, color: 'gray.500' }} >
+                        Add Photo
+                    </Text>
+                    <View style={{ alignSelf: 'center' }}>
+                        <AddIcon size={6} />
+                    </View>
+                </TouchableOpacity>
+            </View>
+            <Formik
+                validationSchema={validationSchema}
+                initialValues={initialValues}
+                onSubmit={onSubmit}
+                render={({ errors, handleChange, values, handleSubmit }) => {
+                    return (
+                        <FormControl style={styles.FormControl}>
+                            <Stack mx='4'>
 
-                <Formik
-                    validationSchema={validationSchema}
-                    initialValues={initialValues}
-                    onSubmit={onSubmit}
-                    render={({ errors, handleChange, values, handleSubmit }) => {
-                        return (
-                            <FormControl style={styles.FormControl}>
-                                <Stack mx='4'>
-                                    <View style={{ backgroundColor: '#ffff', }}>
-                                        <View style={styles.Addphoto}>
-                                            <TouchableOpacity>
-                                                <View style={{ alignSelf: 'center' }}>
-                                                    <AddIcon size={6} />
-                                                </View>
-                                                <Text style={{ alignSelf: 'center', fontSize: 14, marginTop: 6, color: 'gray.500' }} >
-                                                    Click here to upload a Picture
-                                                </Text>
-                                            </TouchableOpacity>
-                                        </View>
-                                    </View>
-                                    {errors.image && <Text style={{ fontSize: 10, color: 'red' }}>{errors.image}</Text>}
-                                    <FormControl.Label>Title</FormControl.Label>
-                                    <Input
-                                        placeholder="e.g Toyota,Premio,Civic,Passo "
-                                        value={values.title}
-                                        onChangeText={handleChange('title')}
-                                    />
-                                    {errors.title && <Text style={{ fontSize: 10, color: 'red' }}>{errors.title}</Text>}
-                                    <FormControl.Label>Description</FormControl.Label>
-                                    <Input
-                                        placeholder="Enter your Description"
-                                        style={styles.DescriptionInput}
-                                        value={values.description}
-                                        onChangeText={handleChange('description')}
-                                    />
-                                    {errors.description && (
-                                        <Text style={{ fontSize: 10, color: 'red' }}>{errors.description}</Text>
-                                    )}
-                                    <FormControl.Label>Manufacturer</FormControl.Label>
-                                    <Select
-                                        selectedValue={carType ?? ''}
-                                        minWidth="200"
-                                        accessibilityLabel="Category"
-                                        placeholder="Manufacturer E.G Toyota, Honda Etc"
-                                        _selectedItem={{
-                                            bg: 'gray.300',
-                                            endIcon: <CheckIcon size="4" />,
+                                {errors.image && <Text style={{ fontSize: 10, color: 'red' }}>{errors.image}</Text>}
+                                <FormControl.Label>Title</FormControl.Label>
+                                <Input
+                                    placeholder="e.g Toyota,Premio,Civic,Passo "
+                                    value={values.title}
+                                    onChangeText={handleChange('title')}
+                                />
+                                {errors.title && <Text style={{ fontSize: 10, color: 'red' }}>{errors.title}</Text>}
+                                <FormControl.Label>Description</FormControl.Label>
+                                <Input
+                                    placeholder="Enter your Description"
+                                    style={styles.DescriptionInput}
+                                    value={values.description}
+                                    onChangeText={handleChange('description')}
+                                />
+                                {errors.description && (
+                                    <Text style={{ fontSize: 10, color: 'red' }}>{errors.description}</Text>
+                                )}
+                                <FormControl.Label>Manufacturer</FormControl.Label>
+                                <Select
+                                    selectedValue={carType ?? ''}
+                                    minWidth="200"
+                                    accessibilityLabel="Category"
+                                    placeholder="Manufacturer E.G Toyota, Honda Etc"
+                                    _selectedItem={{
+                                        bg: 'gray.300',
+                                        endIcon: <CheckIcon size="4" />,
+                                    }}
+                                    mt={1}
+                                    onValueChange={item => setCarType(item)}
+                                >
+                                    {carsCategory.map(item => {
+                                        return <Select.Item label={item} value={item} />;
+                                    })}
+                                </Select>
+                                {errors.manufacturer && (
+                                    <Text style={{ fontSize: 10, color: 'red' }}>{errors.manufacturer}</Text>
+                                )}
+                                <FormControl.Label>Location</FormControl.Label>
+                                <Input
+                                    placeholder="Location"
+                                    value={values.location}
+                                    onChangeText={handleChange('Location')}
+                                />
+                                {errors.location && (
+                                    <Text style={{ fontSize: 10, color: 'red' }}>{errors.location}</Text>
+                                )}
+                                <FormControl.Label>Price</FormControl.Label>
+                                <Input
+                                    placeholder="e.g 350,000, 5000,000, 1000,000 etc..."
+                                    value={values.price}
+                                    keyboardType={'numeric'}
+                                    onChangeText={handleChange('Location')}
+                                />
+                                {errors.price && (
+                                    <Text style={{ fontSize: 10, color: 'red' }}>{errors.price}</Text>
+                                )}
+                            </Stack>
+                            <View style={{ marginTop: 5 }}>
+                                <Text style={styles.Negotation}>Condition</Text>
+                                <View style={{ flexDirection: 'column', justifyContent: 'space-between', }}>
+                                    <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
+
+                                        <Button style={{
+                                            backgroundColor: color ? '#ECECEC' : '#4285F4',
+                                            borderRadius: 50,
+                                            width: 100,
+                                        }} onPress={() => setColor(!color)}>
+                                            <Text style={{ color: color ? '#1C1C1C' : '#ffffff' }}>New</Text>
+                                        </Button>
+
+                                        <Button style={{
+                                            backgroundColor: secondColor ? '#ECECEC' : '#4285F4',
+                                            borderRadius: 50,
+                                            width: 100,
                                         }}
-                                        mt={1}
-                                        onValueChange={item => setCarType(item)}
-                                    >
-                                        {carsCategory.map(item => {
-                                            return <Select.Item label={item} value={item} />;
-                                        })}
-                                    </Select>
-                                    {errors.manufacturer && (
-                                        <Text style={{ fontSize: 10, color: 'red' }}>{errors.manufacturer}</Text>
-                                    )}
-                                    <FormControl.Label>Location</FormControl.Label>
-                                    <Input
-                                        placeholder="Location"
-                                        value={values.location}
-                                        onChangeText={handleChange('Location')}
-                                    />
-                                    {errors.location && (
-                                        <Text style={{ fontSize: 10, color: 'red' }}>{errors.location}</Text>
-                                    )}
-                                    <FormControl.Label>Price</FormControl.Label>
-                                    <Input
-                                        placeholder="e.g 350,000, 5000,000, 1000,000 etc..."
-                                        value={values.price}
-                                        keyboardType={'numeric'}
-                                        onChangeText={handleChange('Location')}
-                                    />
-                                    {errors.price && (
-                                        <Text style={{ fontSize: 10, color: 'red' }}>{errors.price}</Text>
-                                    )}
-                                    <View style={{ top: 10 }}>
-                                        <Text style={styles.Negotation}>Condition</Text>
-                                        <View style={{ flexDirection: 'row', justifyContent: 'space-evenly', right: 50, top: 8 }}>
-
-                                            <Button style={{
-                                                backgroundColor: color ? '#ECECEC' : '#4285F4',
-                                                borderRadius: 50,
-                                                width: 100,
-                                            }} onPress={() => setColor(!color)}>
-                                                <Text style={{ color: color ? '#1C1C1C' : '#ffffff' }}>New</Text>
-                                            </Button>
-
-                                            <Button style={{
-                                                backgroundColor: secondColor ? '#ECECEC' : '#4285F4',
-                                                borderRadius: 50,
-                                                width: 100,
-                                            }}
-                                                onPress={() => setSecondColor(!secondColor)}>
-                                                <Text style={{ color: secondColor ? '#1C1C1C' : '#ffffff' }}>Used</Text>
-                                            </Button>
-                                        </View>
+                                            onPress={() => setSecondColor(!secondColor)}>
+                                            <Text style={{ color: secondColor ? '#1C1C1C' : '#ffffff' }}>Used</Text>
+                                        </Button>
                                     </View>
-                                    <ScrollView horizontal showsHorizontalScrollIndicator={false} style={{ top: 40, }}>
-                                        <Text style={styles.Warranty}>Warranty</Text>
-                                        <SafeAreaView style={{ flexDirection: 'row', justifyContent: 'space-between', right: 50, top: 8 }}>
+                                </View>
+                                <View style={{ flexDirection: 'column', justifyContent: 'flex-end', }}>
 
-                                            <Button style={{
-                                                backgroundColor: thirdColor ? '#ECECEC' : '#4285F4',
-                                                borderRadius: 50,
-                                                width: 100,
-                                            }} onPress={() => setThirdColor(!thirdColor)}>
-                                                <Text style={{ color: thirdColor ? '#1C1C1C' : '#ffffff' }}>7 Days</Text>
-                                            </Button>
+                                    <Text style={styles.Warranty}>Warranty</Text>
+                                    <View style={{ flexDirection: 'row', justifyContent: 'space-evenly', right: 50, }}>
 
-                                            <Button style={{
-                                                backgroundColor: fourthColor ? '#ECECEC' : '#4285F4',
-                                                borderRadius: 50,
-                                                width: 100,
-                                            }}
-                                                onPress={() => setFourthColor(!fourthColor)}>
-                                                <Text style={{ color: fourthColor ? '#1C1C1C' : '#ffffff' }}>15 Days</Text>
-                                            </Button>
-                                            <Button style={{
-                                                backgroundColor: fifthColor ? '#ECECEC' : '#4285F4',
-                                                borderRadius: 50,
-                                                width: 100,
-                                            }} onPress={() => setFifthColor(!fifthColor)}>
-                                                <Text style={{ color: fifthColor ? '#1C1C1C' : '#ffffff' }}>30 Days</Text>
-                                            </Button>
-                                            <Button style={{
-                                                backgroundColor: sixthColor ? '#ECECEC' : '#4285F4',
-                                                borderRadius: 50,
-                                                width: 86,
-                                                height: 42
-                                            }} onPress={() => setSixthColor(!sixthColor)}>
-                                                <Text style={{ color: sixthColor ? '#1C1C1C' : '#ffffff' }}>No Warranty</Text>
-                                            </Button>
-                                        </SafeAreaView>
+                                        <Button style={{
+                                            backgroundColor: thirdColor ? '#ECECEC' : '#4285F4',
+                                            borderRadius: 50,
+                                            width: 100,
+                                        }} onPress={() => setThirdColor(!thirdColor)}>
+                                            <Text style={{ color: thirdColor ? '#1C1C1C' : '#ffffff' }}>7 Days</Text>
+                                        </Button>
 
-                                    </ScrollView>
-                                    <Button style={styles.SellButton} onPress={() => handleSubmit()}>
-                                        {carsEditing ? 'Update' : 'Sell Now'}
-                                    </Button>
-                                </Stack>
+                                        <Button style={{
+                                            backgroundColor: fourthColor ? '#ECECEC' : '#4285F4',
+                                            borderRadius: 50,
+                                            width: 100,
+                                        }}
+                                            onPress={() => setFourthColor(!fourthColor)}>
+                                            <Text style={{ color: fourthColor ? '#1C1C1C' : '#ffffff' }}>15 Days</Text>
+                                        </Button>
+                                        <Button style={{
+                                            backgroundColor: fifthColor ? '#ECECEC' : '#4285F4',
+                                            borderRadius: 50,
+                                            width: 100,
+                                        }} onPress={() => setFifthColor(!fifthColor)}>
+                                            <Text style={{ color: fifthColor ? '#1C1C1C' : '#ffffff' }}>30 Days</Text>
+                                        </Button>
+                                        <Button style={{
+                                            backgroundColor: sixthColor ? '#ECECEC' : '#4285F4',
+                                            borderRadius: 50,
+                                            width: 86,
+                                            height: 42
+                                        }} onPress={() => setSixthColor(!sixthColor)}>
+                                            <Text style={{ color: sixthColor ? '#1C1C1C' : '#ffffff' }}>No Warranty</Text>
+                                        </Button>
+
+                                    </View>
+                                </View>
+
+                            </View>
+
+                            <View style={{ alignSelf: 'center' }}>
+                                <Button style={styles.SellButton} onPress={() => handleSubmit()}>
+                                    {carsEditing ? 'Update' : 'Sell Now'}
+                                </Button>
+                            </View>
 
 
+                        </FormControl>
 
-                            </FormControl>
-                        )
-                    }} />
-            </ScrollView>
-        </View>
+                    )
+
+                }} />
+
+        </ScrollView>
 
 
     )
@@ -240,22 +256,28 @@ export const CarsUploadItems = () => {
 
 
 const styles = StyleSheet.create({
+    container: {
+        backgroundColor: '#FFFFFF'
+    },
     Addphoto: {
         backgroundColor: '#FFFFFF',
         flex: 1,
         marginTop: 50,
+        borderWidth: 1,
         borderColor: 'gray.300',
         height: 150,
-        width: width / 2,
+        width: 150,
         bottom: 40,
         marginBottom: 20,
         alignSelf: 'center',
         justifyContent: 'center',
-        borderWidth: 1,
+        borderRadius: 150
     },
     FormControl: {
         width: '100%',
-        alignSelf: 'center'
+        alignSelf: 'center',
+        // height: height * 0.8
+
     },
     DescriptionInput: {
         width: 380,
