@@ -38,12 +38,15 @@ export const LaptopsUploadItems = () => {
     const item = uploadItemStore(state => state.item)
     const setItem = uploadItemStore(state => state.setItem)
     const [itemType, setItemType] = useState(itemEditing && selectedItem ? selectedItem.type : '')
-    const [color, setColor] = useState(true)
+    const [color, setColor] = useState(false)
     const [secondColor, setSecondColor] = useState(true)
-    const [thirdColor, setThirdColor] = useState(true)
+    const [thirdColor, setThirdColor] = useState(false)
     const [fourthColor, setFourthColor] = useState(true)
-    const [fifthColor, setFifthColor] = useState(true)
-    const [sixthColor, setSixthColor] = useState(true)
+    const [conditionColor, setConditionColor] = useState(false)
+    const [secondConditionColor, setSecondconditionColor] = useState(true)
+    const [productColor, setProductColor] = useState(false)
+    const [secondProductColor, setsecondProductColor] = useState(true)
+
 
     const initialValues: UploadItem = {
         name: itemEditing && selectedItem ? selectedItem.name : '',
@@ -52,6 +55,7 @@ export const LaptopsUploadItems = () => {
         location: itemEditing && selectedItem ? selectedItem.location : '',
         type: itemEditing && selectedItem ? selectedItem.type : '',
         id: itemEditing && selectedItem ? selectedItem.id : '',
+        model: itemEditing && selectedItem ? selectedItem.model : '',
     }
     const onSubmit = (values: UploadItem,) => {
         const itemState = [...item]
@@ -64,6 +68,7 @@ export const LaptopsUploadItems = () => {
                 description: values.description,
                 location: values.location,
                 manufacturer: values.manufacturer,
+                model: values.model,
                 itemType,
             }
             const itemIndex = itemState.findIndex(i => i.id === selectedItem.id);
@@ -75,7 +80,8 @@ export const LaptopsUploadItems = () => {
                 price: values.price,
                 description: values.description,
                 location: values.location,
-                manufacturer: values.manufacturer
+                manufacturer: values.manufacturer,
+                model: values.model
             })
         }
         setItem(itemState);
@@ -93,7 +99,72 @@ export const LaptopsUploadItems = () => {
     const laptops = (Object?.keys(LaptopsCategory) as (keyof typeof LaptopsCategory)[])?.map(key => {
         return LaptopsCategory[key]
     })
+    const toggleNewButton = () => {
+        if (!secondColor) {
+            setSecondColor(!secondColor)
+            setColor(false)
+        }
+    }
+    const toggleUsedButton = () => {
+        if (!color) {
+            setColor(!color)
+            setSecondColor(false)
+        }
+    }
+    const toggleFirstWarrntyButton = () => {
+        if (!fourthColor) {
+            setFourthColor(!fourthColor)
+            setThirdColor(false)
 
+        }
+    }
+    const toggleSecondWarrntyButton = () => {
+        if (!thirdColor) {
+            setThirdColor(!thirdColor)
+            setFourthColor(false)
+        }
+    }
+    const toggleConditionColor = () => {
+        if (!secondConditionColor) {
+            setSecondconditionColor(!secondConditionColor)
+            setConditionColor(false)
+        }
+    }
+
+    const toggleSecondConditionButton = () => {
+        if (!conditionColor) {
+            setConditionColor(!conditionColor)
+            setSecondconditionColor(false)
+        }
+    }
+
+    const toggleProductButton = () => {
+        if (!secondProductColor) {
+            setsecondProductColor(!secondProductColor)
+            setProductColor(false)
+        }
+    }
+
+    const togglesecondProdcutButton = () => {
+        if (!productColor) {
+            setProductColor(!productColor)
+            setsecondProductColor(false)
+        }
+    }
+
+
+
+
+
+
+
+
+
+    const [isClicked, setIsClicked] = useState(false)
+
+    const dropDownHandler = () => {
+        setIsClicked(!isClicked)
+    }
 
     return (
         <View style={{ backgroundColor: '#ffff', flex: 1, }}>
@@ -178,15 +249,15 @@ export const LaptopsUploadItems = () => {
                                 </Stack>
 
                                 <View style={{ top: 10 }}>
-                                    <Text style={styles.Negotation}>Condition</Text>
+                                    <Text style={styles.Negotation}>Negotiable</Text>
                                     <View style={{ flexDirection: 'row', justifyContent: 'space-evenly', right: 60, marginTop: 10 }}>
 
                                         <Button style={{
                                             backgroundColor: color ? '#ECECEC' : '#4285F4',
                                             borderRadius: 50,
                                             width: 100,
-                                        }} onPress={() => setColor(!color)}>
-                                            <Text style={{ color: color ? '#1C1C1C' : '#ffffff' }}>New</Text>
+                                        }} onPress={toggleNewButton}>
+                                            <Text style={{ color: color ? '#1C1C1C' : '#ffffff' }}>Yes</Text>
                                         </Button>
 
                                         <Button style={{
@@ -194,67 +265,100 @@ export const LaptopsUploadItems = () => {
                                             borderRadius: 50,
                                             width: 100,
                                         }}
-                                            onPress={() => setSecondColor(!secondColor)}>
-                                            <Text style={{ color: secondColor ? '#1C1C1C' : '#ffffff' }}>Used</Text>
+                                            onPress={toggleUsedButton}>
+                                            <Text style={{ color: secondColor ? '#1C1C1C' : '#ffffff' }}>No</Text>
                                         </Button>
                                     </View>
                                 </View>
 
 
-                                <Text style={styles.Warranty}>Warranty</Text>
-                                <View style={{ flexDirection: 'column', marginHorizontal: 10, marginVertical: 12, marginTop: 20 }}>
-                                    <ScrollView horizontal showsHorizontalScrollIndicator={false}>
-                                        <View style={{ flexDirection: 'row', justifyContent: 'space-evenly', right: 10, marginVertical: 16, marginHorizontal: 20 }} >
+                                <Text style={styles.Warranty}>Available for Marcha</Text>
+                                <View style={styles.toggleButtons}>
+                                    <View style={{ flexDirection: 'row', justifyContent: 'space-evenly', right: 60, marginTop: 10 }}>
+                                        <Button style={{
+                                            backgroundColor: thirdColor ? '#ECECEC' : '#4285F4',
+                                            borderRadius: 50,
+                                            width: 100,
+                                        }} onPress={toggleFirstWarrntyButton}>
+                                            <Text style={{ color: thirdColor ? '#1C1C1C' : '#ffffff' }}>Yes</Text>
+                                        </Button>
 
-                                            <Button style={{
-                                                backgroundColor: thirdColor ? '#ECECEC' : '#4285F4',
-                                                borderRadius: 50,
-                                                width: 100,
-                                                height: 45
-                                            }} onPress={() => setThirdColor(!thirdColor)}>
-                                                <Text style={{ color: thirdColor ? '#1C1C1C' : '#ffffff' }}>7 Days</Text>
-                                            </Button>
-
-                                            <Button style={{
-                                                backgroundColor: fourthColor ? '#ECECEC' : '#4285F4',
-                                                borderRadius: 50,
-                                                width: 100,
-                                                height: 45
-                                            }}
-                                                onPress={() => setFourthColor(!fourthColor)}>
-                                                <Text style={{ color: fourthColor ? '#1C1C1C' : '#ffffff' }}>15 Days</Text>
-                                            </Button>
-                                            <Button style={{
-                                                backgroundColor: fifthColor ? '#ECECEC' : '#4285F4',
-                                                borderRadius: 50,
-                                                width: 100,
-                                                height: 45
-                                            }} onPress={() => setFifthColor(!fifthColor)}>
-                                                <Text style={{ color: fifthColor ? '#1C1C1C' : '#ffffff' }}>30 Days</Text>
-                                            </Button>
-                                            <Button style={{
-                                                backgroundColor: sixthColor ? '#ECECEC' : '#4285F4',
-                                                borderRadius: 50,
-                                                width: 100,
-                                                height: 45,
-
-                                            }} onPress={() => setSixthColor(!sixthColor)}>
-                                                <Text style={{ color: sixthColor ? '#1C1C1C' : '#ffffff', }}>No Warranty</Text>
-                                            </Button>
-                                        </View>
-                                    </ScrollView>
+                                        <Button style={{
+                                            backgroundColor: fourthColor ? '#ECECEC' : '#4285F4',
+                                            borderRadius: 50,
+                                            width: 100,
+                                        }}
+                                            onPress={toggleSecondWarrntyButton}>
+                                            <Text style={{ color: fourthColor ? '#1C1C1C' : '#ffffff' }}>No</Text>
+                                        </Button>
+                                    </View>
                                 </View>
                                 <View>
-                                    <TouchableOpacity>
+                                    <TouchableOpacity onPress={dropDownHandler}>
                                         <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
                                             <Text style={{ color: '#4285F4', fontFamily: 'Poppins-Light', fontSize: 17, letterSpacing: 1, fontWeight: '500', marginHorizontal: 8, }}>
                                                 Additional Information
                                             </Text>
-                                            <MIcon name='keyboard-arrow-down' size={32} />
+                                            {isClicked ? (<MIcon name='keyboard-arrow-up' size={32} />) :
+                                                (<MIcon name='keyboard-arrow-down' size={32} />)}
                                         </View>
                                     </TouchableOpacity>
-                                </View>
+                                    {isClicked ? (<View style={styles.dropDownArea}>
+                                        <View>
+                                            <Text style={styles.conditionText}>Condition</Text>
+                                            <View style={{ flexDirection: 'row', justifyContent: 'space-evenly', right: 60, marginTop: 10 }}>
 
+                                                <Button style={{
+                                                    backgroundColor: conditionColor ? '#ECECEC' : '#4285F4',
+                                                    borderRadius: 50,
+                                                    width: 100,
+                                                }} onPress={toggleConditionColor}>
+                                                    <Text style={{ color: conditionColor ? '#1C1C1C' : '#ffffff' }}>Yes</Text>
+                                                </Button>
+
+                                                <Button style={{
+                                                    backgroundColor: secondConditionColor ? '#ECECEC' : '#4285F4',
+                                                    borderRadius: 50,
+                                                    width: 100,
+                                                }}
+                                                    onPress={toggleSecondConditionButton}>
+                                                    <Text style={{ color: secondConditionColor ? '#1C1C1C' : '#ffffff' }}>No</Text>
+                                                </Button>
+                                            </View>
+
+                                            <Text style={styles.ProductText}>Product</Text>
+                                            <View style={{ flexDirection: 'row', justifyContent: 'space-evenly', right: 60, marginTop: 10 }}>
+
+                                                <Button style={{
+                                                    backgroundColor: productColor ? '#ECECEC' : '#4285F4',
+                                                    borderRadius: 50,
+                                                    width: 100,
+                                                }} onPress={toggleProductButton}>
+                                                    <Text style={{ color: productColor ? '#1C1C1C' : '#ffffff' }}>Yes</Text>
+                                                </Button>
+
+                                                <Button style={{
+                                                    backgroundColor: secondProductColor ? '#ECECEC' : '#4285F4',
+                                                    borderRadius: 50,
+                                                    width: 100,
+                                                }}
+                                                    onPress={togglesecondProdcutButton}>
+                                                    <Text style={{ color: secondProductColor ? '#1C1C1C' : '#ffffff' }}>No</Text>
+                                                </Button>
+                                            </View>
+                                            <View style={styles.ModelInput}>
+                                                <FormControl.Label style={styles.ModelText}>Model</FormControl.Label>
+                                                <Input
+                                                    placeholder="Add Modeltype e.g.HP EliteBook,Dell Latitude..."
+                                                    value={values.location}
+                                                    onChangeText={handleChange('Model')}
+                                                    mx='2'
+                                                />
+                                            </View>
+                                        </View>
+
+                                    </View>) : null}
+                                </View>
                                 <View style={{ alignSelf: 'center', padding: 10 }}>
                                     <Button style={styles.SellButton} onPress={() => handleSubmit()}>
                                         {itemEditing ? 'Update' : 'Sell Now'}
@@ -267,7 +371,7 @@ export const LaptopsUploadItems = () => {
                         )
                     }} />
             </ScrollView>
-        </View>
+        </View >
 
 
     )
@@ -292,7 +396,6 @@ const styles = StyleSheet.create({
     },
     FormControl: {
         width: '100%',
-        // height: height * 1
         height: '100%',
     },
     DescriptionInput: {
@@ -313,6 +416,7 @@ const styles = StyleSheet.create({
         color: '#1C1C1C',
         fontWeight: '500',
         top: 20,
+        marginVertical: 4,
         marginHorizontal: 8,
         fontFamily: 'Poppins'
 
@@ -320,8 +424,44 @@ const styles = StyleSheet.create({
     SellButton: {
         backgroundColor: '#4285F4',
         width: 360,
-
-
+    },
+    toggleButtons: {
+        marginVertical: 18,
+    },
+    dropDownArea: {
+        width: "100%",
+        height: 300,
+        borderRadius: 10,
+        marginTop: 20,
+        backgroundColor: '#ffff',
+        alignSelf: 'center'
+    },
+    conditionText: {
+        color: '#1C1C1C',
+        fontSize: 16,
+        lineHeight: 24,
+        fontFamily: 'Poppins',
+        marginVertical: 4,
+        marginHorizontal: 8,
+    },
+    ProductText: {
+        color: '#1C1C1C',
+        fontSize: 16,
+        lineHeight: 24,
+        fontFamily: 'Poppins',
+        marginVertical: 4,
+        marginHorizontal: 8,
+        marginTop: 8
+    },
+    ModelText: {
+        lineHeight: 24,
+        fontFamily: 'Poppins',
+        marginVertical: 4,
+        marginHorizontal: 8,
+        marginTop: 8
+    },
+    ModelInput: {
+        marginTop: 20
     }
 
 })

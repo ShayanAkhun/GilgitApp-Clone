@@ -5,5 +5,6 @@ export interface UploadItem {
     manufacturer?: string,
     location?: string,
     type?: string
-    id?: number | string
+    id?: number | string,
+    model?: string
 }
