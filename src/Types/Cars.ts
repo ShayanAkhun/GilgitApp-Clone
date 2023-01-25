@@ -1,7 +1,7 @@
 import { ImageSourcePropType } from "react-native";
 
 export interface Cars {
-    price: string | number,
+    price?: number | string,
     description?: string,
     location?: string,
     views?: number,
@@ -10,6 +10,9 @@ export interface Cars {
     type?: string,
     title?: string,
     manufacturer?: string
+    engine?: number | string,
+    modelYear?: number | string,
+    city?: string,
 }
 
 

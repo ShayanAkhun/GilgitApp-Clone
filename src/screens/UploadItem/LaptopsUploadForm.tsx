@@ -19,11 +19,6 @@ import {
 import * as  ImagePicker from 'react-native-image-picker';
 import MIcon from 'react-native-vector-icons/MaterialIcons';
 
-
-const { width } = Dimensions.get('window')
-const height = Dimensions.get('window').height;
-
-
 const validationSchema = Yup.object().shape({
     name: Yup.string().required('title is a required field'),
     price: Yup.string().required('Price is a required field'),
@@ -151,15 +146,6 @@ export const LaptopsUploadItems = () => {
             setsecondProductColor(false)
         }
     }
-
-
-
-
-
-
-
-
-
     const [isClicked, setIsClicked] = useState(false)
 
     const dropDownHandler = () => {
@@ -334,7 +320,7 @@ export const LaptopsUploadItems = () => {
                                                     borderRadius: 50,
                                                     width: 100,
                                                 }} onPress={toggleProductButton}>
-                                                    <Text style={{ color: productColor ? '#1C1C1C' : '#ffffff' }}>Yes</Text>
+                                                    <Text style={{ color: productColor ? '#1C1C1C' : '#ffffff' }}>Laptop</Text>
                                                 </Button>
 
                                                 <Button style={{
@@ -343,7 +329,7 @@ export const LaptopsUploadItems = () => {
                                                     width: 100,
                                                 }}
                                                     onPress={togglesecondProdcutButton}>
-                                                    <Text style={{ color: secondProductColor ? '#1C1C1C' : '#ffffff' }}>No</Text>
+                                                    <Text style={{ color: secondProductColor ? '#1C1C1C' : '#ffffff' }}>Accessory</Text>
                                                 </Button>
                                             </View>
                                             <View style={styles.ModelInput}>
