@@ -13,6 +13,10 @@ export interface Cars {
     engine?: number | string,
     modelYear?: number | string,
     city?: string,
+    warranty?: string,
+    condition?: string,
+    negotation?: string,
+    marcha?: string
 }
 
 

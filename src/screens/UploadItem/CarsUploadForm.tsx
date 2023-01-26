@@ -15,10 +15,10 @@ import {
     Select,
     CheckIcon,
 } from 'native-base';
-const { width } = Dimensions.get('window')
-const height = Dimensions.get('window').height;
+import GlobalButton from '../../components/LoginButtons/FormButtons';
 import * as  ImagePicker from 'react-native-image-picker';
 import MIcon from 'react-native-vector-icons/MaterialIcons';
+import { CameraOptions } from 'react-native-image-picker';
 
 const validationSchema = Yup.object().shape({
     name: Yup.string().required('This field is required'),
@@ -28,6 +28,11 @@ const validationSchema = Yup.object().shape({
     image: Yup.string().required('You should Upload at least one image'),
     manufacturer: Yup.string().required('This field is required'),
     title: Yup.string().required('This field is required'),
+    warranty: Yup.string(),
+    negotation: Yup.string(),
+    condition: Yup.string(),
+    marcha: Yup.string(),
+
 
 })
 export const CarsUploadItems = () => {
@@ -37,14 +42,7 @@ export const CarsUploadItems = () => {
     const cars = CarsStore(state => state.cars)
     const setItem = CarsStore(state => state.setCars)
     const [carType, setCarType] = useState(carsEditing && selectedCars ? selectedCars.type : '')
-    const [color, setColor] = useState(false)
-    const [secondColor, setSecondColor] = useState(true)
-    const [thirdColor, setThirdColor] = useState(false)
-    const [fourthColor, setFourthColor] = useState(true)
-    const [conditionColor, setConditionColor] = useState(false)
-    const [secondConditionColor, setSecondconditionColor] = useState(true)
-    const [productColor, setProductColor] = useState(false)
-    const [secondProductColor, setsecondProductColor] = useState(true)
+
 
     const initialValues: Cars = {
         title: carsEditing && selectedCars ? selectedCars.title : '',
@@ -57,6 +55,10 @@ export const CarsUploadItems = () => {
         engine: carsEditing && selectedCars ? selectedCars.engine : '',
         modelYear: carsEditing && selectedCars ? selectedCars.modelYear : '',
         city: carsEditing && selectedCars ? selectedCars.city : '',
+        warranty: "",
+        negotation: "",
+        condition: "",
+        marcha: ""
     }
     const onSubmit = (values: Cars) => {
         const carsState = [...cars]
@@ -71,6 +73,7 @@ export const CarsUploadItems = () => {
                 engine: values.engine,
                 modelYear: values.modelYear,
                 city: values.city,
+
             }
             const itemIndex = carsState.findIndex(i => i.id === selectedCars.id);
             carsState[itemIndex] = updatedItems;
@@ -92,9 +95,12 @@ export const CarsUploadItems = () => {
 
     }
     const handleImageUpload = () => {
-        const options = {
-            noData: true
+        const options: CameraOptions = {
+            mediaType: "photo"
         }
+        ImagePicker.launchCamera(options, response => {
+            console.log('Images')
+        })
         ImagePicker.launchImageLibrary(options, response => {
             console.log('Images')
         })
@@ -102,58 +108,6 @@ export const CarsUploadItems = () => {
     const carsCategory = (Object?.keys(CarsCategory) as (keyof typeof CarsCategory)[])?.map(key => {
         return CarsCategory[key];
     });
-    const toggleNewButton = () => {
-        if (!secondColor) {
-            setSecondColor(!secondColor)
-            setColor(false)
-        }
-    }
-    const toggleUsedButton = () => {
-        if (!color) {
-            setColor(!color)
-            setSecondColor(false)
-        }
-    }
-    const toggleFirstWarrntyButton = () => {
-        if (!fourthColor) {
-            setFourthColor(!fourthColor)
-            setThirdColor(false)
-
-        }
-    }
-    const toggleSecondWarrntyButton = () => {
-        if (!thirdColor) {
-            setThirdColor(!thirdColor)
-            setFourthColor(false)
-        }
-    }
-    const toggleConditionColor = () => {
-        if (!secondConditionColor) {
-            setSecondconditionColor(!secondConditionColor)
-            setConditionColor(false)
-        }
-    }
-
-    const toggleSecondConditionButton = () => {
-        if (!conditionColor) {
-            setConditionColor(!conditionColor)
-            setSecondconditionColor(false)
-        }
-    }
-
-    const toggleProductButton = () => {
-        if (!secondProductColor) {
-            setsecondProductColor(!secondProductColor)
-            setProductColor(false)
-        }
-    }
-
-    const togglesecondProdcutButton = () => {
-        if (!productColor) {
-            setProductColor(!productColor)
-            setsecondProductColor(false)
-        }
-    }
     const [isClicked, setIsClicked] = useState(false)
 
     const dropDownHandler = () => {
@@ -176,7 +130,7 @@ export const CarsUploadItems = () => {
                     validationSchema={validationSchema}
                     initialValues={initialValues}
                     onSubmit={onSubmit}
-                    render={({ errors, handleChange, values, handleSubmit }) => {
+                    render={({ errors, handleChange, values, handleSubmit, setFieldValue }) => {
                         return (
                             <FormControl style={styles.FormControl}>
                                 <Stack mx='4'>
@@ -240,65 +194,41 @@ export const CarsUploadItems = () => {
                                     )}
                                 </Stack>
                                 <View style={{ top: 10 }}>
-                                    <Text style={styles.Negotation}>Condition</Text>
+                                    <Text style={styles.Condition}>Condition</Text>
                                     <View style={{ flexDirection: 'row', justifyContent: 'space-evenly', right: 60, marginTop: 10 }}>
 
-                                        <Button style={{
-                                            backgroundColor: color ? '#ECECEC' : '#4285F4',
-                                            borderRadius: 50,
-                                            width: 100,
-                                        }} onPress={toggleNewButton}>
-                                            <Text style={{ color: color ? '#1C1C1C' : '#ffffff' }}>New</Text>
-                                        </Button>
+                                        <GlobalButton name={'New'} text="New" onPress={() => {
+                                            setFieldValue("condition", "New")
+                                        }} isActive={values.condition} />
+                                        <GlobalButton text="Used" name={'Used'} onPress={() => {
+                                            setFieldValue("condition", "Used")
 
-                                        <Button style={{
-                                            backgroundColor: secondColor ? '#ECECEC' : '#4285F4',
-                                            borderRadius: 50,
-                                            width: 100,
-                                        }}
-                                            onPress={toggleUsedButton}>
-                                            <Text style={{ color: secondColor ? '#1C1C1C' : '#ffffff' }}>Used</Text>
-                                        </Button>
+                                        }} isActive={values.condition} />
                                     </View>
                                 </View>
                                 <Text style={styles.Warranty}>Warranty</Text>
                                 <View style={styles.toggleButtons}>
-                                    <View style={{ flexDirection: 'row', justifyContent: 'space-evenly', right: 60, marginTop: 10 }}>
-                                        <ScrollView horizontal showsHorizontalScrollIndicator={false} contentContainerStyle={{ justifyContent: 'space-between', }}>
-                                            <Button style={{
-                                                backgroundColor: thirdColor ? '#ECECEC' : '#4285F4',
-                                                borderRadius: 50,
-                                                width: 100,
-                                            }} onPress={toggleFirstWarrntyButton}>
-                                                <Text style={{ color: thirdColor ? '#1C1C1C' : '#ffffff' }}>7Days</Text>
-                                            </Button>
+                                    <ScrollView horizontal showsHorizontalScrollIndicator={false} contentContainerStyle={{ alignContent: 'center' }}>
+                                        <View style={{ flexDirection: 'row', justifyContent: 'space-evenly', marginTop: 20, marginHorizontal: 20 }}>
 
-                                            <Button style={{
-                                                backgroundColor: fourthColor ? '#ECECEC' : '#4285F4',
-                                                borderRadius: 50,
-                                                width: 100,
-                                            }}
-                                                onPress={toggleSecondWarrntyButton}>
-                                                <Text style={{ color: fourthColor ? '#1C1C1C' : '#ffffff' }}>15 Days</Text>
-                                            </Button>
-                                            <Button style={{
-                                                backgroundColor: fourthColor ? '#ECECEC' : '#4285F4',
-                                                borderRadius: 50,
-                                                width: 100,
-                                            }}
-                                                onPress={toggleSecondWarrntyButton}>
-                                                <Text style={{ color: fourthColor ? '#1C1C1C' : '#ffffff' }}>30 Days</Text>
-                                            </Button>
-                                            <Button style={{
-                                                backgroundColor: fourthColor ? '#ECECEC' : '#4285F4',
-                                                borderRadius: 50,
-                                                width: 100,
-                                            }}
-                                                onPress={toggleSecondWarrntyButton}>
-                                                <Text style={{ color: fourthColor ? '#1C1C1C' : '#ffffff' }}>No Warranty</Text>
-                                            </Button>
-                                        </ScrollView>
-                                    </View>
+                                            <GlobalButton text="7 Days" name='7 Days' isActive={values.warranty} onPress={() => {
+                                                setFieldValue("warranty", "7 Days")
+                                            }} />
+
+                                            <GlobalButton text="15 Days" name='15 Days' isActive={values.warranty} onPress={() => {
+                                                setFieldValue("warranty", "15 Days")
+
+                                            }} />
+                                            <GlobalButton text="30 Days" name='30 Days' isActive={values.warranty} onPress={() => {
+                                                setFieldValue("warranty", "30 Days")
+
+                                            }} />
+                                            <GlobalButton text="No Warranty" name='No Warranty' isActive={values.warranty} onPress={() => {
+                                                setFieldValue("warranty", "No Warranty")
+
+                                            }} />
+                                        </View>
+                                    </ScrollView>
                                 </View>
                                 <View>
                                     <TouchableOpacity onPress={dropDownHandler}>
@@ -315,42 +245,22 @@ export const CarsUploadItems = () => {
                                             <Text style={styles.conditionText}>Negotiable</Text>
                                             <View style={{ flexDirection: 'row', justifyContent: 'space-evenly', right: 60, marginTop: 10 }}>
 
-                                                <Button style={{
-                                                    backgroundColor: conditionColor ? '#ECECEC' : '#4285F4',
-                                                    borderRadius: 50,
-                                                    width: 100,
-                                                }} onPress={toggleConditionColor}>
-                                                    <Text style={{ color: conditionColor ? '#1C1C1C' : '#ffffff' }}>Yes</Text>
-                                                </Button>
-                                                <Button style={{
-                                                    backgroundColor: secondConditionColor ? '#ECECEC' : '#4285F4',
-                                                    borderRadius: 50,
-                                                    width: 100,
-                                                }}
-                                                    onPress={toggleSecondConditionButton}>
-                                                    <Text style={{ color: secondConditionColor ? '#1C1C1C' : '#ffffff' }}>No</Text>
-                                                </Button>
+                                                <GlobalButton name={'Yes'} text="Yes" onPress={() => {
+                                                    setFieldValue("negotation", "Yes")
+                                                }} isActive={values.negotation} />
+                                                <GlobalButton name={'No'} text="No" onPress={() => {
+                                                    setFieldValue("negotation", "No")
+                                                }} isActive={values.condition} />
                                             </View>
-
-                                            <Text style={styles.ProductText}>Availabe for March</Text>
+                                            <Text style={styles.ProductText}>Available for March</Text>
                                             <View style={{ flexDirection: 'row', justifyContent: 'space-evenly', right: 60, marginTop: 10 }}>
 
-                                                <Button style={{
-                                                    backgroundColor: productColor ? '#ECECEC' : '#4285F4',
-                                                    borderRadius: 50,
-                                                    width: 100,
-                                                }} onPress={toggleProductButton}>
-                                                    <Text style={{ color: productColor ? '#1C1C1C' : '#ffffff' }}>Yes</Text>
-                                                </Button>
-
-                                                <Button style={{
-                                                    backgroundColor: secondProductColor ? '#ECECEC' : '#4285F4',
-                                                    borderRadius: 50,
-                                                    width: 100,
-                                                }}
-                                                    onPress={togglesecondProdcutButton}>
-                                                    <Text style={{ color: secondProductColor ? '#1C1C1C' : '#ffffff' }}>No</Text>
-                                                </Button>
+                                                <GlobalButton name={'Yes'} text="Yes" onPress={() => {
+                                                    setFieldValue("marcha", "Yes")
+                                                }} isActive={values.marcha} />
+                                                <GlobalButton name={'No'} text="No" onPress={() => {
+                                                    setFieldValue("marcha", "No")
+                                                }} isActive={values.marcha} />
                                             </View>
                                             <View style={styles.ModelInput}>
                                                 <FormControl.Label style={styles.ModelText}>Engine</FormControl.Label>
@@ -430,10 +340,12 @@ const styles = StyleSheet.create({
         height: 100,
         textAlignVertical: 'top'
     },
-    Negotation: {
+    Condition: {
         fontSize: 16,
         color: '#1C1C1C',
         fontWeight: '500',
+        marginVertical: 4,
+        marginHorizontal: 8,
 
     },
     Warranty: {
@@ -441,6 +353,8 @@ const styles = StyleSheet.create({
         color: '#1C1C1C',
         fontWeight: '500',
         top: 28,
+        marginVertical: 4,
+        marginHorizontal: 8,
 
     },
     SellButton: {

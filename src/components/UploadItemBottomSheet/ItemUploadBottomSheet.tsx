@@ -116,14 +116,15 @@ const UploadItemBottomSheet = () => {
                 ref={sheetRef}
                 snapPoints={snapPoints}
                 onChange={handleSheetChange}
+                enableHandlePanningGesture={true}
                 enablePanDownToClose={true}
             >
                 <BottomSheetFlatList
                     data={data}
                     renderItem={renderItem}
                     contentContainerStyle={styles.contentContainer}
-                    refreshing={false}
-                    onRefresh={handleRefresh}
+                // refreshing={false}
+                // onRefresh={handleRefresh}
                 />
             </BottomSheet>
         </View>
