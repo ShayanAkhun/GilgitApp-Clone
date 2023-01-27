@@ -2,9 +2,13 @@
 import { Cars, CarsCategory } from '../../Types';
 import { CarsStore } from '../../store';
 import * as Yup from 'yup';
+import { useNavigation } from '@react-navigation/native';
 
 const carsEditing = CarsStore(state => state.carsEditing)
 const selectedCars = CarsStore(state => state.selectedCars)
+const cars = CarsStore(state => state.cars)
+const setItem = CarsStore(state => state.setCars)
+const navigation = useNavigation();
 
 
 export const initialValues: Cars = {
@@ -46,3 +50,39 @@ export const validationSchema = Yup.object().shape({
 
 
 })
+
+
+export const onSubmit = (values: Cars) => {
+    const carsState = [...cars]
+    if (carsEditing && selectedCars) {
+        console.log(values, 'is this working ');
+        const updatedItems = {
+            id: selectedCars.id,
+            title: values.title,
+            price: values.price,
+            description: values.description,
+            location: values.location,
+            engine: values.engine,
+            modelYear: values.modelYear,
+            city: values.city,
+
+        }
+        const itemIndex = carsState.findIndex(i => i.id === selectedCars.id);
+        carsState[itemIndex] = updatedItems;
+    } else {
+        carsState.push({
+            id: Math.floor(Math.random() * 100),
+            title: values.title,
+            price: values.price,
+            description: values.description,
+            location: values.location,
+            engine: values.engine,
+            modelYear: values.modelYear,
+            city: values.city,
+
+        })
+    }
+    setItem(carsState);
+    navigation.goBack();
+
+}

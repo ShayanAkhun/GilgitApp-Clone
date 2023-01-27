@@ -21,49 +21,14 @@ import MIcon from 'react-native-vector-icons/MaterialIcons';
 import { CameraOptions } from 'react-native-image-picker';
 import { initialValues } from '../../components/Helpers/CarsHelpers';
 import { validationSchema } from '../../components/Helpers/CarsHelpers';
+import { onSubmit } from '../../components/Helpers/CarsHelpers';
 
 export const CarsUploadItems = () => {
-    const navigation = useNavigation();
     const carsEditing = CarsStore(state => state.carsEditing)
     const selectedCars = CarsStore(state => state.selectedCars)
-    const cars = CarsStore(state => state.cars)
-    const setItem = CarsStore(state => state.setCars)
     const [carType, setCarType] = useState(carsEditing && selectedCars ? selectedCars.type : '')
 
-    const onSubmit = (values: Cars) => {
-        const carsState = [...cars]
-        if (carsEditing && selectedCars) {
-            console.log(values, 'is this working ');
-            const updatedItems = {
-                id: selectedCars.id,
-                title: values.title,
-                price: values.price,
-                description: values.description,
-                location: values.location,
-                engine: values.engine,
-                modelYear: values.modelYear,
-                city: values.city,
 
-            }
-            const itemIndex = carsState.findIndex(i => i.id === selectedCars.id);
-            carsState[itemIndex] = updatedItems;
-        } else {
-            carsState.push({
-                id: Math.floor(Math.random() * 100),
-                title: values.title,
-                price: values.price,
-                description: values.description,
-                location: values.location,
-                engine: values.engine,
-                modelYear: values.modelYear,
-                city: values.city,
-
-            })
-        }
-        setItem(carsState);
-        navigation.goBack();
-
-    }
     const handleImageUpload = () => {
         const options: CameraOptions = {
             mediaType: "photo"
