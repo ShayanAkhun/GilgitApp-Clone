@@ -24,3 +24,7 @@ export enum BikesCategory {
     ZXMCO = 'Zxmco',
     OTHER = 'Others',
 }
+
+
+
+

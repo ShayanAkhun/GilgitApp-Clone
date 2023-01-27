@@ -4,7 +4,7 @@ import MIcon from 'react-native-vector-icons/MaterialCommunityIcons';
 import { FlatButton } from '../../components';
 import { Icon } from '../../components/Icons/Icons';
 import { GoogleSignin, GoogleSigninButton, statusCodes } from '@react-native-google-signin/google-signin';
-import firestore, { FirebaseFirestoreTypes } from '@react-native-firebase/firestore'
+import firestore from '@react-native-firebase/firestore'
 
 export const FirstScreen = ({ navigation }) => {
 

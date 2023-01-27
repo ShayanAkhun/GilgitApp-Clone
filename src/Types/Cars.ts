@@ -16,7 +16,10 @@ export interface Cars {
     warranty?: string,
     condition?: string,
     negotation?: string,
-    marcha?: string
+    marcha?: string,
+    fuel?: string,
+    transmission?: string,
+    milage?: string
 }
 
 

@@ -19,22 +19,9 @@ import GlobalButton from '../../components/LoginButtons/FormButtons';
 import * as  ImagePicker from 'react-native-image-picker';
 import MIcon from 'react-native-vector-icons/MaterialIcons';
 import { CameraOptions } from 'react-native-image-picker';
+import { initialValues } from '../../components/Helpers/CarsHelpers';
+import { validationSchema } from '../../components/Helpers/CarsHelpers';
 
-const validationSchema = Yup.object().shape({
-    name: Yup.string().required('This field is required'),
-    price: Yup.string().required('This field is required'),
-    location: Yup.string().required('This field is required'),
-    description: Yup.string().required('This field is required'),
-    image: Yup.string().required('You should Upload at least one image'),
-    manufacturer: Yup.string().required('This field is required'),
-    title: Yup.string().required('This field is required'),
-    warranty: Yup.string(),
-    negotation: Yup.string(),
-    condition: Yup.string(),
-    marcha: Yup.string(),
-
-
-})
 export const CarsUploadItems = () => {
     const navigation = useNavigation();
     const carsEditing = CarsStore(state => state.carsEditing)
@@ -43,23 +30,6 @@ export const CarsUploadItems = () => {
     const setItem = CarsStore(state => state.setCars)
     const [carType, setCarType] = useState(carsEditing && selectedCars ? selectedCars.type : '')
 
-
-    const initialValues: Cars = {
-        title: carsEditing && selectedCars ? selectedCars.title : '',
-        price: carsEditing && selectedCars ? selectedCars.price : '',
-        description: carsEditing && selectedCars ? selectedCars.description : '',
-        location: carsEditing && selectedCars ? selectedCars.location : '',
-        type: carsEditing && selectedCars ? selectedCars.type : '',
-        id: carsEditing && selectedCars ? selectedCars.id : '',
-        manufacturer: carsEditing && selectedCars ? selectedCars.manufacturer : '',
-        engine: carsEditing && selectedCars ? selectedCars.engine : '',
-        modelYear: carsEditing && selectedCars ? selectedCars.modelYear : '',
-        city: carsEditing && selectedCars ? selectedCars.city : '',
-        warranty: "",
-        negotation: "",
-        condition: "",
-        marcha: ""
-    }
     const onSubmit = (values: Cars) => {
         const carsState = [...cars]
         if (carsEditing && selectedCars) {
@@ -195,7 +165,7 @@ export const CarsUploadItems = () => {
                                 </Stack>
                                 <View style={{ top: 10 }}>
                                     <Text style={styles.Condition}>Condition</Text>
-                                    <View style={{ flexDirection: 'row', justifyContent: 'space-evenly', right: 60, marginTop: 10 }}>
+                                    <View style={{ flexDirection: 'row', marginHorizontal: 80, right: 60, marginTop: 10 }}>
 
                                         <GlobalButton name={'New'} text="New" onPress={() => {
                                             setFieldValue("condition", "New")
@@ -208,8 +178,8 @@ export const CarsUploadItems = () => {
                                 </View>
                                 <Text style={styles.Warranty}>Warranty</Text>
                                 <View style={styles.toggleButtons}>
-                                    <ScrollView horizontal showsHorizontalScrollIndicator={false} contentContainerStyle={{ alignContent: 'center' }}>
-                                        <View style={{ flexDirection: 'row', justifyContent: 'space-evenly', marginTop: 20, marginHorizontal: 20 }}>
+                                    <ScrollView horizontal showsHorizontalScrollIndicator={false} >
+                                        <View style={{ flexDirection: 'row', marginTop: 20, marginHorizontal: 20 }}>
 
                                             <GlobalButton text="7 Days" name='7 Days' isActive={values.warranty} onPress={() => {
                                                 setFieldValue("warranty", "7 Days")
@@ -243,7 +213,7 @@ export const CarsUploadItems = () => {
                                     {isClicked ? (<View style={styles.dropDownArea}>
                                         <View>
                                             <Text style={styles.conditionText}>Negotiable</Text>
-                                            <View style={{ flexDirection: 'row', justifyContent: 'space-evenly', right: 60, marginTop: 10 }}>
+                                            <View style={{ flexDirection: 'row', marginTop: 10, marginHorizontal: 20 }}>
 
                                                 <GlobalButton name={'Yes'} text="Yes" onPress={() => {
                                                     setFieldValue("negotation", "Yes")
@@ -253,7 +223,7 @@ export const CarsUploadItems = () => {
                                                 }} isActive={values.condition} />
                                             </View>
                                             <Text style={styles.ProductText}>Available for March</Text>
-                                            <View style={{ flexDirection: 'row', justifyContent: 'space-evenly', right: 60, marginTop: 10 }}>
+                                            <View style={{ flexDirection: 'row', marginTop: 10, marginHorizontal: 20 }}>
 
                                                 <GlobalButton name={'Yes'} text="Yes" onPress={() => {
                                                     setFieldValue("marcha", "Yes")
@@ -288,6 +258,52 @@ export const CarsUploadItems = () => {
 
                                                 />
                                             </View>
+                                            <Text style={styles.Warranty}>Fuel</Text>
+                                            <View style={styles.toggleButtons}>
+                                                <ScrollView horizontal showsHorizontalScrollIndicator={false} >
+                                                    <View style={{ flexDirection: 'row', marginTop: 20, marginHorizontal: 20 }}>
+
+                                                        <GlobalButton text="Petrol" name='Petrol' isActive={values.fuel} onPress={() => {
+                                                            setFieldValue("fuel", "Petrol")
+                                                        }} />
+
+                                                        <GlobalButton text="Diesel" name='Diesel' isActive={values.fuel} onPress={() => {
+                                                            setFieldValue("fuel", "Diesel")
+
+                                                        }} />
+                                                        <GlobalButton text="Hybrid" name='Hybrid' isActive={values.fuel} onPress={() => {
+                                                            setFieldValue("fuel", "Hybrid")
+
+                                                        }} />
+                                                        <GlobalButton text="CNG" name='CNG' isActive={values.fuel} onPress={() => {
+                                                            setFieldValue("fuel", "CNG")
+
+                                                        }} />
+                                                    </View>
+                                                </ScrollView>
+                                            </View>
+                                            <View>
+                                                <Text style={styles.Condition}>Transmission</Text>
+                                                <View style={{ flexDirection: 'row', marginHorizontal: 80, right: 60, marginTop: 10 }}>
+
+                                                    <GlobalButton name={'Auto'} text="Auto" onPress={() => {
+                                                        setFieldValue("transmission", "Auto")
+                                                    }} isActive={values.transmission} />
+                                                    <GlobalButton text="Manual" name={'Manual'} onPress={() => {
+                                                        setFieldValue("transmission", "Manual")
+
+                                                    }} isActive={values.transmission} />
+                                                </View>
+                                            </View>
+
+                                            <FormControl.Label style={styles.ModelText}>Milage (Meter Reading)</FormControl.Label>
+                                            <Input
+                                                placeholder="e.g. 1000 KM, 20000 KM"
+                                                value={values.milage}
+                                                onChangeText={handleChange('Milage')}
+                                                mx='2'
+
+                                            />
                                         </View>
 
                                     </View>) : null}
@@ -360,15 +376,13 @@ const styles = StyleSheet.create({
     SellButton: {
         backgroundColor: '#4285F4',
         width: 360,
-
-
     },
     toggleButtons: {
         marginVertical: 18,
     },
     dropDownArea: {
         width: "100%",
-        height: 600,
+        height: 750,
         borderRadius: 10,
         marginTop: 20,
         backgroundColor: '#ffff',

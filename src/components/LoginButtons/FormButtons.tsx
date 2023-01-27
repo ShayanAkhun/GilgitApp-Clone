@@ -29,7 +29,7 @@ const styles = StyleSheet.create({
         width: 86,
         height: 42,
         borderRadius: 50,
-        justifyContent: 'space-between'
+        marginRight: 20
     },
     buttonText: {
         fontFamily: 'Poopins',
