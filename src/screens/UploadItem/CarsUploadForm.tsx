@@ -48,6 +48,13 @@ export const CarsUploadItems = () => {
     const dropDownHandler = () => {
         setIsClicked(!isClicked)
     }
+
+
+
+
+
+
+
     return (
         <View style={{ backgroundColor: '#ffff', flex: 1, }}>
             <ScrollView style={styles.container}>
@@ -382,3 +389,6 @@ const styles = StyleSheet.create({
     }
 
 })
+
+
+
