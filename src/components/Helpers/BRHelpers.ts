@@ -1,3 +1,4 @@
+import React from 'react'
 import { useNavigation } from "@react-navigation/native";
 import { Buyerstore } from "../../store";
 import { UploadBuyerRequests } from "../../Types";
@@ -27,6 +28,7 @@ export const initialValues: UploadBuyerRequests = {
     location: brStoresEditing && selectedbrStores ? selectedbrStores.location : '',
     type: brStoresEditing && selectedbrStores ? selectedbrStores.type : '',
     id: brStoresEditing && selectedbrStores ? selectedbrStores.id : '',
+    data: brStoresEditing && selectedbrStores ? selectedbrStores.data : [],
 }
 
 export const onSubmit = (values: UploadBuyerRequests,) => {
@@ -39,6 +41,7 @@ export const onSubmit = (values: UploadBuyerRequests,) => {
             description: values.description,
             location: values.location,
             manufacturer: values.manufacturer,
+            data: values.data
         }
         const itemIndex = state.findIndex(i => i.id === selectedbrStores.id);
         state[itemIndex] = updatedItems;
@@ -49,9 +52,11 @@ export const onSubmit = (values: UploadBuyerRequests,) => {
             price: values.price,
             description: values.description,
             location: values.location,
-            manufacturer: values.manufacturer
+            manufacturer: values.manufacturer,
+            data: values.data
         })
     }
     setbrStores(state);
     navigation.goBack();
 }
+

@@ -1,7 +1,7 @@
-import { View, Text, ScrollView, TouchableOpacity, StyleSheet, SafeAreaView, Dimensions } from 'react-native'
+import { View, Text, ScrollView, TouchableOpacity, StyleSheet, SafeAreaView, Dimensions, FlatList } from 'react-native'
 import React, { useState } from 'react'
 import { Buyerstore } from '../../store'
-import { UploadBuyerRequests, BuyerCategory } from '../../Types'
+import { BuyerCategory } from '../../Types'
 import { Formik, } from 'formik';
 
 import {
@@ -15,20 +15,35 @@ import {
 import { initialValues } from '../../components/Helpers/BRHelpers';
 import { validationSchema } from '../../components/Helpers/BRHelpers';
 import { onSubmit } from '../../components/Helpers/BRHelpers';
+import MIcon from 'react-native-vector-icons/MaterialIcons';
 
+
+const Data = [
+    { Data: "Cars" },
+    { Data: 'Bikes' },
+    { Data: "Laptops" },
+    { Data: "Mobiles" },
+    { Data: "Pets" },
+    { Data: "Home" },
+    { Data: "Appliances" },
+    { Data: "Plots" },
+    { Data: "Shops" },
+    { Data: "Offices" },
+    { Data: "Furniture" },
+    { Data: "Fashions" },
+    { Data: "Dry Fruits" },
+    { Data: "Others" }
+]
 
 export const BuyerRequestUploadForm = () => {
     const brStoresEditing = Buyerstore(state => state.brStoresEditing)
-    const selectedbrStores = Buyerstore(state => state.selectedbrStores)
-    const [type, setType] = useState(brStoresEditing && selectedbrStores ? selectedbrStores.type : '')
+    const [isClicked, setIsClicked] = useState(false)
+    const [category, setCategory] = useState('Category')
+    const [data, setData] = useState(Data)
 
-
-
-
-    const buyerCategory = (Object?.keys(BuyerCategory) as (keyof typeof BuyerCategory)[])?.map(key => {
-        return BuyerCategory[key];
-    });
-
+    const dropDownHandler = () => {
+        setIsClicked(!isClicked)
+    }
 
 
     return (
@@ -53,22 +68,29 @@ export const BuyerRequestUploadForm = () => {
                                         <Text style={{ fontSize: 10, color: 'red' }}>{errors.name}</Text>
                                     )}
                                     <FormControl.Label>Category </FormControl.Label>
-                                    <Select
-                                        selectedValue={type ?? ''}
-                                        minWidth="200"
-                                        accessibilityLabel="Category"
-                                        placeholder="Category"
-                                        _selectedItem={{
-                                            bg: 'gray.300',
-                                            endIcon: <CheckIcon size="4" />,
-                                        }}
-                                        mt={1}
-                                        onValueChange={item => setType(item)}
-                                    >
-                                        {buyerCategory.map(item => {
-                                            return <Select.Item label={item} value={item} />;
-                                        })}
-                                    </Select>
+                                    <View>
+                                        <TouchableOpacity onPress={dropDownHandler} style={styles.dropdownSelector}>
+                                            <Text style={styles.dropDownText}>
+                                                {category}
+                                            </Text>
+                                            {isClicked ? (<MIcon name='keyboard-arrow-up' size={32} />) :
+                                                (<MIcon name='keyboard-arrow-down' size={32} />)}
+                                        </TouchableOpacity>
+                                        {isClicked ? (
+                                            <View style={styles.dropDownArea}>
+                                                <FlatList data={data} renderItem={({ item, index }) => {
+                                                    return (
+                                                        <TouchableOpacity style={styles.DATAitems} onPress={() => {
+                                                            setCategory(item.Data)
+                                                            setIsClicked(false)
+                                                        }}>
+                                                            <Text>{item.Data}</Text>
+                                                        </TouchableOpacity>
+                                                    )
+
+                                                }} />
+                                            </View>) : null}
+                                    </View>
                                     {errors.description && (
                                         <Text style={{ fontSize: 10, color: 'red' }}>{errors.description}</Text>
                                     )}
@@ -96,9 +118,6 @@ export const BuyerRequestUploadForm = () => {
                                     </Button>
 
                                 </Stack>
-
-
-
                             </FormControl>
                         )
                     }} />
@@ -137,6 +156,44 @@ const styles = StyleSheet.create({
         width: 380
 
 
+    },
+    dropDownArea: {
+        width: "100%",
+        height: 300,
+        borderRadius: 2,
+        marginTop: 10,
+        backgroundColor: '#ffff',
+        alignSelf: 'center',
+        elevation: 4
+    },
+    dropdownSelector: {
+        width: '100%',
+        height: 50,
+        borderRadius: 2,
+        borderWidth: 1,
+        borderColor: '#8e8e8e',
+        alignSelf: 'center',
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        alignItems: 'center'
+    },
+    dropDownText: {
+        color: '#1C1C1C',
+        fontFamily: 'Poppins-Light',
+        fontSize: 13,
+        letterSpacing: 1,
+        fontWeight: '500',
+        marginHorizontal: 8,
+        textAlign: 'center'
+    },
+    DATAitems: {
+        width: '85%',
+        height: 50,
+        borderBottomWidth: 0.2,
+        borderBottomColor: '#8e8e8e',
+        alignSelf: 'center',
+        justifyContent: 'center',
+        fontFamily: 'Poppins'
     }
 
 })

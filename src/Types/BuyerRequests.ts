@@ -5,7 +5,8 @@ export interface UploadBuyerRequests {
     manufacturer?: string,
     location?: string,
     type?: string
-    id?: number | string
+    id?: number | string,
+    data: []
 }
 export enum BuyerCategory {
     CARS = 'Cars',

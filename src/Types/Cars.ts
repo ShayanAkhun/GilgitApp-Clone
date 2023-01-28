@@ -23,18 +23,3 @@ export interface Cars {
 }
 
 
-export enum CarsCategory {
-
-    TOYOTA = 'Toyota',
-    HONDA = 'Honda',
-    NISSAN = 'Nissan',
-    HYUNDAI = 'Hyundai',
-    SUZUKI = 'Suzuki',
-    JEEP = 'Jeep',
-    MAZDA = 'Mazda',
-    FORD = 'Ford',
-    MITSUBISHI = 'Mitsubishi',
-    AUDI = 'Audi',
-    OTHERS = 'Others'
-
-}

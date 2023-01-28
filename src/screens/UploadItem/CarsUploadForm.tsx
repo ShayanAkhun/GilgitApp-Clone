@@ -1,4 +1,4 @@
-import { View, Text, ScrollView, TouchableOpacity, StyleSheet, SafeAreaView, Dimensions } from 'react-native'
+import { View, Text, ScrollView, TouchableOpacity, StyleSheet, SafeAreaView, Dimensions, FlatList } from 'react-native'
 import React from 'react'
 import { Formik, Form, Field } from 'formik';
 import * as Yup from 'yup';
@@ -23,10 +23,22 @@ import { initialValues } from '../../components/Helpers/CarsHelpers';
 import { validationSchema } from '../../components/Helpers/CarsHelpers';
 import { onSubmit } from '../../components/Helpers/CarsHelpers';
 
+
+const Data = [
+    { Data: "Toyota" },
+    { Data: 'Honda' },
+    { Data: "Nissan" },
+    { Data: "Hyundai" },
+    { Data: "Suzuki" },
+    { Data: "Jeep" },
+    { Data: "Mazda" },
+    { Data: "Ford" },
+    { Data: "Mitsubishi" },
+    { Data: "Audi" },
+    { Data: "Others" },
+]
 export const CarsUploadItems = () => {
     const carsEditing = CarsStore(state => state.carsEditing)
-    const selectedCars = CarsStore(state => state.selectedCars)
-    const [carType, setCarType] = useState(carsEditing && selectedCars ? selectedCars.type : '')
 
 
     const handleImageUpload = () => {
@@ -40,19 +52,22 @@ export const CarsUploadItems = () => {
             console.log('Images')
         })
     }
-    const carsCategory = (Object?.keys(CarsCategory) as (keyof typeof CarsCategory)[])?.map(key => {
-        return CarsCategory[key];
-    });
     const [isClicked, setIsClicked] = useState(false)
+    const [isDropDownClicked, setisDropDownClicked] = useState(false)
+    const [cars, setCars] = useState('Manufacturer')
+    const [data, setData] = useState(Data)
 
     const dropDownHandler = () => {
         setIsClicked(!isClicked)
     }
+    const dropownHandler = () => {
+        setisDropDownClicked(!isDropDownClicked)
+    }
 
 
     return (
-        <View style={{ backgroundColor: '#ffff', flex: 1, }}>
-            <ScrollView style={styles.container}>
+        <ScrollView style={styles.container} showsVerticalScrollIndicator={false}>
+            <View style={{ backgroundColor: '#ffff', flex: 1, }}>
                 <View style={styles.Addphoto}>
                     <TouchableOpacity onPress={handleImageUpload}>
                         <Text style={{ alignSelf: 'center', fontSize: 16, color: 'gray.500' }} >
@@ -91,22 +106,32 @@ export const CarsUploadItems = () => {
                                         <Text style={{ fontSize: 10, color: 'red' }}>{errors.description}</Text>
                                     )}
                                     <FormControl.Label>Manufacturer</FormControl.Label>
-                                    <Select
-                                        selectedValue={carType ?? ''}
-                                        minWidth="200"
-                                        accessibilityLabel="Category"
-                                        placeholder="Manufacturer E.G Toyota, Honda Etc"
-                                        _selectedItem={{
-                                            bg: 'gray.300',
-                                            endIcon: <CheckIcon size="4" />,
-                                        }}
-                                        mt={1}
-                                        onValueChange={item => setCarType(item)}
-                                    >
-                                        {carsCategory.map(item => {
-                                            return <Select.Item label={item} value={item} />;
-                                        })}
-                                    </Select>
+                                    <View>
+                                        <TouchableOpacity onPress={dropownHandler} style={styles.dropdownSelector}>
+                                            <Text style={styles.dropDownText}>
+                                                {cars}
+                                            </Text>
+                                            {isDropDownClicked ? (<MIcon name='keyboard-arrow-up' size={32} />) :
+                                                (<MIcon name='keyboard-arrow-down' size={32} />)}
+                                        </TouchableOpacity>
+                                        {isDropDownClicked ? (
+                                            <View style={styles.dropDown}>
+                                                <FlatList
+                                                    data={data}
+                                                    showsVerticalScrollIndicator={false}
+                                                    renderItem={({ item, index }) => {
+                                                        return (
+                                                            <TouchableOpacity style={styles.DATAitems} onPress={() => {
+                                                                setCars(item.Data)
+                                                                setisDropDownClicked(false)
+                                                            }}>
+                                                                <Text>{item.Data}</Text>
+                                                            </TouchableOpacity>
+                                                        )
+
+                                                    }} />
+                                            </View>) : null}
+                                    </View>
                                     {errors.manufacturer && (
                                         <Text style={{ fontSize: 10, color: 'red' }}>{errors.manufacturer}</Text>
                                     )}
@@ -288,8 +313,8 @@ export const CarsUploadItems = () => {
 
                     }} />
 
-            </ScrollView>
-        </View>
+            </View>
+        </ScrollView>
 
 
     )
@@ -316,7 +341,7 @@ const styles = StyleSheet.create({
     },
     FormControl: {
         width: '100%',
-        height: '100%'
+        alignSelf: 'center'
     },
     DescriptionInput: {
         width: 380,
@@ -381,6 +406,44 @@ const styles = StyleSheet.create({
     },
     ModelInput: {
         marginTop: 20
+    },
+    dropdownSelector: {
+        width: '100%',
+        height: 50,
+        borderRadius: 2,
+        borderWidth: 1,
+        borderColor: '#8e8e8e',
+        alignSelf: 'center',
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        alignItems: 'center'
+    },
+    dropDownText: {
+        color: '#1C1C1C',
+        fontFamily: 'Poppins-Light',
+        fontSize: 13,
+        letterSpacing: 1,
+        fontWeight: '500',
+        marginHorizontal: 8,
+        textAlign: 'center'
+    },
+    DATAitems: {
+        width: '85%',
+        height: 50,
+        borderBottomWidth: 0.2,
+        borderBottomColor: '#8e8e8e',
+        alignSelf: 'center',
+        justifyContent: 'center',
+        fontFamily: 'Poppins'
+    },
+    dropDown: {
+        width: "100%",
+        height: 400,
+        borderRadius: 2,
+        marginTop: 10,
+        backgroundColor: '#ffff',
+        alignSelf: 'center',
+        elevation: 4
     }
 
 })
