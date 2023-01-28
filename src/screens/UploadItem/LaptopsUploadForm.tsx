@@ -1,10 +1,10 @@
 import { View, Text, ScrollView, TouchableOpacity, StyleSheet, SafeAreaView, Dimensions } from 'react-native'
 import React from 'react'
-import { Formik, Form, Field } from 'formik';
-import * as Yup from 'yup';
+import { Formik, } from 'formik';
+
 import { useNavigation } from '@react-navigation/native';
 import { useState } from 'react';
-import { UploadItem, LaptopsCategory } from '../../Types';
+import { LaptopsCategory } from '../../Types';
 import { uploadItemStore } from '../../store';
 import {
     Input,
@@ -18,74 +18,26 @@ import {
 } from 'native-base';
 import * as  ImagePicker from 'react-native-image-picker';
 import MIcon from 'react-native-vector-icons/MaterialIcons';
+import { initialValues } from '../../components/Helpers/LaptopsHelper';
+import { validationSchema } from '../../components/Helpers/LaptopsHelper';
+import { onSubmit } from '../../components/Helpers/LaptopsHelper';
+import { GlobalButton } from '../../components/LoginButtons/FormButtons';
+import { CameraOptions } from 'react-native-image-picker';
 
-const validationSchema = Yup.object().shape({
-    name: Yup.string().required('title is a required field'),
-    price: Yup.string().required('Price is a required field'),
-    location: Yup.string().required('location is a required field'),
-    description: Yup.string().required('description is a required field'),
-    manufacturer: Yup.string().required('manufacturer is a required field'),
-})
 export const LaptopsUploadItems = () => {
-    const navigation = useNavigation();
     const itemEditing = uploadItemStore(state => state.itemEditing)
     const selectedItem = uploadItemStore(state => state.selectedItem)
-    const item = uploadItemStore(state => state.item)
-    const setItem = uploadItemStore(state => state.setItem)
     const [itemType, setItemType] = useState(itemEditing && selectedItem ? selectedItem.type : '')
-    const [color, setColor] = useState(false)
-    const [secondColor, setSecondColor] = useState(true)
-    const [thirdColor, setThirdColor] = useState(false)
-    const [fourthColor, setFourthColor] = useState(true)
-    const [conditionColor, setConditionColor] = useState(false)
-    const [secondConditionColor, setSecondconditionColor] = useState(true)
-    const [productColor, setProductColor] = useState(false)
-    const [secondProductColor, setsecondProductColor] = useState(true)
 
 
-    const initialValues: UploadItem = {
-        name: itemEditing && selectedItem ? selectedItem.name : '',
-        price: itemEditing && selectedItem ? selectedItem.price : '',
-        description: itemEditing && selectedItem ? selectedItem.description : '',
-        location: itemEditing && selectedItem ? selectedItem.location : '',
-        type: itemEditing && selectedItem ? selectedItem.type : '',
-        id: itemEditing && selectedItem ? selectedItem.id : '',
-        model: itemEditing && selectedItem ? selectedItem.model : '',
-    }
-    const onSubmit = (values: UploadItem,) => {
-        const itemState = [...item]
-        if (itemEditing && selectedItem) {
-            console.log(values, 'is this working ');
-            const updatedItems = {
-                id: selectedItem.id,
-                name: values.name,
-                price: values.price,
-                description: values.description,
-                location: values.location,
-                manufacturer: values.manufacturer,
-                model: values.model,
-                itemType,
-            }
-            const itemIndex = itemState.findIndex(i => i.id === selectedItem.id);
-            itemState[itemIndex] = updatedItems;
-        } else {
-            itemState.push({
-                id: Math.floor(Math.random() * 100),
-                name: values.name,
-                price: values.price,
-                description: values.description,
-                location: values.location,
-                manufacturer: values.manufacturer,
-                model: values.model
-            })
-        }
-        setItem(itemState);
-        navigation.goBack();
-    }
+
     const handleImageUpload = () => {
-        const options = {
-            noData: true
+        const options: CameraOptions = {
+            mediaType: "photo"
         }
+        ImagePicker.launchCamera(options, response => {
+            console.log('Images')
+        })
         ImagePicker.launchImageLibrary(options, response => {
             console.log('Images')
         })
@@ -94,58 +46,7 @@ export const LaptopsUploadItems = () => {
     const laptops = (Object?.keys(LaptopsCategory) as (keyof typeof LaptopsCategory)[])?.map(key => {
         return LaptopsCategory[key]
     })
-    const toggleNewButton = () => {
-        if (!secondColor) {
-            setSecondColor(!secondColor)
-            setColor(false)
-        }
-    }
-    const toggleUsedButton = () => {
-        if (!color) {
-            setColor(!color)
-            setSecondColor(false)
-        }
-    }
-    const toggleFirstWarrntyButton = () => {
-        if (!fourthColor) {
-            setFourthColor(!fourthColor)
-            setThirdColor(false)
 
-        }
-    }
-    const toggleSecondWarrntyButton = () => {
-        if (!thirdColor) {
-            setThirdColor(!thirdColor)
-            setFourthColor(false)
-        }
-    }
-    const toggleConditionColor = () => {
-        if (!secondConditionColor) {
-            setSecondconditionColor(!secondConditionColor)
-            setConditionColor(false)
-        }
-    }
-
-    const toggleSecondConditionButton = () => {
-        if (!conditionColor) {
-            setConditionColor(!conditionColor)
-            setSecondconditionColor(false)
-        }
-    }
-
-    const toggleProductButton = () => {
-        if (!secondProductColor) {
-            setsecondProductColor(!secondProductColor)
-            setProductColor(false)
-        }
-    }
-
-    const togglesecondProdcutButton = () => {
-        if (!productColor) {
-            setProductColor(!productColor)
-            setsecondProductColor(false)
-        }
-    }
     const [isClicked, setIsClicked] = useState(false)
 
     const dropDownHandler = () => {
@@ -169,7 +70,7 @@ export const LaptopsUploadItems = () => {
                     validationSchema={validationSchema}
                     initialValues={initialValues}
                     onSubmit={onSubmit}
-                    render={({ errors, handleChange, values, handleSubmit }) => {
+                    render={({ errors, handleChange, values, handleSubmit, setFieldValue }) => {
                         return (
                             <FormControl style={styles.FormControl}>
                                 <Stack mx='2'>
@@ -235,50 +136,45 @@ export const LaptopsUploadItems = () => {
                                 </Stack>
 
                                 <View style={{ top: 10 }}>
-                                    <Text style={styles.Negotation}>Negotiable</Text>
-                                    <View style={{ flexDirection: 'row', justifyContent: 'space-evenly', right: 60, marginTop: 10 }}>
+                                    <Text style={styles.Condition}>Condition</Text>
+                                    <View style={{ flexDirection: 'row', marginHorizontal: 80, right: 60, marginTop: 10 }}>
 
-                                        <Button style={{
-                                            backgroundColor: color ? '#ECECEC' : '#4285F4',
-                                            borderRadius: 50,
-                                            width: 100,
-                                        }} onPress={toggleNewButton}>
-                                            <Text style={{ color: color ? '#1C1C1C' : '#ffffff' }}>Yes</Text>
-                                        </Button>
+                                        <GlobalButton name={'New'} text="New" onPress={() => {
+                                            setFieldValue("condition", "New")
+                                        }} isActive={values.condition} />
+                                        <GlobalButton text="Used" name={'Used'} onPress={() => {
+                                            setFieldValue("condition", "Used")
 
-                                        <Button style={{
-                                            backgroundColor: secondColor ? '#ECECEC' : '#4285F4',
-                                            borderRadius: 50,
-                                            width: 100,
-                                        }}
-                                            onPress={toggleUsedButton}>
-                                            <Text style={{ color: secondColor ? '#1C1C1C' : '#ffffff' }}>No</Text>
-                                        </Button>
+                                        }} isActive={values.condition} />
                                     </View>
                                 </View>
-
-
-                                <Text style={styles.Warranty}>Available for Marcha</Text>
+                                <Text style={styles.Warranty}>Warranty</Text>
                                 <View style={styles.toggleButtons}>
-                                    <View style={{ flexDirection: 'row', justifyContent: 'space-evenly', right: 60, marginTop: 10 }}>
-                                        <Button style={{
-                                            backgroundColor: thirdColor ? '#ECECEC' : '#4285F4',
-                                            borderRadius: 50,
-                                            width: 100,
-                                        }} onPress={toggleFirstWarrntyButton}>
-                                            <Text style={{ color: thirdColor ? '#1C1C1C' : '#ffffff' }}>Yes</Text>
-                                        </Button>
+                                    <ScrollView horizontal showsHorizontalScrollIndicator={false} >
+                                        <View style={{ flexDirection: 'row', marginTop: 20, marginHorizontal: 20 }}>
 
-                                        <Button style={{
-                                            backgroundColor: fourthColor ? '#ECECEC' : '#4285F4',
-                                            borderRadius: 50,
-                                            width: 100,
-                                        }}
-                                            onPress={toggleSecondWarrntyButton}>
-                                            <Text style={{ color: fourthColor ? '#1C1C1C' : '#ffffff' }}>No</Text>
-                                        </Button>
-                                    </View>
+                                            <GlobalButton text="7 Days" name='7 Days' isActive={values.warranty} onPress={() => {
+                                                setFieldValue("warranty", "7 Days")
+                                            }} />
+
+                                            <GlobalButton text="15 Days" name='15 Days' isActive={values.warranty} onPress={() => {
+                                                setFieldValue("warranty", "15 Days")
+
+                                            }} />
+                                            <GlobalButton text="30 Days" name='30 Days' isActive={values.warranty} onPress={() => {
+                                                setFieldValue("warranty", "30 Days")
+
+                                            }} />
+                                            <GlobalButton text="No Warranty" name='No Warranty' isActive={values.warranty} onPress={() => {
+                                                setFieldValue("warranty", "No Warranty")
+
+                                            }} />
+                                        </View>
+                                    </ScrollView>
                                 </View>
+
+
+
                                 <View>
                                     <TouchableOpacity onPress={dropDownHandler}>
                                         <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
@@ -291,51 +187,92 @@ export const LaptopsUploadItems = () => {
                                     </TouchableOpacity>
                                     {isClicked ? (<View style={styles.dropDownArea}>
                                         <View>
-                                            <Text style={styles.conditionText}>Condition</Text>
-                                            <View style={{ flexDirection: 'row', justifyContent: 'space-evenly', right: 60, marginTop: 10 }}>
+                                            <Text style={styles.conditionText}>Negotiable</Text>
+                                            <View style={{ flexDirection: 'row', marginTop: 10, marginHorizontal: 20 }}>
 
-                                                <Button style={{
-                                                    backgroundColor: conditionColor ? '#ECECEC' : '#4285F4',
-                                                    borderRadius: 50,
-                                                    width: 100,
-                                                }} onPress={toggleConditionColor}>
-                                                    <Text style={{ color: conditionColor ? '#1C1C1C' : '#ffffff' }}>Yes</Text>
-                                                </Button>
-
-                                                <Button style={{
-                                                    backgroundColor: secondConditionColor ? '#ECECEC' : '#4285F4',
-                                                    borderRadius: 50,
-                                                    width: 100,
-                                                }}
-                                                    onPress={toggleSecondConditionButton}>
-                                                    <Text style={{ color: secondConditionColor ? '#1C1C1C' : '#ffffff' }}>No</Text>
-                                                </Button>
+                                                <GlobalButton name={'Yes'} text="Yes" onPress={() => {
+                                                    setFieldValue("negotiable", "Yes")
+                                                }} isActive={values.negotiable} />
+                                                <GlobalButton name={'No'} text="No" onPress={() => {
+                                                    setFieldValue("negotiable", "No")
+                                                }} isActive={values.condition} />
                                             </View>
+                                            <Text style={styles.ProductText}>Available for March</Text>
+                                            <View style={{ flexDirection: 'row', marginTop: 10, marginHorizontal: 20 }}>
 
-                                            <Text style={styles.ProductText}>Product</Text>
-                                            <View style={{ flexDirection: 'row', justifyContent: 'space-evenly', right: 60, marginTop: 10 }}>
+                                                <GlobalButton name={'Yes'} text="Yes" onPress={() => {
+                                                    setFieldValue("marcha", "Yes")
+                                                }} isActive={values.marcha} />
+                                                <GlobalButton name={'No'} text="No" onPress={() => {
+                                                    setFieldValue("marcha", "No")
+                                                }} isActive={values.marcha} />
+                                            </View>
+                                            <Text style={styles.conditionText}>Product</Text>
+                                            <View style={{ flexDirection: 'row', marginTop: 10, marginHorizontal: 20 }}>
 
-                                                <Button style={{
-                                                    backgroundColor: productColor ? '#ECECEC' : '#4285F4',
-                                                    borderRadius: 50,
-                                                    width: 100,
-                                                }} onPress={toggleProductButton}>
-                                                    <Text style={{ color: productColor ? '#1C1C1C' : '#ffffff' }}>Laptop</Text>
-                                                </Button>
-
-                                                <Button style={{
-                                                    backgroundColor: secondProductColor ? '#ECECEC' : '#4285F4',
-                                                    borderRadius: 50,
-                                                    width: 100,
-                                                }}
-                                                    onPress={togglesecondProdcutButton}>
-                                                    <Text style={{ color: secondProductColor ? '#1C1C1C' : '#ffffff' }}>Accessory</Text>
-                                                </Button>
+                                                <GlobalButton name={'Mobile'} text="Mobile" onPress={() => {
+                                                    setFieldValue("product", "Mobile")
+                                                }} isActive={values.product} />
+                                                <GlobalButton name={'Tablet'} text="Tablet" onPress={() => {
+                                                    setFieldValue("product", "Tablet")
+                                                }} isActive={values.product} />
+                                                <GlobalButton name={'Accessory'} text="Accessory" onPress={() => {
+                                                    setFieldValue("product", "Accessory")
+                                                }} isActive={values.product} />
+                                            </View>
+                                            <Text style={styles.ProductText}>Ram</Text>
+                                            <View style={{ flexDirection: 'row', marginTop: 10, marginHorizontal: 20 }}>
+                                                <ScrollView horizontal showsHorizontalScrollIndicator={false} >
+                                                    <GlobalButton name={'2Gb'} text="2Gb" onPress={() => {
+                                                        setFieldValue("ram", "2Gb")
+                                                    }} isActive={values.ram} />
+                                                    <GlobalButton name={'4Gb'} text="4Gb" onPress={() => {
+                                                        setFieldValue("ram", "4Gb")
+                                                    }} isActive={values.ram} />
+                                                    <GlobalButton name={'6Gb'} text="6Gb" onPress={() => {
+                                                        setFieldValue("ram", "6Gb")
+                                                    }} isActive={values.ram} />
+                                                    <GlobalButton name={'8Gb'} text="8Gb" onPress={() => {
+                                                        setFieldValue("ram", "8Gb")
+                                                    }} isActive={values.ram} />
+                                                    <GlobalButton name={'16Gb'} text="16Gb" onPress={() => {
+                                                        setFieldValue("ram", "16Gb")
+                                                    }} isActive={values.ram} />
+                                                    <GlobalButton name={'32Gb'} text="32Gb" onPress={() => {
+                                                        setFieldValue("ram", "32Gb")
+                                                    }} isActive={values.ram} />
+                                                    <GlobalButton name={'64Gb'} text="64Gb" onPress={() => {
+                                                        setFieldValue("ram", "64Gb")
+                                                    }} isActive={values.ram} />
+                                                </ScrollView>
+                                            </View>
+                                            <Text style={styles.MemoryText}>Memory</Text>
+                                            <View style={{ flexDirection: 'row', marginTop: 10, marginHorizontal: 20 }}>
+                                                <ScrollView horizontal showsHorizontalScrollIndicator={false} >
+                                                    <GlobalButton name={'32Gb'} text="32Gb" onPress={() => {
+                                                        setFieldValue("memory", "32Gb")
+                                                    }} isActive={values.memory} />
+                                                    <GlobalButton name={'64Gb'} text="64Gb" onPress={() => {
+                                                        setFieldValue("memory", "64Gb")
+                                                    }} isActive={values.memory} />
+                                                    <GlobalButton name={'128Gb'} text="128Gb" onPress={() => {
+                                                        setFieldValue("memory", "128Gb")
+                                                    }} isActive={values.memory} />
+                                                    <GlobalButton name={'256Gb'} text="256Gb" onPress={() => {
+                                                        setFieldValue("memory", "256Gb")
+                                                    }} isActive={values.memory} />
+                                                    <GlobalButton name={'512Gb'} text="512Gb" onPress={() => {
+                                                        setFieldValue("memory", "512Gb")
+                                                    }} isActive={values.memory} />
+                                                    <GlobalButton name={'1TB'} text="1TB" onPress={() => {
+                                                        setFieldValue("memory", "1TB")
+                                                    }} isActive={values.memory} />
+                                                </ScrollView>
                                             </View>
                                             <View style={styles.ModelInput}>
                                                 <FormControl.Label style={styles.ModelText}>Model</FormControl.Label>
                                                 <Input
-                                                    placeholder="Add Modeltype e.g.HP EliteBook,Dell Latitude..."
+                                                    placeholder="Add Modeltype e.g.S5, 11 Promax etc..."
                                                     value={values.location}
                                                     onChangeText={handleChange('Model')}
                                                     mx='2'
@@ -416,7 +353,7 @@ const styles = StyleSheet.create({
     },
     dropDownArea: {
         width: "100%",
-        height: 300,
+        height: 560,
         borderRadius: 10,
         marginTop: 20,
         backgroundColor: '#ffff',
@@ -437,7 +374,16 @@ const styles = StyleSheet.create({
         fontFamily: 'Poppins',
         marginVertical: 4,
         marginHorizontal: 8,
-        marginTop: 8
+        marginTop: 8,
+    },
+    MemoryText: {
+        color: '#1C1C1C',
+        fontSize: 16,
+        lineHeight: 24,
+        fontFamily: 'Poppins',
+        marginVertical: 4,
+        marginHorizontal: 8,
+        marginTop: 8,
     },
     ModelText: {
         lineHeight: 24,
@@ -448,6 +394,14 @@ const styles = StyleSheet.create({
     },
     ModelInput: {
         marginTop: 20
-    }
+    },
+    Condition: {
+        fontSize: 16,
+        color: '#1C1C1C',
+        fontWeight: '500',
+        marginVertical: 4,
+        marginHorizontal: 8,
+
+    },
 
 })

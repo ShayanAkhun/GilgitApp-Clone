@@ -7,7 +7,9 @@ export interface Laptops {
     views?: number,
     image?: ImageSourcePropType | undefined,
     id: number,
-    model?: string
+    model?: string,
+
+
 }
 
 export enum LaptopsCategory {

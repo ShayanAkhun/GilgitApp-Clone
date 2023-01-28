@@ -2,73 +2,35 @@ import { View, Text, ScrollView, TouchableOpacity, StyleSheet, SafeAreaView, Dim
 import React, { useState } from 'react'
 import { Buyerstore } from '../../store'
 import { UploadBuyerRequests, BuyerCategory } from '../../Types'
-import { Formik, Form, Field } from 'formik';
-import * as Yup from 'yup';
+import { Formik, } from 'formik';
+
 import {
     Input,
     FormControl,
     Stack,
     Button,
-    AddIcon,
     Select,
     CheckIcon
 } from 'native-base';
-import { useNavigation } from '@react-navigation/native';
-const { width, height } = Dimensions.get('window')
+import { initialValues } from '../../components/Helpers/BRHelpers';
+import { validationSchema } from '../../components/Helpers/BRHelpers';
+import { onSubmit } from '../../components/Helpers/BRHelpers';
 
-export const validationSchema = Yup.object().shape({
-    name: Yup.string().required('title is a required field'),
-    price: Yup.string().required('This field is  required '),
-    location: Yup.string().required('This field is  required'),
-    description: Yup.string().required('This field should not be empty'),
-})
+
 export const BuyerRequestUploadForm = () => {
-    const navigation = useNavigation();
     const brStoresEditing = Buyerstore(state => state.brStoresEditing)
     const selectedbrStores = Buyerstore(state => state.selectedbrStores)
-    const buyerstore = Buyerstore(state => state.buyerstore)
-    const setbrStores = Buyerstore(state => state.setbrStores)
     const [type, setType] = useState(brStoresEditing && selectedbrStores ? selectedbrStores.type : '')
 
-    const initialValues: UploadBuyerRequests = {
-        name: brStoresEditing && selectedbrStores ? selectedbrStores.name : '',
-        price: brStoresEditing && selectedbrStores ? selectedbrStores.price : '',
-        description: brStoresEditing && selectedbrStores ? selectedbrStores.description : '',
-        location: brStoresEditing && selectedbrStores ? selectedbrStores.location : '',
-        type: brStoresEditing && selectedbrStores ? selectedbrStores.type : '',
-        id: brStoresEditing && selectedbrStores ? selectedbrStores.id : '',
-    }
 
-    const onSubmit = (values: UploadBuyerRequests,) => {
-        const state = [...buyerstore]
-        if (brStoresEditing && selectedbrStores) {
-            const updatedItems = {
-                id: selectedbrStores.id,
-                name: values.name,
-                price: values.price,
-                description: values.description,
-                location: values.location,
-                manufacturer: values.manufacturer,
-                // itemType,
-            }
-            const itemIndex = state.findIndex(i => i.id === selectedbrStores.id);
-            state[itemIndex] = updatedItems;
-        } else {
-            state.push({
-                id: Math.floor(Math.random() * 100),
-                name: values.name,
-                price: values.price,
-                description: values.description,
-                location: values.location,
-                manufacturer: values.manufacturer
-            })
-        }
-        setbrStores(state);
-        navigation.goBack();
-    }
+
+
     const buyerCategory = (Object?.keys(BuyerCategory) as (keyof typeof BuyerCategory)[])?.map(key => {
         return BuyerCategory[key];
     });
+
+
+
     return (
         <View style={{ backgroundColor: '#FFFFFF' }}>
             <ScrollView>
@@ -130,7 +92,7 @@ export const BuyerRequestUploadForm = () => {
                                         <Text style={{ fontSize: 10, color: 'red' }}>{errors.location}</Text>
                                     )}
                                     <Button style={styles.SellButton} onPress={() => handleSubmit()}>
-                                        {brStoresEditing ? 'Update' : 'Sell Now'}
+                                        {brStoresEditing ? 'Post a Request' : 'Post a Request'}
                                     </Button>
 
                                 </Stack>

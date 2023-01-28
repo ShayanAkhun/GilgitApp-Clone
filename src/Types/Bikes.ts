@@ -9,7 +9,16 @@ export interface Bikes {
     id?: number | string,
     type?: string,
     manufacturer?: string,
-    title?: string
+    title?: string,
+    warranty?: string,
+    negotation?: string,
+    condition?: string,
+    marcha?: string,
+    model?: string,
+    engine?: string,
+    bikeColor?: string,
+    registeredCity?: string,
+    milage?: string
 }
 
 

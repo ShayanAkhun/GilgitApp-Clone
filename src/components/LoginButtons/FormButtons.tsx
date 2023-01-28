@@ -10,7 +10,7 @@ interface IProps {
     id?: string,
     onPress?: () => void;
 }
-const GlobalButton: React.FC<IProps> = ({ text, onPress, isActive, name }) => {
+export const GlobalButton: React.FC<IProps> = ({ text, onPress, isActive, name }) => {
 
     return (
         <TouchableOpacity
@@ -55,4 +55,3 @@ const styles = StyleSheet.create({
 
 });
 
-export default GlobalButton;

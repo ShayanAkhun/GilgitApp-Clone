@@ -15,7 +15,7 @@ import {
     Select,
     CheckIcon,
 } from 'native-base';
-import GlobalButton from '../../components/LoginButtons/FormButtons';
+import { GlobalButton } from '../../components/LoginButtons/FormButtons';
 import * as  ImagePicker from 'react-native-image-picker';
 import MIcon from 'react-native-vector-icons/MaterialIcons';
 import { CameraOptions } from 'react-native-image-picker';
@@ -48,11 +48,6 @@ export const CarsUploadItems = () => {
     const dropDownHandler = () => {
         setIsClicked(!isClicked)
     }
-
-
-
-
-
 
 
     return (
